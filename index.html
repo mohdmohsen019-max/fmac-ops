@@ -596,6 +596,49 @@
     }
     document.getElementById('y').textContent = new Date().getFullYear();
 
+    // Web3Forms Access Key
+    // 👉 Replace this with your actual access key from https://web3forms.com/
+    const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY_HERE';
+
+    // Email Notification Function
+    async function sendEmailNotification(subject, formData) {
+      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY_HERE') {
+        console.warn('Web3Forms Access Key not set. Email notification skipped.');
+        return;
+      }
+
+      // Convert the data object into a formatted string for the email
+      let formattedMessage = '';
+      for (const [key, value] of Object.entries(formData)) {
+        // Skip some internal fields
+        if (key === 'id' || key === 'createdAt') continue;
+        
+        let val = value;
+        if (Array.isArray(val)) val = val.join(', ');
+        if (typeof val === 'boolean') val = val ? 'نعم (Yes)' : 'لا (No)';
+        if (!val) val = '-';
+        
+        formattedMessage += `${key}: ${val}\n`;
+      }
+
+      try {
+        await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: `New FMAC Ops Entry: ${subject}`,
+            message: formattedMessage,
+          })
+        });
+      } catch (error) {
+        console.error('Failed to send email notification:', error);
+      }
+    }
+
     // Stars
     const stars = document.querySelectorAll('.star');
     const score = document.getElementById('score');
@@ -825,14 +868,19 @@
       const db = loadDb();
       const types = Array.from(document.querySelectorAll('input[name="inq"]:checked')).map(i => i.value);
       const notes = document.getElementById('inq-notes')?.value.trim() || '';
-      db.inquiries.unshift({
+      const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         types,
         notes,
         ...getPersonal(),
-      });
+      };
+      db.inquiries.unshift(entry);
       saveDb(db);
+      
+      // Send Email
+      sendEmailNotification('Inquiry (استفسار)', entry);
+
       toast(i18n[msgLang]['toast.inq']);
       showThanks();
     }
@@ -844,7 +892,7 @@
       const details = document.querySelector('textarea[placeholder="اكتب تفاصيل الشكوى"]')?.value.trim() || '';
       const resolved = document.querySelector('input[name="resolve"]')?.checked || false;
       const escalated = document.querySelector('input[name="escalate"]')?.checked || false;
-      db.complaints.unshift({
+      const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         type,
@@ -852,8 +900,13 @@
         resolved,
         escalated,
         ...getPersonal(),
-      });
+      };
+      db.complaints.unshift(entry);
       saveDb(db);
+      
+      // Send Email
+      sendEmailNotification('Complaint (شكوى)', entry);
+
       toast(i18n[msgLang]['toast.comp']);
       showThanks();
     }
@@ -861,14 +914,19 @@
     function submitMeeting() {
       const db = loadDb();
       const person = document.getElementById('meeting-person')?.value || '';
-      db.complaints.unshift({
+      const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         kind: 'meeting',
         person,
         ...getPersonal(),
-      });
+      };
+      db.complaints.unshift(entry); // Note: Original code pushed meeting to complaints
       saveDb(db);
+      
+      // Send Email
+      sendEmailNotification('Meeting Request (طلب لقاء)', entry);
+
       toast(i18n[msgLang]['toast.meet']);
       showThanks();
     }
@@ -887,7 +945,7 @@
       const escalated = document.querySelector('section#calls input[type="checkbox"]:last-of-type')?.checked || false;
       const notes = document.getElementById('call-notes')?.value.trim() || '';
 
-      db.calls.unshift({
+      const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         callerName,
@@ -898,8 +956,13 @@
         handledAdmin,
         escalated,
         notes,
-      });
+      };
+      db.calls.unshift(entry);
       saveDb(db);
+      
+      // Send Email
+      sendEmailNotification('Phone Call (اتصال هاتفي)', entry);
+
       toast(i18n[msgLang]['toast.call']);
       showThanks();
     }
@@ -908,13 +971,18 @@
       const db = loadDb();
       const items = Array.from(document.querySelectorAll('section#maintenance form:first-of-type .choices input[type="checkbox"]:checked')).map(i => i.nextElementSibling?.textContent.trim());
       const details = document.getElementById('maint-building-notes')?.value.trim() || '';
-      db.maintenanceBuilding.unshift({
+      const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         items,
         details,
-      });
+      };
+      db.maintenanceBuilding.unshift(entry);
       saveDb(db);
+      
+      // Send Email
+      sendEmailNotification('Building Maintenance (صيانة المبنى)', entry);
+
       toast(i18n[msgLang]['toast.maint_b']);
       showThanks();
     }
@@ -926,14 +994,19 @@
       const typeSelect = document.querySelector('section#maintenance form:last-of-type select');
       const maintenanceType = typeSelect ? typeSelect.value : '';
       const details = document.getElementById('maint-bus-notes')?.value.trim() || '';
-      db.maintenanceBus.unshift({
+      const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         busNumber,
         maintenanceType,
         details,
-      });
+      };
+      db.maintenanceBus.unshift(entry);
       saveDb(db);
+      
+      // Send Email
+      sendEmailNotification('Bus Maintenance (صيانة الحافلات)', entry);
+
       toast(i18n[msgLang]['toast.maint_bus']);
       showThanks();
     }
@@ -946,14 +1019,19 @@
         value = parseInt(activeStar.dataset.v, 10) || 0;
       }
       const notes = document.getElementById('rating-notes')?.value.trim() || '';
-      db.ratings.unshift({
+      const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         value,
         notes,
         ...getPersonal(),
-      });
+      };
+      db.ratings.unshift(entry);
       saveDb(db);
+      
+      // Send Email
+      sendEmailNotification('Rating (تقييم)', entry);
+
       toast(i18n[msgLang]['toast.rate']);
       showThanks();
     }
