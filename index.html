@@ -652,7 +652,7 @@
               <label><input name="c-type" type="radio" /> <span data-i18n="complaints.opt.other">أخرى</span></label>
             </div>
             <label data-i18n="complaints.details">تفاصيل الشكوى</label>
-            <textarea data-placeholder="complaints.details_ph" placeholder="اكتب تفاصيل الشكوى" rows="4"></textarea>
+            <textarea id="complaint-details" data-placeholder="complaints.details_ph" placeholder="اكتب تفاصيل الشكوى" rows="4"></textarea>
             <br />
             <div class="choices">
               <label><input name="resolve" type="checkbox" /> <span data-i18n="complaints.resolved">تم الحل من قبل
@@ -1138,7 +1138,7 @@
       const db = loadDb();
       const typeInput = document.querySelector('input[name="c-type"]:checked');
       const type = typeInput ? typeInput.nextElementSibling?.textContent.trim() : '';
-      const details = document.querySelector('textarea[placeholder="اكتب تفاصيل الشكوى"]')?.value.trim() || '';
+      const details = document.getElementById('complaint-details')?.value.trim() || '';
       const resolved = document.querySelector('input[name="resolve"]')?.checked || false;
       const escalated = document.querySelector('input[name="escalate"]')?.checked || false;
       const entry = {
