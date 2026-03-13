@@ -7,52 +7,53 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title data-i18n="title">سياسات وإجراءات قسم العمليات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0f1112;
+      --bg: #090a0b;
       --fg: #f9fafb;
-      --muted: #d1d5db;
-      --card: #15191b;
+      --muted: #a1a1aa;
+      --card: #121417;
       --brand: #D6D2BF;
-      --brand-2: #d21f2b;
+      --brand-2: #E63946;
       --accent: #1f1f1f;
-      --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-      --radius: 16px;
-      --border: rgba(255, 255, 255, .08);
-      --overlay: rgba(255, 255, 255, .06);
-      --overlay-strong: rgba(255, 255, 255, .14);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --radius: 20px;
+      --border: rgba(255, 255, 255, 0.05);
+      --overlay: rgba(255, 255, 255, 0.04);
+      --overlay-strong: rgba(255, 255, 255, 0.1);
       --body-bg:
-        radial-gradient(1200px 600px at 100% -20%, rgba(0, 133, 74, .2), transparent 60%),
-        radial-gradient(1000px 500px at -10% 110%, rgba(210, 31, 43, .18), transparent 55%),
-        linear-gradient(180deg, #08090a, var(--bg));
-      --nav-bg: rgba(10, 12, 14, .85);
-      --card-bg: linear-gradient(180deg, rgba(21, 25, 27, .85), rgba(8, 10, 11, .85));
-      --details-bg: linear-gradient(180deg, rgba(21, 25, 27, .85), rgba(8, 10, 11, .85));
-      --input-bg: #101516;
-      --star-bg: #101516;
-      --footer-bg: rgba(8, 10, 11, .65);
+        radial-gradient(1200px 600px at 100% -20%, rgba(0, 133, 74, 0.15), transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, rgba(230, 57, 70, 0.15), transparent 55%),
+        linear-gradient(180deg, #050607, var(--bg));
+      --nav-bg: rgba(9, 10, 11, 0.7);
+      --card-bg: linear-gradient(180deg, rgba(18, 20, 23, 0.8), rgba(12, 14, 16, 0.8));
+      --details-bg: linear-gradient(180deg, rgba(18, 20, 23, 0.8), rgba(12, 14, 16, 0.8));
+      --input-bg: #0f1112;
+      --star-bg: #0f1112;
+      --footer-bg: rgba(9, 10, 11, 0.8);
     }
 
     html[data-theme="light"] {
-      --bg: #f5f7fb;
-      --fg: #111827;
-      --muted: #4b5563;
+      --bg: #f8fafc;
+      --fg: #0f172a;
+      --muted: #64748b;
       --card: #ffffff;
-      --accent: #e5e7eb;
-      --shadow: 0 10px 30px rgba(15, 23, 42, .12);
-      --border: rgba(17, 24, 39, .12);
-      --overlay: rgba(17, 24, 39, .04);
-      --overlay-strong: rgba(17, 24, 39, .1);
+      --accent: #f1f5f9;
+      --shadow: 0 12px 36px rgba(15, 23, 42, 0.08);
+      --border: rgba(15, 23, 42, 0.08);
+      --overlay: rgba(15, 23, 42, 0.04);
+      --overlay-strong: rgba(15, 23, 42, 0.08);
       --body-bg:
-        radial-gradient(1200px 600px at 100% -20%, rgba(0, 133, 74, .15), transparent 60%),
-        radial-gradient(1000px 500px at -10% 110%, rgba(210, 31, 43, .12), transparent 55%),
-        linear-gradient(180deg, #ffffff, #e4ecf7);
-      --nav-bg: rgba(255, 255, 255, .9);
-      --card-bg: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(244, 247, 252, .95));
-      --details-bg: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(240, 244, 250, .95));
-      --input-bg: #f8fafc;
+        radial-gradient(1200px 600px at 100% -20%, rgba(0, 133, 74, 0.1), transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, rgba(230, 57, 70, 0.08), transparent 55%),
+        linear-gradient(180deg, #ffffff, #f1f5f9);
+      --nav-bg: rgba(255, 255, 255, 0.8);
+      --card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+      --details-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+      --input-bg: #ffffff;
       --star-bg: #f8fafc;
-      --footer-bg: rgba(255, 255, 255, .9);
+      --footer-bg: rgba(255, 255, 255, 0.9);
     }
 
     * {
@@ -61,7 +62,7 @@
 
     body {
       margin: 0;
-      font-family: "Cairo", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "Cairo", "Inter", -apple-system, system-ui, sans-serif;
       color: var(--fg);
       background: var(--body-bg);
       background-color: var(--bg);
@@ -73,14 +74,15 @@
       min-height: 100vh;
     }
 
-    /* NAV */
     nav {
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       background: var(--nav-bg);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       transition: background-color .3s ease, border-color .3s ease;
     }
 
@@ -223,16 +225,16 @@
 
     .hero-logo {
       margin: 28px auto 12px;
-      max-width: 220px;
+      max-width: 240px;
     }
 
     .hero-logo img {
       width: 100%;
-      border-radius: 12px;
+      border-radius: 16px;
       display: block;
-      background: #fff;
+      background: transparent;
       padding: 10px;
-      box-shadow: var(--shadow);
+      filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.2));
     }
 
     .container {
@@ -249,11 +251,18 @@
 
     .card {
       background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
-      padding: 20px;
+      padding: 24px;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      transition: background-color .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease;
+      transition: background-color .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
     }
 
     .card h3 {
@@ -290,15 +299,24 @@
     .cta {
       display: inline-block;
       text-decoration: none;
-      padding: 12px 18px;
-      border-radius: 12px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      border: none;
       color: #fff;
       background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      font-family: inherit;
+      font-size: 15px;
       font-weight: 800;
-      letter-spacing: .3px;
+      letter-spacing: .4px;
       margin-top: 14px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 14px rgba(230, 57, 70, 0.4);
       cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
     }
 
     form .row {
@@ -415,15 +433,17 @@
     .footer {
       text-align: center;
       color: var(--muted);
-      padding: 40px 16px 70px;
+      padding: 24px 16px;
       border-top: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       background: var(--footer-bg);
       transition: background-color .3s ease, color .3s ease, border-color .3s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      font-size: 13px;
+      gap: 6px;
+      font-size: 12px;
     }
 
     .btn-export {
@@ -534,8 +554,28 @@
 </head>
 
 <body>
+  <nav>
+    <div class="nav-wrap">
+      <a class="brand" href="/" onclick="startNew(); return false;">
+        <img class="logo" src="/fmac-logo.png" alt="Logo" />
+        <span data-i18n="brand">قسم العمليات</span>
+      </a>
+      <div class="nav-links" id="links">
+        <a href="#" onclick="selectService('#inquiries', this); return false;" data-i18n="nav.inquiries">الاستفسارات</a>
+        <a href="#" onclick="selectService('#complaints', this); return false;" data-i18n="nav.complaints">الشكاوى</a>
+        <a href="#" onclick="selectService('#meeting', this); return false;" data-i18n="nav.meeting">طلب لقاء</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn btn-toggle" onclick="toggleTheme()" type="button" data-i18n="theme.light">الوضع الفاتح</button>
+        <button class="hamburger" onclick="toggleMenu()" type="button">☰</button>
+      </div>
+    </div>
+  </nav>
   <div id="screen-landing" class="screen-landing">
     <div class="landing-card">
+      <div class="hero-placeholder">
+        <img src="/fmac-logo.png" alt="Logo" />
+      </div>
       <h2 class="landing-title" data-i18n="landing.title">قسم العمليات</h2>
       <p class="landing-subtitle" data-i18n="landing.subtitle">اختر اللغة والخدمة المطلوبة للمتابعة.</p>
       <div class="landing-lang">
@@ -571,15 +611,15 @@
         <div class="section-title"><span class="dot"></span>
           <h2 data-i18n="personal.h2">البيانات الشخصية</h2>
         </div>
-        <form class="card" id="form-personal">
+        <form class="card" id="form-personal" onsubmit="event.preventDefault(); goToServiceStep();">
           <div class="row">
             <div>
               <label data-i18n="form.fullname">اسم المتعامل</label>
-              <input data-placeholder="form.fullname_ph" id="inq-name" placeholder="اكتب اسمك الكامل" type="text" />
+              <input data-placeholder="form.fullname_ph" id="inq-name" placeholder="اكتب اسمك الكامل" type="text" required />
             </div>
             <div>
               <label data-i18n="form.phone">رقم الهاتف</label>
-              <input data-placeholder="form.phone_ph" id="inq-phone" placeholder="05xxxxxxxx" type="tel" />
+              <input data-placeholder="form.phone_ph" id="inq-phone" placeholder="05xxxxxxxx" type="tel" required />
             </div>
             <div><label data-i18n="form.email">البريد الإلكتروني</label><input data-placeholder="form.email_ph"
                 id="inq-email" placeholder="example@email.com" type="email" /></div>
@@ -592,17 +632,17 @@
               <input data-placeholder="form.sport_ph" id="inq-sport" placeholder="مثال: كرة قدم" type="text" />
             </div>
           </div>
+          <div style="margin-top:16px; text-align:left;">
+            <button class="cta" type="submit" data-i18n="btn.next_service">التالي</button>
+          </div>
         </form>
-        <div style="margin-top:16px; text-align:left;">
-          <button class="cta" type="button" onclick="goToServiceStep()" data-i18n="btn.next_service">التالي</button>
-        </div>
       </section>
       <section id="inquiries">
         <div class="section-title"><span class="dot"></span>
           <h2 data-i18n="inquiries.h2">الاستفسارات</h2>
         </div>
         <p class="hint" data-i18n="inquiries.hint">اختر نوع الاستفسار ثم أكمل بيانات التواصل ليتم الرد عليك سريعًا.</p>
-        <form class="card" id="form-inquiries">
+        <form class="card" id="form-inquiries" onsubmit="event.preventDefault(); submitInquiry();">
           <div class="choices">
             <label><input name="inq" type="checkbox" value="new" /> <span data-i18n="inquiries.opt.new">استفسار عن تسجيل
                 جديد بالنادي</span></label>
@@ -627,8 +667,7 @@
             placeholder="اكتب ملاحظاتك هنا..." rows="4"></textarea>
           <div class="pill" data-i18n="note.submit">بالنقر على إرسال سيتم تحويل الطلب إلى فريق العمليات.</div>
           <br />
-          <button class="cta" data-i18n="btn.send_inquiry" onclick="submitInquiry()" type="button">إرسال
-            الاستفسار</button>
+          <button class="cta" data-i18n="btn.send_inquiry" type="submit">إرسال الاستفسار</button>
         </form>
       </section>
       <section id="complaints">
@@ -636,23 +675,23 @@
           <h2 data-i18n="complaints.h2">الشكاوى</h2>
         </div>
         <div class="grid">
-          <div class="card">
+          <form class="card" onsubmit="event.preventDefault(); submitComplaint();">
             <h3 data-i18n="complaints.type">نوع الشكوى</h3>
             <div class="choices">
-              <label><input name="c-type" type="radio" /> <span data-i18n="complaints.opt.bus">شكوى على
+              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.bus">شكوى على
                   الحافلات</span></label>
-              <label><input name="c-type" type="radio" /> <span data-i18n="complaints.opt.coach">شكوى على
+              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.coach">شكوى على
                   مدرب</span></label>
-              <label><input name="c-type" type="radio" /> <span data-i18n="complaints.opt.admin">شكوى على
+              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.admin">شكوى على
                   إداري</span></label>
-              <label><input name="c-type" type="radio" /> <span data-i18n="complaints.opt.player">شكوى على لاعب
+              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.player">شكوى على لاعب
                   زميل</span></label>
-              <label><input name="c-type" type="radio" /> <span data-i18n="complaints.opt.driver">شكوى على
+              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.driver">شكوى على
                   سائق</span></label>
-              <label><input name="c-type" type="radio" /> <span data-i18n="complaints.opt.other">أخرى</span></label>
+              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.other">أخرى</span></label>
             </div>
             <label data-i18n="complaints.details">تفاصيل الشكوى</label>
-            <textarea id="complaint-details" data-placeholder="complaints.details_ph" placeholder="اكتب تفاصيل الشكوى" rows="4"></textarea>
+            <textarea id="complaint-details" data-placeholder="complaints.details_ph" placeholder="اكتب تفاصيل الشكوى" rows="4" required></textarea>
             <br />
             <div class="choices">
               <label><input name="resolve" type="checkbox" /> <span data-i18n="complaints.resolved">تم الحل من قبل
@@ -660,9 +699,8 @@
               <label><input name="escalate" type="checkbox" /> <span data-i18n="complaints.escalate">إحالة الشكوى إلى
                   رئيس القسم</span></label>
             </div>
-            <a class="cta" data-i18n="btn.send_complaint" href="#complaints" onclick="submitComplaint()">إرسال
-              الشكوى</a>
-          </div>
+            <button class="cta" type="submit" data-i18n="btn.send_complaint">إرسال الشكوى</button>
+          </form>
         </div>
       </section>
       <section id="meeting">
@@ -670,34 +708,39 @@
           <h2 data-i18n="meeting.h3">طلب لقاء بالإدارة</h2>
         </div>
         <div class="grid">
-          <div class="card" id="form-meeting">
+          <form class="card" id="form-meeting" onsubmit="event.preventDefault(); submitMeeting();">
             <h3 data-i18n="meeting.h3">طلب لقاء بالإدارة</h3>
             <p class="hint" data-i18n="meeting.hint">اختر الجهة التي تود مقابلتها وحدد سبب الطلب.</p>
             <label data-i18n="meeting.person">المسؤول المطلوب</label>
-            <select id="meeting-person">
-              <option data-i18n="meeting.o1">مدير النادي - مكتب المدير</option>
-              <option data-i18n="meeting.o2">رئيس قسم العمليات</option>
-              <option data-i18n="meeting.o3">رئيس القسم الفني</option>
-              <option data-i18n="meeting.o4">رئيس قسم المالية</option>
-              <option data-i18n="meeting.o5">رئيس قسم الخدمات المساندة</option>
+            <select id="meeting-person" onchange="toggleAdminName(this.value)" required>
+              <option value="o1" data-i18n="meeting.o1">مدير النادي - مكتب المدير</option>
+              <option value="o2" data-i18n="meeting.o2">رئيس قسم العمليات</option>
+              <option value="o3" data-i18n="meeting.o3">رئيس القسم الفني</option>
+              <option value="o4" data-i18n="meeting.o4">رئيس قسم المالية</option>
+              <option value="o5" data-i18n="meeting.o5">رئيس قسم الخدمات المساندة</option>
+              <option value="o6" data-i18n="meeting.o6">إداري - حدد الاسم</option>
             </select>
+            <div id="admin-name-container" style="display:none; margin-top:10px;">
+              <label data-i18n="meeting.admin_name">اسم الإداري</label>
+              <input type="text" id="meeting-admin-name" data-placeholder="meeting.admin_name_ph" placeholder="اكتب اسم الإداري">
+            </div>
             <label data-i18n="meeting.reason">سبب اللقاء</label>
-            <textarea id="meeting-reason" data-placeholder="meeting.reason_ph" placeholder="اشرح باختصار سبب طلب اللقاء" rows="4"></textarea>
+            <textarea id="meeting-reason" data-placeholder="meeting.reason_ph" placeholder="اشرح باختصار سبب طلب اللقاء" rows="4" required></textarea>
             <br />
-            <a class="cta" data-i18n="btn.confirm_meeting" href="#meeting" onclick="submitMeeting()">تأكيد الطلب</a>
-          </div>
+            <button class="cta" type="submit" data-i18n="btn.confirm_meeting">تأكيد الطلب</button>
+          </form>
         </div>
       </section>
       <section id="calls">
         <div class="section-title"><span class="dot"></span>
           <h2 data-i18n="calls.h2">الاتصالات الهاتفية</h2>
         </div>
-        <form class="card">
+        <form class="card" onsubmit="event.preventDefault(); submitCall();">
           <div class="row">
             <div><label data-i18n="form.caller_name">اسم المتصل</label><input data-placeholder="form.caller_name_ph"
-                placeholder="الاسم" type="text" /></div>
+                placeholder="الاسم" type="text" required /></div>
             <div><label data-i18n="form.caller_phone">رقم المتصل</label><input data-placeholder="form.caller_phone_ph"
-                placeholder="05xxxxxxxx" type="tel" /></div>
+                placeholder="05xxxxxxxx" type="tel" required /></div>
             <div><label data-i18n="form.role">الصفة</label>
               <select>
                 <option data-i18n="role.parent">ولي أمر</option>
@@ -706,7 +749,7 @@
               </select>
             </div>
             <div><label data-i18n="form.sport">اللعبة</label><input data-placeholder="form.sport_ph"
-                placeholder="مثال: كرة سلة" type="text" /></div>
+                placeholder="مثال: كرة سلة" type="text" required /></div>
           </div>
           <label data-i18n="calls.type">نوع الشكوى</label>
           <div class="choices">
@@ -730,9 +773,9 @@
           </div>
           <label data-i18n="calls.notes">ملاحظات المكالمة</label>
           <textarea id="call-notes" data-placeholder="calls.notes_ph" placeholder="أضف ملخص المكالمة"
-            rows="4"></textarea>
+            rows="4" required></textarea>
           <br />
-          <button class="cta" data-i18n="btn.save_call" onclick="submitCall()" type="button">حفظ السجل</button>
+          <button class="cta" data-i18n="btn.save_call" type="submit">حفظ السجل</button>
         </form>
       </section>
       <section id="maintenance">
@@ -740,7 +783,7 @@
           <h2 data-i18n="maint.h2">الصيانة</h2>
         </div>
         <div class="grid">
-          <form class="card">
+          <form class="card" onsubmit="event.preventDefault(); submitBuildingMaintenance();">
             <h3 data-i18n="maint.building">صيانة المبنى</h3>
             <div class="choices">
               <label><input type="checkbox" /> <span data-i18n="maint.ac">مكيفات</span></label>
@@ -751,15 +794,14 @@
             </div>
             <label data-i18n="maint.details">تفاصيل الطلب</label>
             <textarea id="maint-building-notes" data-placeholder="maint.details_ph" placeholder="صف موقع العطل ونوعه"
-              rows="4"></textarea>
-            <a class="cta" data-i18n="btn.send_building" href="#maintenance" onclick="submitBuildingMaintenance()">إرسال
-              الطلب</a>
+              rows="4" required></textarea>
+            <button class="cta" data-i18n="btn.send_building" type="submit">إرسال الطلب</button>
           </form>
-          <form class="card">
+          <form class="card" onsubmit="event.preventDefault(); submitBusMaintenance();">
             <h3 data-i18n="maint.bus">صيانة الحافلات</h3>
             <div class="row">
               <div><label data-i18n="maint.busno">رقم الحافلة</label><input data-placeholder="maint.busno_ph"
-                  placeholder="123" type="text" /></div>
+                  placeholder="123" type="text" required /></div>
               <div>
                 <label data-i18n="maint.type">نوع الصيانة</label>
                 <select>
@@ -770,8 +812,8 @@
             </div>
             <label data-i18n="maint.more">تفاصيل</label>
             <textarea id="maint-bus-notes" data-placeholder="maint.more_ph" placeholder="صف المشكلة والملاحظات"
-              rows="4"></textarea>
-            <a class="cta" data-i18n="btn.send_bus" href="#maintenance" onclick="submitBusMaintenance()">إرسال الطلب</a>
+              rows="4" required></textarea>
+            <button class="cta" data-i18n="btn.send_bus" type="submit">إرسال الطلب</button>
           </form>
         </div>
       </section>
@@ -956,7 +998,7 @@
         'note.submit': 'بالنقر على إرسال سيتم تحويل الطلب إلى فريق العمليات.',
         'btn.send_inquiry': 'إرسال الاستفسار', 'btn.send_complaint': 'إرسال الشكوى', 'btn.confirm_meeting': 'تأكيد الطلب', 'btn.save_call': 'حفظ السجل', 'btn.send_building': 'إرسال الطلب', 'btn.send_bus': 'إرسال الطلب', 'btn.send_rating': 'إرسال التقييم',
         'complaints.h2': 'الشكاوى', 'complaints.type': 'نوع الشكوى', 'complaints.opt.bus': 'شكوى على الحافلات', 'complaints.opt.coach': 'شكوى على مدرب', 'complaints.opt.admin': 'شكوى على إداري', 'complaints.opt.player': 'شكوى على لاعب زميل', 'complaints.opt.driver': 'شكوى على سائق', 'complaints.opt.other': 'أخرى', 'complaints.bus_details': 'تفاصيل خاصة بالحافلات', 'complaints.area': 'المنطقة السكنية', 'complaints.area_ph': 'اكتب المنطقة', 'complaints.busno': 'رقم الحافلة', 'complaints.busno_ph': '123', 'complaints.player_details': 'تفاصيل خاصة باللاعبين', 'complaints.details': 'تفاصيل الشكوى', 'complaints.details_ph': 'اكتب تفاصيل الشكوى', 'complaints.resolved': 'تم الحل من قبل الإداري', 'complaints.escalate': 'إحالة الشكوى إلى رئيس القسم',
-        'meeting.h3': 'طلب لقاء بالإدارة', 'meeting.hint': 'اختر الجهة التي تود مقابلتها وحدد سبب الطلب.', 'meeting.person': 'المسؤول المطلوب', 'meeting.reason': 'سبب اللقاء', 'meeting.reason_ph': 'اشرح باختصار سبب طلب اللقاء', 'meeting.o1': 'مدير النادي - مكتب المدير', 'meeting.o2': 'رئيس قسم العمليات', 'meeting.o3': 'رئيس القسم الفني', 'meeting.o4': 'رئيس قسم المالية', 'meeting.o5': 'رئيس قسم الخدمات المساندة',
+        'meeting.h3': 'طلب لقاء بالإدارة', 'meeting.hint': 'اختر الجهة التي تود مقابلتها وحدد سبب الطلب.', 'meeting.person': 'المسؤول المطلوب', 'meeting.reason': 'سبب اللقاء', 'meeting.reason_ph': 'اشرح باختصار سبب طلب اللقاء', 'meeting.o1': 'مدير النادي - مكتب المدير', 'meeting.o2': 'رئيس قسم العمليات', 'meeting.o3': 'رئيس القسم الفني', 'meeting.o4': 'رئيس قسم المالية', 'meeting.o5': 'رئيس قسم الخدمات المساندة', 'meeting.o6': 'إداري - حدد الاسم', 'meeting.admin_name': 'اسم الإداري', 'meeting.admin_name_ph': 'اكتب اسم الإداري',
         'form.complainant': 'اسم الشاكي', 'form.against': 'اسم المُشتكى عليه',
         'calls.h2': 'الاتصالات الهاتفية', 'calls.type': 'نوع الشكوى', 'calls.how': 'آلية التعامل', 'calls.notes': 'ملاحظات المكالمة', 'calls.notes_ph': 'أضف ملخص المكالمة',
         'role.parent': 'ولي أمر', 'role.player': 'لاعب', 'role.other': 'أخرى',
@@ -1003,7 +1045,7 @@
         'note.submit': 'By submitting, your request will be forwarded to the Operations team.',
         'btn.send_inquiry': 'Send Inquiry', 'btn.send_complaint': 'Send Complaint', 'btn.confirm_meeting': 'Confirm Request', 'btn.save_call': 'Save Log', 'btn.send_building': 'Submit', 'btn.send_bus': 'Submit', 'btn.send_rating': 'Send Rating',
         'complaints.h2': 'Complaints', 'complaints.type': 'Complaint type', 'complaints.opt.bus': 'Bus related', 'complaints.opt.coach': 'About a coach', 'complaints.opt.admin': 'About an admin', 'complaints.opt.player': 'About a teammate', 'complaints.opt.driver': 'About a driver', 'complaints.opt.other': 'Other', 'complaints.bus_details': 'Bus-specific details', 'complaints.area': 'Residential area', 'complaints.area_ph': 'Write the area', 'complaints.busno': 'Bus number', 'complaints.busno_ph': '123', 'complaints.player_details': 'Player-related details', 'complaints.details': 'Complaint details', 'complaints.details_ph': 'Write the complaint details', 'complaints.resolved': 'Resolved by admin', 'complaints.escalate': 'Escalate to head of department',
-        'meeting.h3': 'Request a Meeting', 'meeting.hint': 'Choose whom you want to meet and specify the reason.', 'meeting.person': 'Person to meet', 'meeting.reason': 'Reason for meeting', 'meeting.reason_ph': 'Briefly explain the reason', 'meeting.o1': 'Club Manager - Manager\'s Office', 'meeting.o2': 'Head of Operations Dept.', 'meeting.o3': 'Head of Technical Dept.', 'meeting.o4': 'Head of Finance Dept.', 'meeting.o5': 'Head of Support Services Dept.',
+        'meeting.h3': 'Request a Meeting', 'meeting.hint': 'Choose whom you want to meet and specify the reason.', 'meeting.person': 'Person to meet', 'meeting.reason': 'Reason for meeting', 'meeting.reason_ph': 'Briefly explain the reason', 'meeting.o1': 'Club Manager - Manager\'s Office', 'meeting.o2': 'Head of Operations Dept.', 'meeting.o3': 'Head of Technical Dept.', 'meeting.o4': 'Head of Finance Dept.', 'meeting.o5': 'Head of Support Services Dept.', 'meeting.o6': 'Administrator - Specify name', 'meeting.admin_name': 'Administrator Name', 'meeting.admin_name_ph': 'Enter Administrator\'s name',
         'form.complainant': 'Complainant name', 'form.against': 'Against',
         'calls.h2': 'Phone Calls', 'calls.type': 'Complaint type', 'calls.how': 'Resolution path', 'calls.notes': 'Call notes', 'calls.notes_ph': 'Add a summary of the call',
         'role.parent': 'Parent', 'role.player': 'Player', 'role.other': 'Other',
@@ -1170,7 +1212,13 @@
     function submitMeeting() {
       const db = loadDb();
       const personSelect = document.getElementById('meeting-person');
-      const person = personSelect ? personSelect.options[personSelect.selectedIndex].text : '';
+      let person = personSelect ? personSelect.options[personSelect.selectedIndex].text : '';
+      if (personSelect && personSelect.value === 'o6') {
+        const adminName = document.getElementById('meeting-admin-name');
+        if (adminName && adminName.value.trim()) {
+           person += ' - ' + adminName.value.trim();
+        }
+      }
       const reason = document.getElementById('meeting-reason')?.value.trim() || '';
       const entry = {
         id: uid(),
@@ -1438,6 +1486,13 @@
       document.getElementById('call-notes') && (document.getElementById('call-notes').value = '');
       selectedServiceId = '#inquiries';
       selectService('#inquiries', document.querySelector('.service-card[data-target="#inquiries"]'));
+    }
+
+    function toggleAdminName(val) {
+      const el = document.getElementById('admin-name-container');
+      if (el) {
+        el.style.display = val === 'o6' ? 'block' : 'none';
+      }
     }
 
     // Init
