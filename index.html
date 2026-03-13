@@ -675,15 +675,15 @@
             <p class="hint" data-i18n="meeting.hint">اختر الجهة التي تود مقابلتها وحدد سبب الطلب.</p>
             <label data-i18n="meeting.person">المسؤول المطلوب</label>
             <select id="meeting-person">
-              <option data-i18n="meeting.o1">مدير النادي</option>
-              <option data-i18n="meeting.o2">نائب مدير النادي</option>
-              <option data-i18n="meeting.o3">رئيس قسم العمليات</option>
-              <option data-i18n="meeting.o4">رئيس قسم الاعداد الفني</option>
-              <option data-i18n="meeting.o5">رئيس قسم المالية</option>
-              <option data-i18n="meeting.o6">رئيس قسم الموارد البشرية</option>
-              <option data-i18n="meeting.o7">إداري</option>
-              <option data-i18n="meeting.o8">معالج</option>
+              <option data-i18n="meeting.o1">مدير النادي - مكتب المدير</option>
+              <option data-i18n="meeting.o2">رئيس قسم العمليات</option>
+              <option data-i18n="meeting.o3">رئيس القسم الفني</option>
+              <option data-i18n="meeting.o4">رئيس قسم المالية</option>
+              <option data-i18n="meeting.o5">رئيس قسم الخدمات المساندة</option>
             </select>
+            <label data-i18n="meeting.reason">سبب اللقاء</label>
+            <textarea id="meeting-reason" data-placeholder="meeting.reason_ph" placeholder="اشرح باختصار سبب طلب اللقاء" rows="4"></textarea>
+            <br />
             <a class="cta" data-i18n="btn.confirm_meeting" href="#meeting" onclick="submitMeeting()">تأكيد الطلب</a>
           </div>
         </div>
@@ -956,7 +956,7 @@
         'note.submit': 'بالنقر على إرسال سيتم تحويل الطلب إلى فريق العمليات.',
         'btn.send_inquiry': 'إرسال الاستفسار', 'btn.send_complaint': 'إرسال الشكوى', 'btn.confirm_meeting': 'تأكيد الطلب', 'btn.save_call': 'حفظ السجل', 'btn.send_building': 'إرسال الطلب', 'btn.send_bus': 'إرسال الطلب', 'btn.send_rating': 'إرسال التقييم',
         'complaints.h2': 'الشكاوى', 'complaints.type': 'نوع الشكوى', 'complaints.opt.bus': 'شكوى على الحافلات', 'complaints.opt.coach': 'شكوى على مدرب', 'complaints.opt.admin': 'شكوى على إداري', 'complaints.opt.player': 'شكوى على لاعب زميل', 'complaints.opt.driver': 'شكوى على سائق', 'complaints.opt.other': 'أخرى', 'complaints.bus_details': 'تفاصيل خاصة بالحافلات', 'complaints.area': 'المنطقة السكنية', 'complaints.area_ph': 'اكتب المنطقة', 'complaints.busno': 'رقم الحافلة', 'complaints.busno_ph': '123', 'complaints.player_details': 'تفاصيل خاصة باللاعبين', 'complaints.details': 'تفاصيل الشكوى', 'complaints.details_ph': 'اكتب تفاصيل الشكوى', 'complaints.resolved': 'تم الحل من قبل الإداري', 'complaints.escalate': 'إحالة الشكوى إلى رئيس القسم',
-        'meeting.h3': 'طلب لقاء بالإدارة', 'meeting.hint': 'اختر الجهة التي تود مقابلتها وحدد سبب الطلب.', 'meeting.person': 'المسؤول المطلوب', 'meeting.reason': 'سبب اللقاء', 'meeting.reason_ph': 'اشرح باختصار سبب طلب اللقاء', 'meeting.o1': 'مدير النادي', 'meeting.o2': 'نائب مدير النادي', 'meeting.o3': 'رئيس قسم العمليات', 'meeting.o4': 'رئيس قسم الاعداد الفني', 'meeting.o5': 'رئيس قسم المالية', 'meeting.o6': 'رئيس قسم الموارد البشرية', 'meeting.o7': 'إداري', 'meeting.o8': 'معالج',
+        'meeting.h3': 'طلب لقاء بالإدارة', 'meeting.hint': 'اختر الجهة التي تود مقابلتها وحدد سبب الطلب.', 'meeting.person': 'المسؤول المطلوب', 'meeting.reason': 'سبب اللقاء', 'meeting.reason_ph': 'اشرح باختصار سبب طلب اللقاء', 'meeting.o1': 'مدير النادي - مكتب المدير', 'meeting.o2': 'رئيس قسم العمليات', 'meeting.o3': 'رئيس القسم الفني', 'meeting.o4': 'رئيس قسم المالية', 'meeting.o5': 'رئيس قسم الخدمات المساندة',
         'form.complainant': 'اسم الشاكي', 'form.against': 'اسم المُشتكى عليه',
         'calls.h2': 'الاتصالات الهاتفية', 'calls.type': 'نوع الشكوى', 'calls.how': 'آلية التعامل', 'calls.notes': 'ملاحظات المكالمة', 'calls.notes_ph': 'أضف ملخص المكالمة',
         'role.parent': 'ولي أمر', 'role.player': 'لاعب', 'role.other': 'أخرى',
@@ -1003,7 +1003,7 @@
         'note.submit': 'By submitting, your request will be forwarded to the Operations team.',
         'btn.send_inquiry': 'Send Inquiry', 'btn.send_complaint': 'Send Complaint', 'btn.confirm_meeting': 'Confirm Request', 'btn.save_call': 'Save Log', 'btn.send_building': 'Submit', 'btn.send_bus': 'Submit', 'btn.send_rating': 'Send Rating',
         'complaints.h2': 'Complaints', 'complaints.type': 'Complaint type', 'complaints.opt.bus': 'Bus related', 'complaints.opt.coach': 'About a coach', 'complaints.opt.admin': 'About an admin', 'complaints.opt.player': 'About a teammate', 'complaints.opt.driver': 'About a driver', 'complaints.opt.other': 'Other', 'complaints.bus_details': 'Bus-specific details', 'complaints.area': 'Residential area', 'complaints.area_ph': 'Write the area', 'complaints.busno': 'Bus number', 'complaints.busno_ph': '123', 'complaints.player_details': 'Player-related details', 'complaints.details': 'Complaint details', 'complaints.details_ph': 'Write the complaint details', 'complaints.resolved': 'Resolved by admin', 'complaints.escalate': 'Escalate to head of department',
-        'meeting.h3': 'Request a Meeting', 'meeting.hint': 'Choose whom you want to meet and specify the reason.', 'meeting.person': 'Person to meet', 'meeting.reason': 'Reason for meeting', 'meeting.reason_ph': 'Briefly explain the reason', 'meeting.o1': 'Club Director', 'meeting.o2': 'Deputy Director', 'meeting.o3': 'Head of Operations', 'meeting.o4': 'Head Coach', 'meeting.o5': 'Head of Finance', 'meeting.o6': 'Head of HR', 'meeting.o7': 'Administrator', 'meeting.o8': 'Physio',
+        'meeting.h3': 'Request a Meeting', 'meeting.hint': 'Choose whom you want to meet and specify the reason.', 'meeting.person': 'Person to meet', 'meeting.reason': 'Reason for meeting', 'meeting.reason_ph': 'Briefly explain the reason', 'meeting.o1': 'Club Manager - Manager\'s Office', 'meeting.o2': 'Head of Operations Dept.', 'meeting.o3': 'Head of Technical Dept.', 'meeting.o4': 'Head of Finance Dept.', 'meeting.o5': 'Head of Support Services Dept.',
         'form.complainant': 'Complainant name', 'form.against': 'Against',
         'calls.h2': 'Phone Calls', 'calls.type': 'Complaint type', 'calls.how': 'Resolution path', 'calls.notes': 'Call notes', 'calls.notes_ph': 'Add a summary of the call',
         'role.parent': 'Parent', 'role.player': 'Player', 'role.other': 'Other',
@@ -1169,12 +1169,15 @@
 
     function submitMeeting() {
       const db = loadDb();
-      const person = document.getElementById('meeting-person')?.value || '';
+      const personSelect = document.getElementById('meeting-person');
+      const person = personSelect ? personSelect.options[personSelect.selectedIndex].text : '';
+      const reason = document.getElementById('meeting-reason')?.value.trim() || '';
       const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         kind: 'meeting',
         person,
+        reason,
         ...getPersonal(),
       };
       db.complaints.unshift(entry); // Note: Original code pushed meeting to complaints
