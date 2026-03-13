@@ -245,10 +245,129 @@
       border-top:1px solid var(--border);
       background:var(--footer-bg);
       transition:background-color .3s ease, color .3s ease, border-color .3s ease;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+    }
+
+    .btn-export{
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      font-size:11px;
+      cursor:pointer;
+      opacity:.7;
+    }
+    .btn-export:hover{
+      opacity:1;
+      text-decoration:underline;
+    }
+
+    /* Landing screen */
+    .screen-landing{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px 16px;
+    }
+    .landing-card{
+      max-width:780px;
+      width:100%;
+      background:var(--card-bg);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px 20px 28px;
+    }
+    .landing-title{
+      margin:0 0 8px;
+      font-size:24px;
+    }
+    .landing-subtitle{
+      margin:0 0 16px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .landing-lang{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:20px;
+    }
+    .landing-lang button{
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--overlay);
+      color:var(--fg);
+      cursor:pointer;
+      font-weight:700;
+      font-size:13px;
+    }
+    .landing-lang button.active{
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));
+      border-color:transparent;
+      color:#111827;
+    }
+    .service-grid{
+      display:grid;
+      gap:10px;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      margin-bottom:18px;
+    }
+    .service-card{
+      border-radius:14px;
+      border:1px solid var(--border);
+      padding:10px 12px;
+      background:rgba(0,0,0,.04);
+      cursor:pointer;
+      font-size:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--fg);
+    }
+    .service-card.active{
+      border-color:var(--brand-2);
+      box-shadow:0 0 0 2px rgba(210,31,43,.3);
+      background:var(--overlay-strong);
+    }
+    .landing-actions{
+      display:flex;
+      justify-content:flex-end;
+      margin-top:10px;
     }
   </style>
 </head>
 <body>
+<div id="screen-landing" class="screen-landing">
+  <div class="landing-card">
+    <h2 class="landing-title">قسم العمليات</h2>
+    <p class="landing-subtitle">اختر اللغة والخدمة المطلوبة للمتابعة.</p>
+    <div class="landing-lang">
+      <button id="btn-lang-ar" class="active" type="button" onclick="selectLang('ar')">العربية</button>
+      <button id="btn-lang-en" type="button" onclick="selectLang('en')">English</button>
+    </div>
+    <p class="landing-subtitle">ما نوع الخدمة المطلوبة؟</p>
+    <div class="service-grid">
+      <button class="service-card active" type="button" data-target="#inquiries" onclick="selectService('#inquiries', this)">استفسار</button>
+      <button class="service-card" type="button" data-target="#complaints" onclick="selectService('#complaints', this)">شكوى</button>
+      <button class="service-card" type="button" data-target="#meeting" onclick="selectService('#meeting', this)">طلب لقاء</button>
+      <button class="service-card" type="button" data-target="#calls" onclick="selectService('#calls', this)">اتصال هاتفي</button>
+      <button class="service-card" type="button" data-target="#maintenance" onclick="selectService('#maintenance', this)">صيانة</button>
+      <button class="service-card" type="button" data-target="#rating" onclick="selectService('#rating', this)">تقييم</button>
+    </div>
+    <div class="landing-actions">
+      <button class="cta" type="button" onclick="startFlow()">ابدأ</button>
+    </div>
+  </div>
+</div>
+
+<div id="screen-main" style="display:none">
 <nav>
 <div class="nav-wrap">
 <a aria-label="Home" class="brand" href="#top">
@@ -474,8 +593,12 @@
 </section>
 </main>
 <div class="footer">
+  <div>
     © <span id="y"></span> <span data-i18n="brand">قسم العمليات</span> — <span data-i18n="rights">جميع الحقوق محفوظة</span>
+  </div>
+  <button type="button" class="btn-export" onclick="exportData()">تصدير البيانات (للاستخدام الإداري)</button>
 </div>
+</div> <!-- end screen-main -->
 <script>
     function toggleMenu(){
       document.getElementById('links').classList.toggle('open');
@@ -814,6 +937,48 @@
       a.download = 'fmac-operations-data.json';
       a.click();
       URL.revokeObjectURL(url);
+    }
+
+    // Landing flow
+    let selectedServiceId = '#inquiries';
+
+    function selectLang(lang){
+      msgLang = lang;
+      applyLang(msgLang);
+      const btnAr = document.getElementById('btn-lang-ar');
+      const btnEn = document.getElementById('btn-lang-en');
+      if (btnAr && btnEn) {
+        btnAr.classList.toggle('active', lang === 'ar');
+        btnEn.classList.toggle('active', lang === 'en');
+      }
+    }
+
+    function selectService(id, el){
+      selectedServiceId = id;
+      document.querySelectorAll('.service-card').forEach(card => {
+        card.classList.toggle('active', card === el);
+      });
+    }
+
+    function startFlow(){
+      const landing = document.getElementById('screen-landing');
+      const main = document.getElementById('screen-main');
+      if (landing && main) {
+        landing.style.display = 'none';
+        main.style.display = 'block';
+      }
+      const personal = document.getElementById('personal-data');
+      if (personal) {
+        personal.scrollIntoView({ behavior: 'smooth' });
+      }
+      setTimeout(() => {
+        if (selectedServiceId) {
+          const target = document.querySelector(selectedServiceId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }, 1200);
     }
 
     // Init
