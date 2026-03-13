@@ -346,23 +346,23 @@
 <body>
 <div id="screen-landing" class="screen-landing">
   <div class="landing-card">
-    <h2 class="landing-title">قسم العمليات</h2>
-    <p class="landing-subtitle">اختر اللغة والخدمة المطلوبة للمتابعة.</p>
+    <h2 class="landing-title" data-i18n="landing.title">قسم العمليات</h2>
+    <p class="landing-subtitle" data-i18n="landing.subtitle">اختر اللغة والخدمة المطلوبة للمتابعة.</p>
     <div class="landing-lang">
-      <button id="btn-lang-ar" class="active" type="button" onclick="selectLang('ar')">العربية</button>
-      <button id="btn-lang-en" type="button" onclick="selectLang('en')">English</button>
+      <button id="btn-lang-ar" class="active" type="button" onclick="selectLang('ar')" data-i18n="landing.lang_ar">العربية</button>
+      <button id="btn-lang-en" type="button" onclick="selectLang('en')" data-i18n="landing.lang_en">English</button>
     </div>
-    <p class="landing-subtitle">ما نوع الخدمة المطلوبة؟</p>
+    <p class="landing-subtitle" data-i18n="landing.question">ما نوع الخدمة المطلوبة؟</p>
     <div class="service-grid">
-      <button class="service-card active" type="button" data-target="#inquiries" onclick="selectService('#inquiries', this)">استفسار</button>
-      <button class="service-card" type="button" data-target="#complaints" onclick="selectService('#complaints', this)">شكوى</button>
-      <button class="service-card" type="button" data-target="#meeting" onclick="selectService('#meeting', this)">طلب لقاء</button>
-      <button class="service-card" type="button" data-target="#calls" onclick="selectService('#calls', this)">اتصال هاتفي</button>
-      <button class="service-card" type="button" data-target="#maintenance" onclick="selectService('#maintenance', this)">صيانة</button>
-      <button class="service-card" type="button" data-target="#rating" onclick="selectService('#rating', this)">تقييم</button>
+      <button class="service-card active" type="button" data-target="#inquiries" onclick="selectService('#inquiries', this)" data-i18n="srv.inquiry">استفسار</button>
+      <button class="service-card" type="button" data-target="#complaints" onclick="selectService('#complaints', this)" data-i18n="srv.complaint">شكوى</button>
+      <button class="service-card" type="button" data-target="#meeting" onclick="selectService('#meeting', this)" data-i18n="srv.meeting">طلب لقاء</button>
+      <button class="service-card" type="button" data-target="#calls" onclick="selectService('#calls', this)" data-i18n="srv.call">اتصال هاتفي</button>
+      <button class="service-card" type="button" data-target="#maintenance" onclick="selectService('#maintenance', this)" data-i18n="srv.maintenance">صيانة</button>
+      <button class="service-card" type="button" data-target="#rating" onclick="selectService('#rating', this)" data-i18n="srv.rating">تقييم</button>
     </div>
     <div class="landing-actions">
-      <button class="cta" type="button" onclick="startFlow()">ابدأ</button>
+      <button class="cta" type="button" onclick="startFlow()" data-i18n="cta.start">ابدأ الآن</button>
     </div>
   </div>
 </div>
@@ -417,7 +417,11 @@
 <label data-i18n="form.sport">اللعبة</label>
 <input data-placeholder="form.sport_ph" id="inq-sport" placeholder="مثال: كرة قدم" type="text"/>
 </div>
-</div></form></section><section id="inquiries">
+</div></form>
+<div style="margin-top:16px; text-align:left;">
+  <button class="cta" type="button" onclick="goToServiceStep()" data-i18n="btn.next_service">التالي</button>
+</div>
+</section><section id="inquiries">
 <div class="section-title"><span class="dot"></span><h2 data-i18n="inquiries.h2">الاستفسارات</h2></div>
 <p class="hint" data-i18n="inquiries.hint">اختر نوع الاستفسار ثم أكمل بيانات التواصل ليتم الرد عليك سريعًا.</p>
 <form class="card" id="form-inquiries">
@@ -599,6 +603,16 @@
   <button type="button" class="btn-export" onclick="exportData()">تصدير البيانات (للاستخدام الإداري)</button>
 </div>
 </div> <!-- end screen-main -->
+
+<div id="screen-thanks" class="screen-landing" style="display:none">
+  <div class="landing-card" style="text-align:center;">
+    <h2 class="landing-title" data-i18n="thanks.title">شكرًا لك</h2>
+    <p class="landing-subtitle" data-i18n="thanks.subtitle">تم استلام طلبك، وسيقوم فريق العمليات بالمتابعة.</p>
+    <div class="landing-actions" style="justify-content:center; margin-top:20px;">
+      <button class="cta" type="button" onclick="startNew()" data-i18n="thanks.new">إرسال طلب جديد</button>
+    </div>
+  </div>
+</div>
 <script>
     function toggleMenu(){
       document.getElementById('links').classList.toggle('open');
@@ -644,6 +658,17 @@
         'title':'سياسات وإجراءات قسم العمليات',
         'brand':'قسم العمليات',
         'badge':'قسم العمليات يرحب بكم 👋',
+        'landing.title':'قسم العمليات',
+        'landing.subtitle':'اختر اللغة والخدمة المطلوبة للمتابعة.',
+        'landing.lang_ar':'العربية',
+        'landing.lang_en':'English',
+        'landing.question':'ما نوع الخدمة المطلوبة؟',
+        'srv.inquiry':'استفسار',
+        'srv.complaint':'شكوى',
+        'srv.meeting':'طلب لقاء',
+        'srv.call':'اتصال هاتفي',
+        'srv.maintenance':'صيانة',
+        'srv.rating':'تقييم',
         'h1':'سياسات وإجراءات قسم العمليات',
         'lead':'منصة موحدة لتجميع الاستفسارات والشكاوى والطلبات مع تصميم حديث وتجربة استخدام سهلة وسريعة.',
         'cta.start':'ابدأ الآن',
@@ -666,7 +691,11 @@
                 'form.email':'البريد الإلكتروني','form.email_ph':'example@email.com',
                 'nav.personal':'البيانات الشخصية',
         'rights':'جميع الحقوق محفوظة',
-        'toast.inq':'تم تسجيل الاستفسار ✅','toast.comp':'تم إرسال الشكوى 📬','toast.meet':'تم تسجيل طلب اللقاء 🗓️','toast.call':'تم حفظ سجل المكالمة ☎️','toast.maint_b':'تم إرسال طلب صيانة المبنى 🧰','toast.maint_bus':'تم إرسال طلب صيانة الحافلة 🚌','toast.rate':'شكرًا لمشاركتك رأيك 🌟'
+        'thanks.title':'شكرًا لك',
+        'thanks.subtitle':'تم استلام طلبك، وسيقوم فريق العمليات بالمتابعة.',
+        'thanks.new':'إرسال طلب جديد',
+        'toast.inq':'تم تسجيل الاستفسار ✅','toast.comp':'تم إرسال الشكوى 📬','toast.meet':'تم تسجيل طلب اللقاء 🗓️','toast.call':'تم حفظ سجل المكالمة ☎️','toast.maint_b':'تم إرسال طلب صيانة المبنى 🧰','toast.maint_bus':'تم إرسال طلب صيانة الحافلة 🚌','toast.rate':'شكرًا لمشاركتك رأيك 🌟',
+        'btn.next_service':'التالي'
       },
       en: {
         'lang.btn':'العربية',
@@ -675,6 +704,17 @@
         'title':'Operations Department Policies & Procedures',
         'brand':'Operations Dept.',
         'badge':'Welcome to Operations 👋',
+        'landing.title':'Operations Department',
+        'landing.subtitle':'Choose your language and the service you need to continue.',
+        'landing.lang_ar':'Arabic',
+        'landing.lang_en':'English',
+        'landing.question':'What type of service do you need?',
+        'srv.inquiry':'Inquiry',
+        'srv.complaint':'Complaint',
+        'srv.meeting':'Meeting request',
+        'srv.call':'Phone call',
+        'srv.maintenance':'Maintenance',
+        'srv.rating':'Rating',
         'h1':'Operations Department Policies & Procedures',
         'lead':'A unified portal for inquiries, complaints, and requests—modern design with a smooth, fast UX.',
         'cta.start':'Get Started',
@@ -697,7 +737,11 @@
                 'form.email':'Email','form.email_ph':'example@email.com',
                 'nav.personal':'Personal Info',
         'rights':'All rights reserved',
-        'toast.inq':'Inquiry recorded ✅','toast.comp':'Complaint sent 📬','toast.meet':'Meeting request saved 🗓️','toast.call':'Call log saved ☎️','toast.maint_b':'Building maintenance request sent 🧰','toast.maint_bus':'Bus maintenance request sent 🚌','toast.rate':'Thanks for your feedback 🌟'
+        'thanks.title':'Thank you',
+        'thanks.subtitle':'Your request has been received. The Operations team will follow up.',
+        'thanks.new':'Submit another request',
+        'toast.inq':'Inquiry recorded ✅','toast.comp':'Complaint sent 📬','toast.meet':'Meeting request saved 🗓️','toast.call':'Call log saved ☎️','toast.maint_b':'Building maintenance request sent 🧰','toast.maint_bus':'Bus maintenance request sent 🚌','toast.rate':'Thanks for your feedback 🌟',
+        'btn.next_service':'Next'
       }
     };
 
@@ -811,6 +855,7 @@
       });
       saveDb(db);
       toast(i18n[msgLang]['toast.inq']);
+      showThanks();
     }
 
     function submitComplaint() {
@@ -831,6 +876,7 @@
       });
       saveDb(db);
       toast(i18n[msgLang]['toast.comp']);
+      showThanks();
     }
 
     function submitMeeting() {
@@ -845,6 +891,7 @@
       });
       saveDb(db);
       toast(i18n[msgLang]['toast.meet']);
+      showThanks();
     }
 
     function submitCall() {
@@ -875,6 +922,7 @@
       });
       saveDb(db);
       toast(i18n[msgLang]['toast.call']);
+      showThanks();
     }
 
     function submitBuildingMaintenance() {
@@ -889,6 +937,7 @@
       });
       saveDb(db);
       toast(i18n[msgLang]['toast.maint_b']);
+      showThanks();
     }
 
     function submitBusMaintenance() {
@@ -907,6 +956,7 @@
       });
       saveDb(db);
       toast(i18n[msgLang]['toast.maint_bus']);
+      showThanks();
     }
 
     function submitRating() {
@@ -926,6 +976,7 @@
       });
       saveDb(db);
       toast(i18n[msgLang]['toast.rate']);
+      showThanks();
     }
 
     function exportData() {
@@ -967,18 +1018,71 @@
         landing.style.display = 'none';
         main.style.display = 'block';
       }
+      showPersonalStep();
+    }
+
+    function showPersonalStep(){
       const personal = document.getElementById('personal-data');
+      const serviceIds = ['inquiries','complaints','calls','maintenance','staff','rating'];
+      if (personal) personal.style.display = 'block';
+      serviceIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
       if (personal) {
         personal.scrollIntoView({ behavior: 'smooth' });
       }
-      setTimeout(() => {
-        if (selectedServiceId) {
-          const target = document.querySelector(selectedServiceId);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-          }
+    }
+
+    function goToServiceStep(){
+      const personal = document.getElementById('personal-data');
+      if (personal) personal.style.display = 'none';
+      const serviceIds = ['inquiries','complaints','calls','maintenance','staff','rating'];
+      serviceIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if ('#'+id === selectedServiceId || (selectedServiceId === '#meeting' && id === 'complaints')) {
+          el.style.display = 'block';
+        } else {
+          el.style.display = 'none';
         }
-      }, 1200);
+      });
+      let target = document.querySelector(selectedServiceId);
+      if (!target && selectedServiceId.startsWith('#')) {
+        target = document.getElementById(selectedServiceId.slice(1));
+      }
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function showThanks(){
+      const landing = document.getElementById('screen-landing');
+      const main = document.getElementById('screen-main');
+      const thanks = document.getElementById('screen-thanks');
+      if (landing) landing.style.display = 'none';
+      if (main) main.style.display = 'none';
+      if (thanks) thanks.style.display = 'flex';
+    }
+
+    function startNew(){
+      const landing = document.getElementById('screen-landing');
+      const main = document.getElementById('screen-main');
+      const thanks = document.getElementById('screen-thanks');
+      if (thanks) thanks.style.display = 'none';
+      if (main) main.style.display = 'none';
+      if (landing) landing.style.display = 'flex';
+      // reset basic fields
+      document.getElementById('form-personal')?.reset();
+      document.getElementById('form-inquiries')?.reset();
+      const callsForm = document.querySelector('section#calls form');
+      if (callsForm) callsForm.reset();
+      const maintForms = document.querySelectorAll('section#maintenance form');
+      maintForms.forEach(f => f.reset());
+      document.getElementById('rating-notes') && (document.getElementById('rating-notes').value = '');
+      document.getElementById('call-notes') && (document.getElementById('call-notes').value = '');
+      selectedServiceId = '#inquiries';
+      selectService('#inquiries', document.querySelector('.service-card[data-target="#inquiries"]'));
     }
 
     // Init
