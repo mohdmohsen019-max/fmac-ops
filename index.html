@@ -1018,10 +1018,12 @@
         landing.style.display = 'none';
         main.style.display = 'block';
       }
-      showPersonalStep();
+      showPersonalStep({ scrollToSection: false });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function showPersonalStep(){
+    function showPersonalStep(options = {}){
+      const { scrollToSection = true } = options;
       const personal = document.getElementById('personal-data');
       const serviceIds = ['inquiries','complaints','calls','maintenance','staff','rating'];
       if (personal) personal.style.display = 'block';
@@ -1029,7 +1031,7 @@
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });
-      if (personal) {
+      if (personal && scrollToSection) {
         personal.scrollIntoView({ behavior: 'smooth' });
       }
     }
