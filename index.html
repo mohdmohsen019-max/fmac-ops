@@ -663,7 +663,15 @@
             <a class="cta" data-i18n="btn.send_complaint" href="#complaints" onclick="submitComplaint()">إرسال
               الشكوى</a>
           </div>
-          <div class="card" id="meeting">
+          </div>
+        </div>
+      </section>
+      <section id="meeting">
+        <div class="section-title"><span class="dot"></span>
+          <h2 data-i18n="meeting.h3">طلب لقاء بالإدارة</h2>
+        </div>
+        <div class="grid">
+          <div class="card" id="form-meeting">
             <h3 data-i18n="meeting.h3">طلب لقاء بالإدارة</h3>
             <p class="hint" data-i18n="meeting.hint">اختر الجهة التي تود مقابلتها وحدد سبب الطلب.</p>
             <label data-i18n="meeting.person">المسؤول المطلوب</label>
@@ -1368,7 +1376,7 @@
 
     function showPersonalStep() {
       const personal = document.getElementById('personal-data');
-      const serviceIds = ['inquiries', 'complaints', 'calls', 'maintenance', 'staff', 'rating'];
+      const serviceIds = ['inquiries', 'complaints', 'meeting', 'calls', 'maintenance', 'staff', 'rating'];
       if (personal) personal.style.display = 'block';
       serviceIds.forEach(id => {
         const el = document.getElementById(id);
@@ -1382,11 +1390,11 @@
     function goToServiceStep() {
       const personal = document.getElementById('personal-data');
       if (personal) personal.style.display = 'none';
-      const serviceIds = ['inquiries', 'complaints', 'calls', 'maintenance', 'staff', 'rating'];
+      const serviceIds = ['inquiries', 'complaints', 'meeting', 'calls', 'maintenance', 'staff', 'rating'];
       serviceIds.forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
-        if ('#' + id === selectedServiceId || (selectedServiceId === '#meeting' && id === 'complaints')) {
+        if ('#' + id === selectedServiceId) {
           el.style.display = 'block';
         } else {
           el.style.display = 'none';
