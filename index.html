@@ -7,7 +7,9 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title data-i18n="title">سياسات وإجراءات قسم العمليات</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <style>
     :root {
       --bg: #090a0b;
@@ -567,6 +569,201 @@
       background: transparent;
       filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
     }
+    /* ========== ADMIN MODAL ========== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .modal-box h3 {
+      margin: 0 0 4px;
+      font-size: 20px;
+    }
+
+    .modal-box .modal-sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 20px;
+    }
+
+    .modal-box .modal-close {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-error {
+      color: var(--brand-2);
+      font-size: 13px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* ========== ADMIN DASHBOARD ========== */
+    #screen-admin {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 24px 16px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .admin-header h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .stat-card .stat-num {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .stat-card .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .stat-card.green .stat-num { color: #22c55e; }
+    .stat-card.red .stat-num   { color: var(--brand-2); }
+    .stat-card.yellow .stat-num { color: #f59e0b; }
+
+    .admin-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .admin-table th {
+      background: var(--overlay);
+      padding: 10px 14px;
+      text-align: right;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    html[dir="ltr"] .admin-table th,
+    html[dir="ltr"] .admin-table td {
+      text-align: left;
+    }
+
+    .admin-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .admin-table tr:hover td {
+      background: var(--overlay);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .badge-resolved  { background: rgba(34,197,94,.15);  color: #22c55e; }
+    .badge-escalated { background: rgba(230,57,70,.15);   color: var(--brand-2); }
+    .badge-pending   { background: rgba(161,161,170,.12); color: var(--muted); }
+
+    .icon-btn {
+      background: var(--overlay);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--fg);
+      transition: background .15s;
+    }
+
+    .icon-btn:hover {
+      background: var(--overlay-strong);
+    }
+
+    .icon-btn.active-resolve  { background: rgba(34,197,94,.2);  border-color: #22c55e; color: #22c55e; }
+    .icon-btn.active-escalate { background: rgba(230,57,70,.2);   border-color: var(--brand-2); color: var(--brand-2); }
+
+    .empty-admin {
+      text-align: center;
+      padding: 48px;
+      color: var(--muted);
+    }
   </style>
 </head>
 
@@ -583,11 +780,62 @@
         <a href="#" onclick="selectService('#meeting', this); return false;" data-i18n="nav.meeting">طلب لقاء</a>
       </div>
       <div class="nav-actions">
-        <button class="btn btn-toggle" onclick="toggleTheme()" type="button" data-i18n="theme.light">الوضع الفاتح</button>
+        <button class="btn btn-toggle" onclick="toggleTheme()" type="button" data-i18n="theme.light">الوضع
+          الفاتح</button>
+        <button class="btn" id="btn-admin" onclick="handleAdminButton()" type="button">🔒 دخول الإداري</button>
         <button class="hamburger" onclick="toggleMenu()" type="button">☰</button>
       </div>
     </div>
   </nav>
+
+  <!-- ========== ADMIN LOGIN MODAL ========== -->
+  <div class="modal-overlay" id="admin-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeAdminModal()" type="button">×</button>
+      <h3>🔐 دخول الإداري</h3>
+      <p class="modal-sub">Admin Sign In</p>
+      <label>اسم المستخدم ‪/ Username</label>
+      <input id="admin-user" type="text" autocomplete="username" placeholder="admin" />
+      <label style="margin-top:12px">كلمة المرور ‪/ Password</label>
+      <input id="admin-pass" type="password" autocomplete="current-password" placeholder="••••••••" />
+      <div class="modal-error" id="admin-error">بيانات غير صحيحة‎ / Incorrect credentials</div>
+      <button class="cta" style="width:100%;margin-top:16px;" onclick="attemptAdminLogin()" type="button">دخول / Sign In</button>
+    </div>
+  </div>
+
+  <!-- ========== ADMIN DASHBOARD ========== -->
+  <div id="screen-admin">
+    <div class="admin-header">
+      <div>
+        <h2>📊 سجل الشكاوى ‎&mdash; Complaints Log</h2>
+        <p style="color:var(--muted);font-size:13px;margin:4px 0 0">للمراجعة الإدارية فقط ‎/ Admin review only</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" onclick="renderAdminDashboard()" type="button">🔄 تحديث</button>
+        <button class="btn" onclick="exportData()" type="button">📄 تصدير CSV</button>
+        <button class="btn" onclick="adminLogout()" type="button" style="color:var(--brand-2)">خروج / Logout</button>
+        <button class="btn" onclick="closeAdminDashboard()" type="button">← رجوع</button>
+      </div>
+    </div>
+
+    <div class="stats-row" id="admin-stats"></div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>التاريخ</th>
+            <th>المقدم</th>
+            <th>نوع الشكوى</th>
+            <th>التفاصيل</th>
+            <th>الحالة</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="admin-tbody"></tbody>
+      </table>
+    </div>
+  </div>
   <div id="screen-landing" class="screen-landing">
     <div class="landing-card">
       <div class="hero-placeholder">
@@ -632,7 +880,8 @@
           <div class="row">
             <div>
               <label data-i18n="form.fullname">اسم المتعامل</label>
-              <input data-placeholder="form.fullname_ph" id="inq-name" placeholder="اكتب اسمك الكامل" type="text" required />
+              <input data-placeholder="form.fullname_ph" id="inq-name" placeholder="اكتب اسمك الكامل" type="text"
+                required />
             </div>
             <div>
               <label data-i18n="form.phone">رقم الهاتف</label>
@@ -705,10 +954,12 @@
                   زميل</span></label>
               <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.driver">شكوى على
                   سائق</span></label>
-              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.other">أخرى</span></label>
+              <label><input name="c-type" type="radio" required /> <span
+                  data-i18n="complaints.opt.other">أخرى</span></label>
             </div>
             <label data-i18n="complaints.details">تفاصيل الشكوى</label>
-            <textarea id="complaint-details" data-placeholder="complaints.details_ph" placeholder="اكتب تفاصيل الشكوى" rows="4" required></textarea>
+            <textarea id="complaint-details" data-placeholder="complaints.details_ph" placeholder="اكتب تفاصيل الشكوى"
+              rows="4" required></textarea>
             <br />
             <div class="choices">
               <label><input name="resolve" type="checkbox" /> <span data-i18n="complaints.resolved">تم الحل من قبل
@@ -739,10 +990,12 @@
             </select>
             <div id="admin-name-container" style="display:none; margin-top:10px;">
               <label data-i18n="meeting.admin_name">اسم الإداري</label>
-              <input type="text" id="meeting-admin-name" data-placeholder="meeting.admin_name_ph" placeholder="اكتب اسم الإداري">
+              <input type="text" id="meeting-admin-name" data-placeholder="meeting.admin_name_ph"
+                placeholder="اكتب اسم الإداري">
             </div>
             <label data-i18n="meeting.reason">سبب اللقاء</label>
-            <textarea id="meeting-reason" data-placeholder="meeting.reason_ph" placeholder="اشرح باختصار سبب طلب اللقاء" rows="4" required></textarea>
+            <textarea id="meeting-reason" data-placeholder="meeting.reason_ph" placeholder="اشرح باختصار سبب طلب اللقاء"
+              rows="4" required></textarea>
             <br />
             <button class="cta" type="submit" data-i18n="btn.confirm_meeting">تأكيد الطلب</button>
           </form>
@@ -789,8 +1042,8 @@
                 القسم</span></label>
           </div>
           <label data-i18n="calls.notes">ملاحظات المكالمة</label>
-          <textarea id="call-notes" data-placeholder="calls.notes_ph" placeholder="أضف ملخص المكالمة"
-            rows="4" required></textarea>
+          <textarea id="call-notes" data-placeholder="calls.notes_ph" placeholder="أضف ملخص المكالمة" rows="4"
+            required></textarea>
           <br />
           <button class="cta" data-i18n="btn.save_call" type="submit">حفظ السجل</button>
         </form>
@@ -828,8 +1081,8 @@
               </div>
             </div>
             <label data-i18n="maint.more">تفاصيل</label>
-            <textarea id="maint-bus-notes" data-placeholder="maint.more_ph" placeholder="صف المشكلة والملاحظات"
-              rows="4" required></textarea>
+            <textarea id="maint-bus-notes" data-placeholder="maint.more_ph" placeholder="صف المشكلة والملاحظات" rows="4"
+              required></textarea>
             <button class="cta" data-i18n="btn.send_bus" type="submit">إرسال الطلب</button>
           </form>
         </div>
@@ -1233,7 +1486,7 @@
       if (personSelect && personSelect.value === 'o6') {
         const adminName = document.getElementById('meeting-admin-name');
         if (adminName && adminName.value.trim()) {
-           person += ' - ' + adminName.value.trim();
+          person += ' - ' + adminName.value.trim();
         }
       }
       const reason = document.getElementById('meeting-reason')?.value.trim() || '';
@@ -1512,9 +1765,199 @@
       }
     }
 
+    // ========== ADMIN PORTAL ==========
+    const ADMIN_CREDS = { user: 'admin', pass: 'ops2025' };
+    let isAdmin = false;
+
+    function checkAdminSession() {
+      try {
+        isAdmin = sessionStorage.getItem('fmac_admin') === '1';
+      } catch (e) { isAdmin = false; }
+      updateAdminNav();
+    }
+
+    function updateAdminNav() {
+      const btn = document.getElementById('btn-admin');
+      if (!btn) return;
+      if (isAdmin) {
+        btn.textContent = '📊 لوحة الإدارة';
+        btn.style.borderColor = '#22c55e';
+        btn.style.color = '#22c55e';
+      } else {
+        btn.textContent = '🔒 دخول الإداري';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+    }
+
+    function handleAdminButton() {
+      if (isAdmin) {
+        openAdminDashboard();
+      } else {
+        openAdminModal();
+      }
+    }
+
+    function openAdminModal() {
+      document.getElementById('admin-modal').classList.add('open');
+      document.getElementById('admin-user').value = '';
+      document.getElementById('admin-pass').value = '';
+      document.getElementById('admin-error').style.display = 'none';
+      setTimeout(() => document.getElementById('admin-user').focus(), 100);
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.remove('open');
+    }
+
+    function attemptAdminLogin() {
+      const u = document.getElementById('admin-user').value.trim();
+      const p = document.getElementById('admin-pass').value;
+      if (u === ADMIN_CREDS.user && p === ADMIN_CREDS.pass) {
+        isAdmin = true;
+        try { sessionStorage.setItem('fmac_admin', '1'); } catch (e) {}
+        closeAdminModal();
+        updateAdminNav();
+        openAdminDashboard();
+      } else {
+        document.getElementById('admin-error').style.display = 'block';
+        document.getElementById('admin-pass').value = '';
+        document.getElementById('admin-pass').focus();
+      }
+    }
+
+    // Allow Enter key to submit login
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && document.getElementById('admin-modal').classList.contains('open')) {
+        attemptAdminLogin();
+      }
+      if (e.key === 'Escape' && document.getElementById('admin-modal').classList.contains('open')) {
+        closeAdminModal();
+      }
+    });
+
+    function adminLogout() {
+      isAdmin = false;
+      try { sessionStorage.removeItem('fmac_admin'); } catch (e) {}
+      updateAdminNav();
+      closeAdminDashboard();
+    }
+
+    function openAdminDashboard() {
+      // Hide all other screens
+      ['screen-landing', 'screen-main', 'screen-thanks'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+      const dash = document.getElementById('screen-admin');
+      if (dash) dash.style.display = 'flex';
+      renderAdminDashboard();
+    }
+
+    function closeAdminDashboard() {
+      const dash = document.getElementById('screen-admin');
+      if (dash) dash.style.display = 'none';
+      // Return to landing
+      const landing = document.getElementById('screen-landing');
+      if (landing) landing.style.display = 'flex';
+    }
+
+    function renderAdminDashboard() {
+      const db = loadDb();
+      const complaints = (db.complaints || []).filter(c => !c.kind); // exclude meeting entries
+      renderStats(complaints);
+      renderComplaintsTable(complaints);
+    }
+
+    function renderStats(complaints) {
+      const total = complaints.length;
+      const resolved = complaints.filter(c => c.resolved).length;
+      const escalated = complaints.filter(c => c.escalated).length;
+      const pending = complaints.filter(c => !c.resolved && !c.escalated).length;
+
+      const statsEl = document.getElementById('admin-stats');
+      if (!statsEl) return;
+      statsEl.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-num">${total}</div>
+          <div class="stat-label">إجمالي الشكاوى<br>Total</div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-num">${pending}</div>
+          <div class="stat-label">قيد المعالجة<br>Pending</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-num">${resolved}</div>
+          <div class="stat-label">تم الحل<br>Resolved</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-num">${escalated}</div>
+          <div class="stat-label">تمت الإحالة<br>Escalated</div>
+        </div>
+      `;
+    }
+
+    function renderComplaintsTable(complaints) {
+      const tbody = document.getElementById('admin-tbody');
+      if (!tbody) return;
+
+      if (complaints.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-admin">لا توجد شكاوى مسجلة بعد<br><span style="font-size:12px;opacity:.6">No complaints recorded yet</span></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = complaints.map((c, idx) => {
+        const date = new Date(c.createdAt).toLocaleString('ar-SA', { dateStyle: 'short', timeStyle: 'short' });
+        const name = c.fullName || '-';
+        const type = c.type || '-';
+        const details = (c.details || '').substring(0, 60) + (c.details && c.details.length > 60 ? '…' : '');
+
+        let statusBadge = '';
+        if (c.resolved && c.escalated) {
+          statusBadge = '<span class="status-badge badge-resolved">✅ حُل</span> <span class="status-badge badge-escalated">⬆ مُحال</span>';
+        } else if (c.resolved) {
+          statusBadge = '<span class="status-badge badge-resolved">✅ تم الحل</span>';
+        } else if (c.escalated) {
+          statusBadge = '<span class="status-badge badge-escalated">⬆ تمت الإحالة</span>';
+        } else {
+          statusBadge = '<span class="status-badge badge-pending">🕐 قيد المعالجة</span>';
+        }
+
+        const resolveClass = c.resolved ? 'active-resolve' : '';
+        const escalateClass = c.escalated ? 'active-escalate' : '';
+
+        return `
+          <tr>
+            <td title="${c.createdAt}">${date}</td>
+            <td title="${c.fullName || ''}">${name}</td>
+            <td>${type}</td>
+            <td title="${c.details || ''}">${details || '-'}</td>
+            <td>${statusBadge}</td>
+            <td style="white-space:nowrap">
+              <button class="icon-btn ${resolveClass}" onclick="toggleComplaintStatus('${c.id}', 'resolved')" title="تبديل حالة الحل">✅ حُل</button>
+              <button class="icon-btn ${escalateClass}" style="margin-top:4px" onclick="toggleComplaintStatus('${c.id}', 'escalated')" title="تبديل الإحالة">⬆ إحالة</button>
+            </td>
+          </tr>`;
+      }).join('');
+    }
+
+    function toggleComplaintStatus(id, field) {
+      const db = loadDb();
+      const entry = (db.complaints || []).find(c => c.id === id);
+      if (!entry) return;
+      entry[field] = !entry[field];
+      saveDb(db);
+      const complaints = db.complaints.filter(c => !c.kind);
+      renderStats(complaints);
+      renderComplaintsTable(complaints);
+    }
+
+    // ========== END ADMIN PORTAL ==========
+
     // Init
     setTheme(currentTheme);
     applyLang(msgLang);
+    checkAdminSession();
   </script>
 </body>
 
