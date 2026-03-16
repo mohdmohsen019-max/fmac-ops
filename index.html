@@ -871,6 +871,27 @@
         <tbody id="admin-tbody"></tbody>
       </table>
     </div>
+
+    <!-- Ratings Section -->
+    <div style="margin-top: 48px;">
+      <div class="admin-header" style="margin-bottom: 16px;">
+        <h2>📈 تقييم الخدمة &mdash; Service Evaluations</h2>
+        <div id="admin-avg-rating" style="font-size: 20px; font-weight: 900; color: #f59e0b;"></div>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>بيانات المتعامل</th>
+              <th>التقييم</th>
+              <th>الملاحظات</th>
+            </tr>
+          </thead>
+          <tbody id="admin-ratings-tbody"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
   <div id="screen-landing" class="screen-landing">
     <div class="landing-card">
@@ -1971,6 +1992,7 @@
       const complaints = (db.complaints || []).filter(c => !c.kind); // exclude meeting entries
       renderStats(complaints);
       renderComplaintsTable(complaints);
+      renderRatingsTable(db.ratings || []);
     }
 
     function renderStats(complaints) {
@@ -2056,6 +2078,53 @@
       renderComplaintsTable(complaints);
     }
 
+    function renderRatingsTable(ratings) {
+      const tbody = document.getElementById('admin-ratings-tbody');
+      const avgEl = document.getElementById('admin-avg-rating');
+      if (!tbody) return;
+
+      if (ratings.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="empty-admin">لا توجد تقييمات مسجلة بعد<br><span style="font-size:12px;opacity:.6">No ratings recorded yet</span></td></tr>`;
+        if (avgEl) avgEl.textContent = '0 / 5';
+        return;
+      }
+
+      // Calculate Average
+      const totalScore = ratings.reduce((sum, r) => sum + (r.value || 0), 0);
+      const avg = (totalScore / ratings.length).toFixed(1);
+      if (avgEl) avgEl.textContent = `${avg} / 5 ⭐`;
+
+      const emojiMap = ['', '😞', '😕', '😐', '🙂', '😄'];
+
+      tbody.innerHTML = ratings.map(r => {
+        const date = new Date(r.createdAt).toLocaleString('ar-SA', { dateStyle: 'short', timeStyle: 'short' });
+        
+        // Build contact block
+        let contact = '-';
+        if (r.fullName || r.phone || r.email || r.playerName) {
+          contact = `<div style="line-height:1.4">`;
+          if (r.fullName) contact += `<strong>${r.fullName}</strong><br>`;
+          if (r.phone) contact += `<span style="color:var(--muted)">📞 ${r.phone}</span><br>`;
+          if (r.email) contact += `<span style="color:var(--muted)">✉️ ${r.email}</span><br>`;
+          if (r.playerName) contact += `<span style="color:var(--muted)">🏃 لاعب: ${r.playerName}</span>`;
+          contact += `</div>`;
+        }
+
+        const face = emojiMap[r.value] || '⭐';
+        const ratingBadge = `<span style="font-size:16px; background:var(--overlay); padding:4px 8px; border-radius:8px; border:1px solid var(--border)">${face} ${r.value}/5</span>`;
+        
+        const comment = r.comment ? r.comment : `<span style="color:var(--muted)">-</span>`;
+
+        return `
+          <tr>
+            <td style="white-space:nowrap" title="${r.createdAt}">${date}</td>
+            <td>${contact}</td>
+            <td style="white-space:nowrap">${ratingBadge}</td>
+            <td style="white-space:normal; max-width:300px;">${comment}</td>
+          </tr>`;
+      }).join('');
+    }
+
     // ========== END ADMIN PORTAL ==========
 
     // ========== EVALUATION WIDGET ==========
@@ -2090,13 +2159,8 @@
       });
       saveDb(db);
 
-      // Send email
-      sendEmailNotification('Service Evaluation (تقييم)', {
-        rating: selectedEmojiVal + ' / 5',
-        comment: comment || '-',
-        ...getPersonal()
-      });
-
+      // Email notifications for evaluations have been disabled per user request
+      
       // Show confirmation state
       const prompt = document.getElementById('eval-prompt');
       const done = document.getElementById('eval-done');
