@@ -764,6 +764,42 @@
       padding: 48px;
       color: var(--muted);
     }
+
+    /* ========== EMOJI EVALUATION ========== */
+    @keyframes popIn {
+      0%   { transform: scale(0.5); opacity: 0; }
+      70%  { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .emoji-face {
+      background: var(--overlay);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s, background 0.15s;
+      padding: 0;
+    }
+
+    .emoji-face:hover {
+      transform: scale(1.18) translateY(-4px);
+      border-color: var(--brand-2);
+      background: var(--overlay-strong);
+    }
+
+    .emoji-face.selected {
+      transform: scale(1.25) translateY(-6px);
+      border-color: var(--brand-2);
+      background: rgba(230, 57, 70, 0.15);
+      box-shadow: 0 4px 16px rgba(230, 57, 70, 0.35);
+      animation: popIn 0.3s ease;
+    }
   </style>
 </head>
 
@@ -1141,12 +1177,40 @@
   </div> <!-- end screen-main -->
 
   <div id="screen-thanks" class="screen-landing" style="display:none">
-    <div class="landing-card" style="text-align:center;">
+    <!-- State 1: Evaluation prompt -->
+    <div id="eval-prompt" class="landing-card" style="text-align:center; max-width:500px;">
+      <div style="font-size:48px; margin-bottom:8px;">✅</div>
       <h2 class="landing-title" data-i18n="thanks.title">شكرًا لك</h2>
       <p class="landing-subtitle" data-i18n="thanks.subtitle">تم استلام طلبك، وسيقوم فريق العمليات بالمتابعة.</p>
-      <div class="landing-actions" style="justify-content:center; margin-top:20px;">
-        <button class="cta" type="button" onclick="startNew()" data-i18n="thanks.new">إرسال طلب جديد</button>
+
+      <div style="margin:20px 0 8px;">
+        <p style="font-weight:700; margin:0 0 12px; font-size:15px;" data-i18n="eval.ask">كيف كانت تجربتك مع الخدمة؟</p>
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;" id="emoji-row">
+          <button class="emoji-face" data-v="1" onclick="selectEmoji(1)" title="سيئة جداً">😞</button>
+          <button class="emoji-face" data-v="2" onclick="selectEmoji(2)" title="سيئة">😕</button>
+          <button class="emoji-face" data-v="3" onclick="selectEmoji(3)" title="مقبولة">😐</button>
+          <button class="emoji-face" data-v="4" onclick="selectEmoji(4)" title="جيدة">🙂</button>
+          <button class="emoji-face" data-v="5" onclick="selectEmoji(5)" title="ممتازة">😄</button>
+        </div>
+        <div id="emoji-label" style="font-size:13px; color:var(--muted); margin-top:10px; min-height:20px;"></div>
       </div>
+
+      <div id="eval-comment-wrap" style="margin-top:12px; display:none;">
+        <textarea id="eval-comment" rows="2" style="width:100%; resize:none;" placeholder="ملاحظات إضافية (اختياري)..."></textarea>
+      </div>
+
+      <div id="eval-actions" style="margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="cta" id="btn-submit-eval" onclick="submitEval()" type="button" style="display:none;" data-i18n="eval.send">إرسال التقييم</button>
+        <button class="btn" onclick="startNew()" type="button" style="margin-top:0;" data-i18n="eval.skip">تجاوز</button>
+      </div>
+    </div>
+
+    <!-- State 2: Post-evaluation confirmation -->
+    <div id="eval-done" class="landing-card" style="text-align:center; max-width:400px; display:none;">
+      <div id="eval-done-emoji" style="font-size:64px; margin-bottom:12px; animation: popIn .4s ease;">⭐</div>
+      <h2 class="landing-title" id="eval-done-title">شكراً على تقييمك!</h2>
+      <p class="landing-subtitle" id="eval-done-sub" style="margin-bottom:20px;">رأيك يساعدنا على التحسين المستمر.</p>
+      <button class="cta" onclick="startNew()" type="button" data-i18n="thanks.new">إرسال طلب جديد</button>
     </div>
   </div>
 
@@ -1993,6 +2057,89 @@
     }
 
     // ========== END ADMIN PORTAL ==========
+
+    // ========== EVALUATION WIDGET ==========
+    let selectedEmojiVal = 0;
+    const emojiLabels = {
+      ar: ['', 'سيئة جداً 😞', 'سيئة 😕', 'مقبولة 😐', 'جيدة 🙂', 'ممتازة 🌟'],
+      en: ['', 'Very poor 😞', 'Poor 😕', 'Okay 😐', 'Good 🙂', 'Excellent 🌟']
+    };
+
+    function selectEmoji(val) {
+      selectedEmojiVal = val;
+      document.querySelectorAll('.emoji-face').forEach(btn => {
+        btn.classList.toggle('selected', parseInt(btn.dataset.v) === val);
+      });
+      const labels = emojiLabels[msgLang] || emojiLabels.ar;
+      document.getElementById('emoji-label').textContent = labels[val] || '';
+      document.getElementById('eval-comment-wrap').style.display = 'block';
+      document.getElementById('btn-submit-eval').style.display = 'inline-block';
+    }
+
+    function submitEval() {
+      const comment = document.getElementById('eval-comment')?.value.trim() || '';
+      // Save to localStorage
+      const db = loadDb();
+      if (!db.ratings) db.ratings = [];
+      db.ratings.unshift({
+        id: uid(),
+        createdAt: new Date().toISOString(),
+        value: selectedEmojiVal,
+        comment,
+        ...getPersonal()
+      });
+      saveDb(db);
+
+      // Send email
+      sendEmailNotification('Service Evaluation (تقييم)', {
+        rating: selectedEmojiVal + ' / 5',
+        comment: comment || '-',
+        ...getPersonal()
+      });
+
+      // Show confirmation state
+      const prompt = document.getElementById('eval-prompt');
+      const done = document.getElementById('eval-done');
+      const doneEmoji = document.getElementById('eval-done-emoji');
+      const doneTitle = document.getElementById('eval-done-title');
+      const doneSub = document.getElementById('eval-done-sub');
+
+      const emoji = ['⭐', '🥲', '😐', '😊', '🎉'][selectedEmojiVal - 1] || '⭐';
+      doneEmoji.textContent = emoji;
+
+      const isAr = msgLang === 'ar';
+      if (selectedEmojiVal >= 4) {
+        doneTitle.textContent = isAr ? 'شكراً على تقييمك الرائع! 🙏' : 'Thank you for the great rating! 🙏';
+        doneSub.textContent = isAr ? 'يسعدنا خدمتك ونتطلع للتكون أفضل لك.' : 'We are glad to serve you and look forward to being even better.';
+      } else {
+        doneTitle.textContent = isAr ? 'شكراً على رأيك!' : 'Thanks for your feedback!';
+        doneSub.textContent = isAr ? 'سنعمل على تحسين خدماتنا بناءً على ملاحظاتك.' : 'We will work on improving our services based on your feedback.';
+      }
+
+      if (prompt) prompt.style.display = 'none';
+      if (done) done.style.display = 'block';
+    }
+
+    // Reset evaluation state when starting new request
+    const origStartNew = startNew;
+    startNew = function() {
+      selectedEmojiVal = 0;
+      const prompt = document.getElementById('eval-prompt');
+      const done = document.getElementById('eval-done');
+      if (prompt) prompt.style.display = 'block';
+      if (done) done.style.display = 'none';
+      document.querySelectorAll('.emoji-face').forEach(b => b.classList.remove('selected'));
+      const lbl = document.getElementById('emoji-label');
+      if (lbl) lbl.textContent = '';
+      const cmtWrap = document.getElementById('eval-comment-wrap');
+      if (cmtWrap) cmtWrap.style.display = 'none';
+      const submitBtn = document.getElementById('btn-submit-eval');
+      if (submitBtn) submitBtn.style.display = 'none';
+      const cmt = document.getElementById('eval-comment');
+      if (cmt) cmt.value = '';
+      origStartNew();
+    };
+    // ========== END EVALUATION WIDGET ==========
 
     // Init
     setTheme(currentTheme);
