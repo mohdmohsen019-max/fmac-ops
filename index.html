@@ -775,9 +775,9 @@
         <span data-i18n="brand">قسم العمليات</span>
       </a>
       <div class="nav-links" id="links">
-        <a href="#" onclick="selectService('#inquiries', this); return false;" data-i18n="nav.inquiries">الاستفسارات</a>
-        <a href="#" onclick="selectService('#complaints', this); return false;" data-i18n="nav.complaints">الشكاوى</a>
-        <a href="#" onclick="selectService('#meeting', this); return false;" data-i18n="nav.meeting">طلب لقاء</a>
+        <a href="#" onclick="navToService('#inquiries'); return false;" data-i18n="nav.inquiries">الاستفسارات</a>
+        <a href="#" onclick="navToService('#complaints'); return false;" data-i18n="nav.complaints">الشكاوى</a>
+        <a href="#" onclick="navToService('#meeting'); return false;" data-i18n="nav.meeting">طلب لقاء</a>
       </div>
       <div class="nav-actions">
         <button class="btn btn-toggle" onclick="toggleTheme()" type="button" data-i18n="theme.light">الوضع
@@ -1766,13 +1766,20 @@
     }
 
     // ========== ADMIN PORTAL ==========
-    const ADMIN_CREDS = { user: 'admin', pass: 'ops2025' };
+    const ADMIN_ACCOUNTS = [
+      { name: 'Ihab Estitiah',      title: 'Head of Operations',   user: 'ihab',    pass: 'ihab2025'    },
+      { name: 'Mohamed Mohsen',     title: 'Athletics Specialist',  user: 'mohsen',  pass: 'mohsen2025'  },
+      { name: 'Khaled Eissa',       title: 'Logistics Specialist',  user: 'khaled',  pass: 'khaled2025'  },
+      { name: 'Mahmoud Mansour',    title: 'Logistics Specialist',  user: 'mahmoud', pass: 'mahmoud2025' },
+    ];
     let isAdmin = false;
+    let adminName = '';
 
     function checkAdminSession() {
       try {
         isAdmin = sessionStorage.getItem('fmac_admin') === '1';
-      } catch (e) { isAdmin = false; }
+        adminName = sessionStorage.getItem('fmac_admin_name') || '';
+      } catch (e) { isAdmin = false; adminName = ''; }
       updateAdminNav();
     }
 
@@ -1780,7 +1787,7 @@
       const btn = document.getElementById('btn-admin');
       if (!btn) return;
       if (isAdmin) {
-        btn.textContent = '📊 لوحة الإدارة';
+        btn.textContent = '📊 ' + (adminName || 'Admin');
         btn.style.borderColor = '#22c55e';
         btn.style.color = '#22c55e';
       } else {
@@ -1811,11 +1818,16 @@
     }
 
     function attemptAdminLogin() {
-      const u = document.getElementById('admin-user').value.trim();
+      const u = document.getElementById('admin-user').value.trim().toLowerCase();
       const p = document.getElementById('admin-pass').value;
-      if (u === ADMIN_CREDS.user && p === ADMIN_CREDS.pass) {
+      const match = ADMIN_ACCOUNTS.find(a => a.user === u && a.pass === p);
+      if (match) {
         isAdmin = true;
-        try { sessionStorage.setItem('fmac_admin', '1'); } catch (e) {}
+        adminName = match.name;
+        try {
+          sessionStorage.setItem('fmac_admin', '1');
+          sessionStorage.setItem('fmac_admin_name', match.name);
+        } catch (e) {}
         closeAdminModal();
         updateAdminNav();
         openAdminDashboard();
@@ -1838,7 +1850,11 @@
 
     function adminLogout() {
       isAdmin = false;
-      try { sessionStorage.removeItem('fmac_admin'); } catch (e) {}
+      adminName = '';
+      try {
+        sessionStorage.removeItem('fmac_admin');
+        sessionStorage.removeItem('fmac_admin_name');
+      } catch (e) {}
       updateAdminNav();
       closeAdminDashboard();
     }
@@ -1860,6 +1876,30 @@
       // Return to landing
       const landing = document.getElementById('screen-landing');
       if (landing) landing.style.display = 'flex';
+    }
+
+    // Navigate from nav links — works from any screen including the admin dashboard
+    function navToService(id) {
+      // Close admin dashboard if visible
+      const dash = document.getElementById('screen-admin');
+      if (dash && dash.style.display === 'flex') {
+        dash.style.display = 'none';
+      }
+      // Hide landing, show main
+      const landing = document.getElementById('screen-landing');
+      const main = document.getElementById('screen-main');
+      const thanks = document.getElementById('screen-thanks');
+      if (landing) landing.style.display = 'none';
+      if (thanks) thanks.style.display = 'none';
+      if (main) main.style.display = 'block';
+      // Set the selected service and skip straight to it (bypass personal step if already filled)
+      selectedServiceId = id;
+      const hasName = document.getElementById('inq-name')?.value.trim();
+      if (hasName) {
+        goToServiceStep();
+      } else {
+        showPersonalStep();
+      }
     }
 
     function renderAdminDashboard() {
