@@ -1110,12 +1110,6 @@
             <textarea id="complaint-details" data-placeholder="complaints.details_ph" placeholder="اكتب تفاصيل الشكوى"
               rows="4" required></textarea>
             <br />
-            <div class="choices">
-              <label><input name="resolve" type="checkbox" /> <span data-i18n="complaints.resolved">تم الحل من قبل
-                  الإداري</span></label>
-              <label><input name="escalate" type="checkbox" /> <span data-i18n="complaints.escalate">إحالة الشكوى إلى
-                  رئيس القسم</span></label>
-            </div>
             <button class="cta" type="submit" data-i18n="btn.send_complaint">إرسال الشكوى</button>
           </form>
         </div>
@@ -1185,11 +1179,6 @@
             <label><input name="call-type" type="radio" /> <span data-i18n="complaints.opt.other">أخرى</span></label>
           </div>
           <label data-i18n="calls.how">آلية التعامل</label>
-          <div class="choices">
-            <label><input type="checkbox" /> <span data-i18n="complaints.resolved">تم الحل من قبل الإداري</span></label>
-            <label><input type="checkbox" /> <span data-i18n="complaints.escalate">إحالة الشكوى إلى رئيس
-                القسم</span></label>
-          </div>
           <label data-i18n="calls.notes">ملاحظات المكالمة</label>
           <textarea id="call-notes" data-placeholder="calls.notes_ph" placeholder="أضف ملخص المكالمة" rows="4"
             required></textarea>
@@ -1314,7 +1303,6 @@
 
       <div id="eval-actions" style="margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <button class="cta" id="btn-submit-eval" onclick="submitEval()" type="button" style="display:none;" data-i18n="eval.send">إرسال التقييم</button>
-        <button class="btn" onclick="startNew()" type="button" style="margin-top:0;" data-i18n="eval.skip">تجاوز</button>
       </div>
     </div>
 
@@ -1683,15 +1671,13 @@
       const typeInput = document.querySelector('input[name="c-type"]:checked');
       const type = typeInput ? typeInput.nextElementSibling?.textContent.trim() : '';
       const details = document.getElementById('complaint-details')?.value.trim() || '';
-      const resolved = document.querySelector('input[name="resolve"]')?.checked || false;
-      const escalated = document.querySelector('input[name="escalate"]')?.checked || false;
       const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
         type,
         details,
-        resolved,
-        escalated,
+        resolved: false,
+        escalated: false,
         ...getPersonal(),
       };
       saveEntry('complaints', entry);
@@ -1741,8 +1727,6 @@
       const sport = sportInput ? sportInput.value.trim() : '';
       const typeInput = document.querySelector('input[name="call-type"]:checked');
       const type = typeInput ? typeInput.nextElementSibling?.textContent.trim() : '';
-      const handledAdmin = document.querySelector('section#calls input[type="checkbox"]:first-of-type')?.checked || false;
-      const escalated = document.querySelector('section#calls input[type="checkbox"]:last-of-type')?.checked || false;
       const notes = document.getElementById('call-notes')?.value.trim() || '';
 
       const entry = {
@@ -1753,8 +1737,8 @@
         role,
         sport,
         type,
-        handledAdmin,
-        escalated,
+        handledAdmin: false,
+        escalated: false,
         notes,
       };
       saveEntry('calls', entry);
