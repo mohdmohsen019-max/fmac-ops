@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" href="/fmac-logo.png" />
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title data-i18n="title">سياسات وإجراءات قسم العمليات</title>
+  <title data-i18n="title">مقترحات و شكاوى نادي الفجيرة للفنون القتالية</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
@@ -569,6 +569,7 @@
       background: transparent;
       filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
     }
+
     /* ========== ADMIN MODAL ========== */
     .modal-overlay {
       display: none;
@@ -680,9 +681,17 @@
       margin-top: 4px;
     }
 
-    .stat-card.green .stat-num { color: #22c55e; }
-    .stat-card.red .stat-num   { color: var(--brand-2); }
-    .stat-card.yellow .stat-num { color: #f59e0b; }
+    .stat-card.green .stat-num {
+      color: #22c55e;
+    }
+
+    .stat-card.red .stat-num {
+      color: var(--brand-2);
+    }
+
+    .stat-card.yellow .stat-num {
+      color: #f59e0b;
+    }
 
     .admin-table-wrap {
       overflow-x: auto;
@@ -737,9 +746,20 @@
       font-weight: 700;
     }
 
-    .badge-resolved  { background: rgba(34,197,94,.15);  color: #22c55e; }
-    .badge-escalated { background: rgba(230,57,70,.15);   color: var(--brand-2); }
-    .badge-pending   { background: rgba(161,161,170,.12); color: var(--muted); }
+    .badge-resolved {
+      background: rgba(34, 197, 94, .15);
+      color: #22c55e;
+    }
+
+    .badge-escalated {
+      background: rgba(230, 57, 70, .15);
+      color: var(--brand-2);
+    }
+
+    .badge-pending {
+      background: rgba(161, 161, 170, .12);
+      color: var(--muted);
+    }
 
     .icon-btn {
       background: var(--overlay);
@@ -756,8 +776,17 @@
       background: var(--overlay-strong);
     }
 
-    .icon-btn.active-resolve  { background: rgba(34,197,94,.2);  border-color: #22c55e; color: #22c55e; }
-    .icon-btn.active-escalate { background: rgba(230,57,70,.2);   border-color: var(--brand-2); color: var(--brand-2); }
+    .icon-btn.active-resolve {
+      background: rgba(34, 197, 94, .2);
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+
+    .icon-btn.active-escalate {
+      background: rgba(230, 57, 70, .2);
+      border-color: var(--brand-2);
+      color: var(--brand-2);
+    }
 
     .empty-admin {
       text-align: center;
@@ -767,9 +796,19 @@
 
     /* ========== EMOJI EVALUATION ========== */
     @keyframes popIn {
-      0%   { transform: scale(0.5); opacity: 0; }
-      70%  { transform: scale(1.15); }
-      100% { transform: scale(1); opacity: 1; }
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      70% {
+        transform: scale(1.15);
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     .emoji-face {
@@ -835,7 +874,8 @@
       <label style="margin-top:12px">كلمة المرور ‪/ Password</label>
       <input id="admin-pass" type="password" autocomplete="current-password" placeholder="••••••••" />
       <div class="modal-error" id="admin-error">بيانات غير صحيحة‎ / Incorrect credentials</div>
-      <button class="cta" style="width:100%;margin-top:16px;" onclick="attemptAdminLogin()" type="button">دخول / Sign In</button>
+      <button class="cta" style="width:100%;margin-top:16px;" onclick="attemptAdminLogin()" type="button">دخول / Sign
+        In</button>
     </div>
   </div>
 
@@ -856,13 +896,19 @@
 
     <!-- Admin Sub-Nav -->
     <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; overflow-x:auto; padding-bottom:8px;">
-      <button class="btn active" id="btn-admin-tab-complaints" onclick="switchAdminTab('complaints')" type="button">📫 الشكاوى</button>
-      <button class="btn" id="btn-admin-tab-inquiries" onclick="switchAdminTab('inquiries')" type="button">❓ الاستفسارات</button>
-      <button class="btn" id="btn-admin-tab-meetings" onclick="switchAdminTab('meetings')" type="button">🗓️ اللقاءات</button>
+      <button class="btn active" id="btn-admin-tab-complaints" onclick="switchAdminTab('complaints')" type="button">📫
+        الشكاوى</button>
+      <button class="btn" id="btn-admin-tab-inquiries" onclick="switchAdminTab('inquiries')" type="button">❓
+        الاستفسارات</button>
+      <button class="btn" id="btn-admin-tab-meetings" onclick="switchAdminTab('meetings')" type="button">🗓️
+        اللقاءات</button>
       <button class="btn" id="btn-admin-tab-calls" onclick="switchAdminTab('calls')" type="button">☎️ المكالمات</button>
-      <button class="btn" id="btn-admin-tab-maint-b" onclick="switchAdminTab('maint-b')" type="button">🧰 صيانة المبنى</button>
-      <button class="btn" id="btn-admin-tab-maint-bus" onclick="switchAdminTab('maint-bus')" type="button">🚌 صيانة الحافلات</button>
-      <button class="btn" id="btn-admin-tab-ratings" onclick="switchAdminTab('ratings')" type="button">🌟 التقييمات</button>
+      <button class="btn" id="btn-admin-tab-maint-b" onclick="switchAdminTab('maint-b')" type="button">🧰 صيانة
+        المبنى</button>
+      <button class="btn" id="btn-admin-tab-maint-bus" onclick="switchAdminTab('maint-bus')" type="button">🚌 صيانة
+        الحافلات</button>
+      <button class="btn" id="btn-admin-tab-ratings" onclick="switchAdminTab('ratings')" type="button">🌟
+        التقييمات</button>
     </div>
 
     <div id="admin-tab-complaints" class="admin-tab-content">
@@ -885,7 +931,7 @@
     </div>
 
     <div id="admin-tab-inquiries" class="admin-tab-content" style="display:none">
-       <div class="admin-table-wrap">
+      <div class="admin-table-wrap">
         <table class="admin-table">
           <thead>
             <tr>
@@ -901,7 +947,7 @@
     </div>
 
     <div id="admin-tab-meetings" class="admin-tab-content" style="display:none">
-       <div class="admin-table-wrap">
+      <div class="admin-table-wrap">
         <table class="admin-table">
           <thead>
             <tr>
@@ -917,7 +963,7 @@
     </div>
 
     <div id="admin-tab-calls" class="admin-tab-content" style="display:none">
-       <div class="admin-table-wrap">
+      <div class="admin-table-wrap">
         <table class="admin-table">
           <thead>
             <tr>
@@ -935,7 +981,7 @@
     </div>
 
     <div id="admin-tab-maint-b" class="admin-tab-content" style="display:none">
-       <div class="admin-table-wrap">
+      <div class="admin-table-wrap">
         <table class="admin-table">
           <thead>
             <tr>
@@ -950,7 +996,7 @@
     </div>
 
     <div id="admin-tab-maint-bus" class="admin-tab-content" style="display:none">
-       <div class="admin-table-wrap">
+      <div class="admin-table-wrap">
         <table class="admin-table">
           <thead>
             <tr>
@@ -1298,11 +1344,13 @@
       </div>
 
       <div id="eval-comment-wrap" style="margin-top:12px; display:none;">
-        <textarea id="eval-comment" rows="2" style="width:100%; resize:none;" placeholder="ملاحظات إضافية (اختياري)..."></textarea>
+        <textarea id="eval-comment" rows="2" style="width:100%; resize:none;"
+          placeholder="ملاحظات إضافية (اختياري)..."></textarea>
       </div>
 
       <div id="eval-actions" style="margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-        <button class="cta" id="btn-submit-eval" onclick="submitEval()" type="button" style="display:none;" data-i18n="eval.send">إرسال التقييم</button>
+        <button class="cta" id="btn-submit-eval" onclick="submitEval()" type="button" style="display:none;"
+          data-i18n="eval.send">إرسال التقييم</button>
       </div>
     </div>
 
@@ -1335,7 +1383,7 @@
       storageBucket: "fmac-ops.firebasestorage.app",
       messagingSenderId: "461928660272",
       appId: "1:461928660272:web:b07b6563f641ebfb955cf5",
-      databaseURL: "https://fmac-ops-default-rtdb.firebaseio.com", 
+      databaseURL: "https://fmac-ops-default-rtdb.firebaseio.com",
       measurementId: "G-H8B99DVWBJ"
     };
 
@@ -1352,14 +1400,14 @@
       ratings: {},
     };
 
-    window.toggleMenu = function() {
+    window.toggleMenu = function () {
       document.getElementById('links').classList.toggle('open');
     }
     document.getElementById('y').textContent = new Date().getFullYear();
 
     // Web3Forms Access Key
     // 👉 Replace this with your actual access key from https://web3forms.com/
-    const WEB3FORMS_ACCESS_KEY = 'ed4613a3-671c-4cb7-ad2a-0d191ca53831';
+    const WEB3FORMS_ACCESS_KEY = '975b13fd-2b00-4a9c-b862-54a2c9c23aff';
 
     // Email Notification Function
     async function sendEmailNotification(subject, formData) {
@@ -1436,7 +1484,7 @@
         'lang.btn': 'English',
         'theme.light': 'الوضع الفاتح',
         'theme.dark': 'الوضع الداكن',
-        'title': 'سياسات وإجراءات قسم العمليات',
+        'title': 'مقترحات و شكاوى نادي الفجيرة للفنون القتالية',
         'brand': 'قسم العمليات',
         'badge': 'قسم العمليات يرحب بكم 👋',
         'landing.title': 'قسم العمليات',
@@ -1450,7 +1498,7 @@
         'srv.call': 'اتصال هاتفي',
         'srv.maintenance': 'صيانة',
         'srv.rating': 'تقييم',
-        'h1': 'سياسات وإجراءات قسم العمليات',
+        'h1': 'مقترحات و شكاوى نادي الفجيرة للفنون القتالية',
         'lead': 'منصة موحدة لتجميع الاستفسارات والشكاوى والطلبات مع تصميم حديث وتجربة استخدام سهلة وسريعة.',
         'cta.start': 'ابدأ الآن',
         'nav.inquiries': 'الاستفسارات', 'nav.complaints': 'الشكاوى', 'nav.meeting': 'طلب لقاء', 'nav.calls': 'الاتصالات الهاتفية', 'nav.maintenance': 'الصيانة', 'nav.staff': 'الإداري المرافق', 'nav.rating': 'التقييم',
@@ -1483,7 +1531,7 @@
         'lang.btn': 'العربية',
         'theme.light': 'Light mode',
         'theme.dark': 'Dark mode',
-        'title': 'Operations Department Policies & Procedures',
+        'title': 'Fujairah Martial Arts Club Suggestions & Complaints',
         'brand': 'Operations Dept.',
         'badge': 'Welcome to Operations 👋',
         'landing.title': 'Operations Department',
@@ -1497,7 +1545,7 @@
         'srv.call': 'Phone call',
         'srv.maintenance': 'Maintenance',
         'srv.rating': 'Rating',
-        'h1': 'Operations Department Policies & Procedures',
+        'h1': 'Fujairah Martial Arts Club Suggestions & Complaints',
         'lead': 'A unified portal for inquiries, complaints, and requests—modern design with a smooth, fast UX.',
         'cta.start': 'Get Started',
         'nav.inquiries': 'Inquiries', 'nav.complaints': 'Complaints', 'nav.meeting': 'Request Meeting', 'nav.calls': 'Phone Calls', 'nav.maintenance': 'Maintenance', 'nav.staff': 'Staff', 'nav.rating': 'Rating',
@@ -1565,7 +1613,7 @@
       updateThemeButton();
     }
 
-    window.toggleTheme = function() {
+    window.toggleTheme = function () {
       setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     }
 
@@ -1580,7 +1628,7 @@
       updateThemeButton();
     }
 
-    window.cycleLang = function() {
+    window.cycleLang = function () {
       msgLang = (msgLang === 'ar') ? 'en' : 'ar';
       applyLang(msgLang);
     }
@@ -1603,35 +1651,35 @@
     }
 
     function loadDb() {
-        // Return object structure similar to before but resolving arrays for tables
-        return {
-          inquiries: Object.values(currentData.inquiries || {}).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)),
-          complaints: Object.values(currentData.complaints || {}).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)),
-          calls: Object.values(currentData.calls || {}).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)),
-          maintenanceBuilding: Object.values(currentData.maintenanceBuilding || {}).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)),
-          maintenanceBus: Object.values(currentData.maintenanceBus || {}).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)),
-          ratings: Object.values(currentData.ratings || {}).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)),
-          raw: currentData // For direct modifications
-        };
+      // Return object structure similar to before but resolving arrays for tables
+      return {
+        inquiries: Object.values(currentData.inquiries || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        complaints: Object.values(currentData.complaints || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        calls: Object.values(currentData.calls || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        maintenanceBuilding: Object.values(currentData.maintenanceBuilding || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        maintenanceBus: Object.values(currentData.maintenanceBus || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        ratings: Object.values(currentData.ratings || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        raw: currentData // For direct modifications
+      };
     }
 
     function saveEntry(category, entry) {
-      if(!entry.id) entry.id = uid();
+      if (!entry.id) entry.id = uid();
       set(ref(db, 'fmac_ops_entries_v1/' + category + '/' + entry.id), entry);
     }
-    
+
     // We keep saveDb for backwards compatibility, mostly for toggleComplaintStatus
     function saveDb(updatedDb) {
       // Re-convert arrays back to objects mapped by id before saving entirely 
       // This is less efficient than saveEntry but works for status toggles
       const toSave = {};
-      for(const key of ['inquiries', 'complaints', 'calls', 'maintenanceBuilding', 'maintenanceBus', 'ratings']) {
-         toSave[key] = {};
-         if(updatedDb[key]) {
-             for(const item of updatedDb[key]) {
-                 toSave[key][item.id] = item;
-             }
-         }
+      for (const key of ['inquiries', 'complaints', 'calls', 'maintenanceBuilding', 'maintenanceBus', 'ratings']) {
+        toSave[key] = {};
+        if (updatedDb[key]) {
+          for (const item of updatedDb[key]) {
+            toSave[key][item.id] = item;
+          }
+        }
       }
       set(dbRef, toSave);
     }
@@ -1646,7 +1694,7 @@
       };
     }
 
-    window.submitInquiry = function() {
+    window.submitInquiry = function () {
       const db = loadDb();
       const types = Array.from(document.querySelectorAll('input[name="inq"]:checked')).map(i => i.value);
       const notes = document.getElementById('inq-notes')?.value.trim() || '';
@@ -1666,7 +1714,7 @@
       showThanks();
     }
 
-    window.submitComplaint = function() {
+    window.submitComplaint = function () {
       const db = loadDb();
       const typeInput = document.querySelector('input[name="c-type"]:checked');
       const type = typeInput ? typeInput.nextElementSibling?.textContent.trim() : '';
@@ -1689,7 +1737,7 @@
       showThanks();
     }
 
-    window.submitMeeting = function() {
+    window.submitMeeting = function () {
       const db = loadDb();
       const personSelect = document.getElementById('meeting-person');
       let person = personSelect ? personSelect.options[personSelect.selectedIndex].text : '';
@@ -1717,7 +1765,7 @@
       showThanks();
     }
 
-    window.submitCall = function() {
+    window.submitCall = function () {
       const db = loadDb();
       const callerName = document.querySelector('input[placeholder="الاسم"]')?.value.trim() || '';
       const callerPhone = document.querySelector('input[placeholder="05xxxxxxxx"]')?.value.trim() || '';
@@ -1750,7 +1798,7 @@
       showThanks();
     }
 
-    window.submitBuildingMaintenance = function() {
+    window.submitBuildingMaintenance = function () {
       const db = loadDb();
       const items = Array.from(document.querySelectorAll('section#maintenance form:first-of-type .choices input[type="checkbox"]:checked')).map(i => i.nextElementSibling?.textContent.trim());
       const details = document.getElementById('maint-building-notes')?.value.trim() || '';
@@ -1769,7 +1817,7 @@
       showThanks();
     }
 
-    window.submitBusMaintenance = function() {
+    window.submitBusMaintenance = function () {
       const db = loadDb();
       const busNoInput = document.querySelector('input[placeholder="123"]');
       const busNumber = busNoInput ? busNoInput.value.trim() : '';
@@ -1792,7 +1840,7 @@
       showThanks();
     }
 
-    window.submitRating = function() {
+    window.submitRating = function () {
       const db = loadDb();
       const activeStar = document.querySelector('.star.active:last-of-type');
       let value = 0;
@@ -1816,7 +1864,7 @@
       showThanks();
     }
 
-    window.exportData = function() {
+    window.exportData = function () {
       const db = loadDb();
 
       const tables = [
@@ -1869,7 +1917,7 @@
     // Landing flow
     let selectedServiceId = '#inquiries';
 
-    window.selectLang = function(lang) {
+    window.selectLang = function (lang) {
       msgLang = lang;
       applyLang(msgLang);
       const btnAr = document.getElementById('btn-lang-ar');
@@ -1880,14 +1928,14 @@
       }
     }
 
-    window.selectService = function(id, el) {
+    window.selectService = function (id, el) {
       selectedServiceId = id;
       document.querySelectorAll('.service-card').forEach(card => {
         card.classList.toggle('active', card === el);
       });
     }
 
-    window.startFlow = function() {
+    window.startFlow = function () {
       const landing = document.getElementById('screen-landing');
       const main = document.getElementById('screen-main');
       if (landing && main) {
@@ -1910,7 +1958,7 @@
       }
     }
 
-    window.goToServiceStep = function() {
+    window.goToServiceStep = function () {
       const personal = document.getElementById('personal-data');
       if (personal) personal.style.display = 'none';
       const serviceIds = ['inquiries', 'complaints', 'meeting', 'calls', 'maintenance', 'staff', 'rating'];
@@ -1942,7 +1990,7 @@
     }
 
     // We initialize this initially but override it at the bottom of the script
-    window.startNew = function() {
+    window.startNew = function () {
       const landing = document.getElementById('screen-landing');
       const main = document.getElementById('screen-main');
       const thanks = document.getElementById('screen-thanks');
@@ -1962,7 +2010,7 @@
       selectService('#inquiries', document.querySelector('.service-card[data-target="#inquiries"]'));
     }
 
-    window.toggleAdminName = function(val) {
+    window.toggleAdminName = function (val) {
       const el = document.getElementById('admin-name-container');
       if (el) {
         el.style.display = val === 'o6' ? 'block' : 'none';
@@ -1971,10 +2019,10 @@
 
     // ========== ADMIN PORTAL ==========
     const ADMIN_ACCOUNTS = [
-      { name: 'Ihab Estitiah',      title: 'Head of Operations',   user: 'ihab',    pass: 'ihab2025'    },
-      { name: 'Mohamed Mohsen',     title: 'Athletics Specialist',  user: 'mohsen',  pass: 'mohsen2025'  },
-      { name: 'Khaled Eissa',       title: 'Logistics Specialist',  user: 'khaled',  pass: 'khaled2025'  },
-      { name: 'Mahmoud Mansour',    title: 'Logistics Specialist',  user: 'mahmoud', pass: 'mahmoud2025' },
+      { name: 'Ihab Estitiah', title: 'Head of Operations', user: 'ihab', pass: 'ihab2025' },
+      { name: 'Mohamed Mohsen', title: 'Athletics Specialist', user: 'mohsen', pass: 'mohsen2025' },
+      { name: 'Khaled Eissa', title: 'Logistics Specialist', user: 'khaled', pass: 'khaled2025' },
+      { name: 'Mahmoud Mansour', title: 'Logistics Specialist', user: 'mahmoud', pass: 'mahmoud2025' },
     ];
     let isAdmin = false;
     let adminName = '';
@@ -2001,7 +2049,7 @@
       }
     }
 
-    window.handleAdminButton = function() {
+    window.handleAdminButton = function () {
       if (isAdmin) {
         openAdminDashboard();
       } else {
@@ -2009,7 +2057,7 @@
       }
     }
 
-    window.openAdminModal = function() {
+    window.openAdminModal = function () {
       document.getElementById('admin-modal').classList.add('open');
       document.getElementById('admin-user').value = '';
       document.getElementById('admin-pass').value = '';
@@ -2017,11 +2065,11 @@
       setTimeout(() => document.getElementById('admin-user').focus(), 100);
     }
 
-    window.closeAdminModal = function() {
+    window.closeAdminModal = function () {
       document.getElementById('admin-modal').classList.remove('open');
     }
 
-    window.attemptAdminLogin = function() {
+    window.attemptAdminLogin = function () {
       const u = document.getElementById('admin-user').value.trim().toLowerCase();
       const p = document.getElementById('admin-pass').value;
       const match = ADMIN_ACCOUNTS.find(a => a.user === u && a.pass === p);
@@ -2031,7 +2079,7 @@
         try {
           sessionStorage.setItem('fmac_admin', '1');
           sessionStorage.setItem('fmac_admin_name', match.name);
-        } catch (e) {}
+        } catch (e) { }
         closeAdminModal();
         updateAdminNav();
         openAdminDashboard();
@@ -2043,7 +2091,7 @@
     }
 
     // Allow Enter key to submit login
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && document.getElementById('admin-modal').classList.contains('open')) {
         attemptAdminLogin();
       }
@@ -2052,18 +2100,18 @@
       }
     });
 
-    window.adminLogout = function() {
+    window.adminLogout = function () {
       isAdmin = false;
       adminName = '';
       try {
         sessionStorage.removeItem('fmac_admin');
         sessionStorage.removeItem('fmac_admin_name');
-      } catch (e) {}
+      } catch (e) { }
       updateAdminNav();
       closeAdminDashboard();
     }
 
-    window.openAdminDashboard = function() {
+    window.openAdminDashboard = function () {
       // Hide all other screens
       ['screen-landing', 'screen-main', 'screen-thanks'].forEach(id => {
         const el = document.getElementById(id);
@@ -2083,7 +2131,7 @@
     }
 
     // Navigate from nav links — works from any screen including the admin dashboard
-    window.navToService = function(id) {
+    window.navToService = function (id) {
       // Close admin dashboard if visible
       const dash = document.getElementById('screen-admin');
       if (dash && dash.style.display === 'flex') {
@@ -2107,7 +2155,7 @@
     }
 
     let currentAdminTab = 'complaints';
-    window.switchAdminTab = function(tab) {
+    window.switchAdminTab = function (tab) {
       currentAdminTab = tab;
       // Update buttons
       const buttons = document.querySelectorAll('#screen-admin [id^="btn-admin-tab-"]');
@@ -2129,7 +2177,7 @@
       const complaintsTotal = (db.complaints || []).filter(c => !c.kind);
       renderStats(complaintsTotal);
 
-      switch(currentAdminTab) {
+      switch (currentAdminTab) {
         case 'complaints': renderComplaintsTable(complaintsTotal); break;
         case 'inquiries': renderInquiriesTable(db.inquiries || []); break;
         case 'meetings': renderMeetingsTable((db.complaints || []).filter(c => c.kind === 'meeting')); break;
@@ -2315,7 +2363,7 @@
       }).join('');
     }
 
-    window.toggleComplaintStatus = function(id, field) {
+    window.toggleComplaintStatus = function (id, field) {
       const db = loadDb();
       const entry = (db.complaints || []).find(c => c.id === id);
       if (!entry) return;
@@ -2346,7 +2394,7 @@
 
       tbody.innerHTML = ratings.map(r => {
         const date = new Date(r.createdAt).toLocaleString('ar-SA', { dateStyle: 'short', timeStyle: 'short' });
-        
+
         // Build contact block
         let contact = '-';
         if (r.fullName || r.phone || r.email || r.playerName) {
@@ -2360,7 +2408,7 @@
 
         const face = emojiMap[r.value] || '⭐';
         const ratingBadge = `<span style="font-size:16px; background:var(--overlay); padding:4px 8px; border-radius:8px; border:1px solid var(--border)">${face} ${r.value}/5</span>`;
-        
+
         const comment = r.comment ? r.comment : `<span style="color:var(--muted)">-</span>`;
 
         return `
@@ -2382,7 +2430,7 @@
       en: ['', 'Very poor 😞', 'Poor 😕', 'Okay 😐', 'Good 🙂', 'Excellent 🌟']
     };
 
-    window.selectEmoji = function(val) {
+    window.selectEmoji = function (val) {
       selectedEmojiVal = val;
       document.querySelectorAll('.emoji-face').forEach(btn => {
         btn.classList.toggle('selected', parseInt(btn.dataset.v) === val);
@@ -2393,7 +2441,7 @@
       document.getElementById('btn-submit-eval').style.display = 'inline-block';
     }
 
-    window.submitEval = function() {
+    window.submitEval = function () {
       const comment = document.getElementById('eval-comment')?.value.trim() || '';
       saveEntry('ratings', {
         id: uid(),
@@ -2404,7 +2452,7 @@
       });
 
       // Email notifications for evaluations have been disabled per user request
-      
+
       // Show confirmation state
       const prompt = document.getElementById('eval-prompt');
       const done = document.getElementById('eval-done');
@@ -2430,7 +2478,7 @@
 
     // Reset evaluation state when starting new request
     const origStartNew = window.startNew;
-    window.startNew = function() {
+    window.startNew = function () {
       selectedEmojiVal = 0;
       const prompt = document.getElementById('eval-prompt');
       const done = document.getElementById('eval-done');
