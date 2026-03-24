@@ -48,6 +48,26 @@ const meetingPersons = [
   "Physio",
 ];
 
+const WEB3FORMS_ACCESS_KEY = "975b13fd-2b00-4a9c-b862-54a2c9c23aff";
+
+async function sendWeb3FormsEmail(subject, messageLines) {
+  try {
+    const message = messageLines.filter(Boolean).join("\n");
+    await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject,
+        message,
+        from_name: "FMAC Operations System",
+      }),
+    });
+  } catch (err) {
+    console.error("Web3Forms error:", err);
+  }
+}
+
 function uid() {
   return Math.random().toString(36).slice(2, 10);
 }
@@ -312,6 +332,18 @@ export default function FMACOperationsSystem() {
                   </div>
                   <Button className="rounded-2xl" onClick={() => {
                     appendRecord("inquiries", { ...personal, ...inquiry, status: "New" });
+                    sendWeb3FormsEmail(
+                      `[FMAC] New Inquiry – ${personal.fullName || 'Unknown'}`,
+                      [
+                        `Name: ${personal.fullName}`,
+                        `Phone: ${personal.phone}`,
+                        `Email: ${personal.email}`,
+                        `Player: ${personal.playerName}`,
+                        `Sport: ${personal.sport}`,
+                        `Inquiry types: ${inquiry.types.join(", ") || "None"}`,
+                        `Notes: ${inquiry.notes}`,
+                      ]
+                    );
                     setInquiry({ types: [], notes: "" });
                   }}>Submit Inquiry</Button>
                 </CardContent>
@@ -339,6 +371,20 @@ export default function FMACOperationsSystem() {
                   </div>
                   <Button className="rounded-2xl" onClick={() => {
                     appendRecord("complaints", { ...personal, ...complaint, status: complaint.escalated ? "Escalated" : "Open" });
+                    sendWeb3FormsEmail(
+                      `[FMAC] New Complaint (${complaint.type}) – ${personal.fullName || 'Unknown'}`,
+                      [
+                        `Name: ${personal.fullName}`,
+                        `Phone: ${personal.phone}`,
+                        `Email: ${personal.email}`,
+                        `Player: ${personal.playerName}`,
+                        `Sport: ${personal.sport}`,
+                        `Complaint type: ${complaint.type}`,
+                        `Details: ${complaint.details}`,
+                        `Resolved by admin: ${complaint.resolvedByAdmin ? "Yes" : "No"}`,
+                        `Escalated: ${complaint.escalated ? "Yes" : "No"}`,
+                      ]
+                    );
                     setComplaint({ type: "Bus", details: "", resolvedByAdmin: false, escalated: false });
                   }}>Submit Complaint</Button>
                 </CardContent>
@@ -386,6 +432,18 @@ export default function FMACOperationsSystem() {
                   </div>
                   <Button className="rounded-2xl" onClick={() => {
                     appendRecord("calls", { ...callLog });
+                    sendWeb3FormsEmail(
+                      `[FMAC] Call Log – ${callLog.callerName || 'Unknown'} (${callLog.type})`,
+                      [
+                        `Caller: ${callLog.callerName}`,
+                        `Phone: ${callLog.callerPhone}`,
+                        `Role: ${callLog.role}`,
+                        `Sport: ${callLog.sport}`,
+                        `Complaint type: ${callLog.type}`,
+                        `Handled by: ${callLog.handledBy.join(", ") || "None"}`,
+                        `Notes: ${callLog.notes}`,
+                      ]
+                    );
                     setCallLog({ callerName: "", callerPhone: "", role: "Parent", sport: "", type: "Bus", handledBy: [], notes: "" });
                   }}>Save Call Log</Button>
                 </CardContent>
@@ -434,6 +492,17 @@ export default function FMACOperationsSystem() {
                   </div>
                   <Button className="rounded-2xl" onClick={() => {
                     appendRecord("maintenance", { ...maintenance, status: "Submitted" });
+                    sendWeb3FormsEmail(
+                      `[FMAC] Maintenance Request – ${maintenance.target === "bus" ? `Bus ${maintenance.busNumber}` : "Building"}`,
+                      [
+                        `Target: ${maintenance.target}`,
+                        maintenance.target === "building"
+                          ? `Areas: ${maintenance.buildingItems.join(", ") || "None"}`
+                          : `Bus number: ${maintenance.busNumber}`,
+                        maintenance.target === "bus" ? `Maintenance type: ${maintenance.maintenanceType}` : null,
+                        `Details: ${maintenance.details}`,
+                      ]
+                    );
                     setMaintenance({ target: "building", buildingItems: [], busNumber: "", maintenanceType: "Periodic", details: "" });
                   }}>Submit Maintenance Request</Button>
                 </CardContent>
@@ -457,6 +526,16 @@ export default function FMACOperationsSystem() {
                   </div>
                   <Button className="rounded-2xl" onClick={() => {
                     appendRecord("meetings", { ...personal, ...meeting, status: "Pending" });
+                    sendWeb3FormsEmail(
+                      `[FMAC] Meeting Request – ${personal.fullName || 'Unknown'} → ${meeting.person}`,
+                      [
+                        `Name: ${personal.fullName}`,
+                        `Phone: ${personal.phone}`,
+                        `Email: ${personal.email}`,
+                        `Person to meet: ${meeting.person}`,
+                        `Reason: ${meeting.reason}`,
+                      ]
+                    );
                     setMeeting({ person: "Club Director", reason: "" });
                   }}>Submit Meeting Request</Button>
                 </CardContent>
@@ -482,6 +561,16 @@ export default function FMACOperationsSystem() {
                   </div>
                   <Button className="rounded-2xl" onClick={() => {
                     appendRecord("ratings", { ...personal, ...rating });
+                    sendWeb3FormsEmail(
+                      `[FMAC] Experience Rating – ${rating.value}/5 from ${personal.fullName || 'Anonymous'}`,
+                      [
+                        `Name: ${personal.fullName}`,
+                        `Phone: ${personal.phone}`,
+                        `Email: ${personal.email}`,
+                        `Rating: ${rating.value}/5`,
+                        `Notes: ${rating.notes}`,
+                      ]
+                    );
                     setRating({ value: 0, notes: "" });
                   }}>Submit Rating</Button>
                 </CardContent>
