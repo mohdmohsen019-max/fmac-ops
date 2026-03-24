@@ -907,8 +907,8 @@
         المبنى</button>
       <button class="btn" id="btn-admin-tab-maint-bus" onclick="switchAdminTab('maint-bus')" type="button">🚌 صيانة
         الحافلات</button>
-      <button class="btn" id="btn-admin-tab-ratings" onclick="switchAdminTab('ratings')" type="button">🌟
-        التقييمات</button>
+      <button class="btn" id="btn-admin-tab-suggestions" onclick="switchAdminTab('suggestions')" type="button">💡
+        المقترحات</button>
     </div>
 
     <div id="admin-tab-complaints" class="admin-tab-content">
@@ -1011,10 +1011,9 @@
       </div>
     </div>
 
-    <div id="admin-tab-ratings" class="admin-tab-content" style="display:none">
+    <div id="admin-tab-suggestions" class="admin-tab-content" style="display:none">
       <div class="admin-header" style="margin-bottom: 16px;">
-        <h2>📈 تقييم الخدمة &mdash; Service Evaluations</h2>
-        <div id="admin-avg-rating" style="font-size: 20px; font-weight: 900; color: #f59e0b;"></div>
+        <h2>💡 المقترحات &mdash; Suggestions</h2>
       </div>
       <div class="admin-table-wrap">
         <table class="admin-table">
@@ -1022,11 +1021,12 @@
             <tr>
               <th>التاريخ</th>
               <th>بيانات المتعامل</th>
-              <th>التقييم</th>
-              <th>الملاحظات</th>
+              <th>القسم المعني</th>
+              <th>المقترح</th>
+              <th>الأولوية</th>
             </tr>
           </thead>
-          <tbody id="admin-ratings-tbody"></tbody>
+          <tbody id="admin-suggestions-tbody"></tbody>
         </table>
       </div>
     </div>
@@ -1047,6 +1047,8 @@
       <div class="service-grid">
         <button class="service-card active" type="button" data-target="#inquiries"
           onclick="selectService('#inquiries', this)" data-i18n="srv.inquiry">استفسار</button>
+        <button class="service-card" type="button" data-target="#suggestions"
+          onclick="selectService('#suggestions', this)" data-i18n="srv.suggestion">مقترحات</button>
         <button class="service-card" type="button" data-target="#complaints"
           onclick="selectService('#complaints', this)" data-i18n="srv.complaint">شكوى</button>
         <button class="service-card" type="button" data-target="#meeting" onclick="selectService('#meeting', this)"
@@ -1055,8 +1057,6 @@
           data-i18n="srv.call">اتصال هاتفي</button>
         <button class="service-card" type="button" data-target="#maintenance"
           onclick="selectService('#maintenance', this)" data-i18n="srv.maintenance">صيانة</button>
-        <button class="service-card" type="button" data-target="#rating" onclick="selectService('#rating', this)"
-          data-i18n="srv.rating">تقييم</button>
       </div>
       <div class="landing-actions">
         <button class="cta" type="button" onclick="startFlow()" data-i18n="cta.start">ابدأ الآن</button>
@@ -1129,6 +1129,38 @@
           <div class="pill" data-i18n="note.submit">بالنقر على إرسال سيتم تحويل الطلب إلى فريق العمليات.</div>
           <br />
           <button class="cta" data-i18n="btn.send_inquiry" type="submit">إرسال الاستفسار</button>
+        </form>
+      </section>
+      <section id="suggestions">
+        <div class="section-title"><span class="dot"></span>
+          <h2 data-i18n="suggestions.h2">المقترحات</h2>
+        </div>
+        <p class="hint" data-i18n="suggestions.hint">شاركنا مقترحاتك لتطوير الخدمات والارتقاء بمستواها.</p>
+        <form class="card" id="form-suggestions" onsubmit="event.preventDefault(); submitSuggestion();">
+          <label data-i18n="suggestions.department">القسم المعني</label>
+          <select id="sug-department" required>
+            <option value="" data-i18n="suggestions.dept.select">-- اختر القسم --</option>
+            <option value="operations" data-i18n="suggestions.dept.operations">قسم العمليات</option>
+            <option value="coaching" data-i18n="suggestions.dept.coaching">القسم الفني / التدريب</option>
+            <option value="finance" data-i18n="suggestions.dept.finance">قسم المالية</option>
+            <option value="transport" data-i18n="suggestions.dept.transport">الحافلات والنقل</option>
+            <option value="clinic" data-i18n="suggestions.dept.clinic">العيادة والصحة</option>
+            <option value="facilities" data-i18n="suggestions.dept.facilities">المرافق والمبنى</option>
+            <option value="general" data-i18n="suggestions.dept.general">عام</option>
+          </select>
+          <label style="margin-top:14px" data-i18n="suggestions.priority">الأولوية</label>
+          <div class="choices">
+            <label><input name="sug-priority" type="radio" value="low" required /> <span data-i18n="suggestions.priority.low">منخفضة</span></label>
+            <label><input name="sug-priority" type="radio" value="medium" /> <span data-i18n="suggestions.priority.medium">متوسطة</span></label>
+            <label><input name="sug-priority" type="radio" value="high" /> <span data-i18n="suggestions.priority.high">عالية</span></label>
+          </div>
+          <label data-i18n="suggestions.text">نص المقترح</label>
+          <textarea id="sug-text" data-placeholder="suggestions.text_ph" placeholder="اكتب مقترحك بوضوح وبالتفصيل..." rows="5" required></textarea>
+          <label data-i18n="suggestions.expected">النتيجة المتوقعة من التطبيق <span style="font-weight:400;color:var(--muted);">(اختياري)</span></label>
+          <textarea id="sug-expected" data-placeholder="suggestions.expected_ph" placeholder="ما الذي تتوقع تحسينه؟" rows="3"></textarea>
+          <div class="pill" data-i18n="note.submit">بالنقر على إرسال سيتم تحويل الطلب إلى فريق العمليات.</div>
+          <br />
+          <button class="cta" data-i18n="btn.send_suggestion" type="submit">إرسال المقترح</button>
         </form>
       </section>
       <section id="complaints">
@@ -1299,28 +1331,7 @@
           </div>
         </div>
       </section>
-      <section id="rating">
-        <div class="section-title"><span class="dot"></span>
-          <h2 data-i18n="rating.h2">التقييم</h2>
-        </div>
-        <div class="card">
-          <p data-i18n="rating.ask">قيّم تجربتك مع قسم العمليات من 1 إلى 5:</p>
-          <div class="rating">
-            <div class="stars" id="stars">
-              <div class="star" data-v="1">1</div>
-              <div class="star" data-v="2">2</div>
-              <div class="star" data-v="3">3</div>
-              <div class="star" data-v="4">4</div>
-              <div class="star" data-v="5">5</div>
-            </div>
-            <div class="pill" data-i18n="rating.none" id="score">لم يتم التقييم بعد</div>
-          </div>
-          <label data-i18n="rating.notes">ملاحظات</label>
-          <textarea id="rating-notes" data-placeholder="rating.notes_ph" placeholder="أخبرنا كيف يمكننا التحسين"
-            rows="3"></textarea>
-          <a class="cta" data-i18n="btn.send_rating" href="#rating" onclick="submitRating()">إرسال التقييم</a>
-        </div>
-      </section>
+
     </main>
   </div> <!-- end screen-main -->
 
@@ -1397,7 +1408,7 @@
       calls: {},
       maintenanceBuilding: {},
       maintenanceBus: {},
-      ratings: {},
+      suggestions: {},
     };
 
     window.toggleMenu = function () {
@@ -1493,11 +1504,11 @@
         'landing.lang_en': 'English',
         'landing.question': 'ما نوع الخدمة المطلوبة؟',
         'srv.inquiry': 'استفسار',
+        'srv.suggestion': 'مقترحات',
         'srv.complaint': 'شكوى',
         'srv.meeting': 'طلب لقاء',
         'srv.call': 'اتصال هاتفي',
         'srv.maintenance': 'صيانة',
-        'srv.rating': 'تقييم',
         'h1': 'مقترحات و شكاوى نادي الفجيرة للفنون القتالية',
         'lead': 'منصة موحدة لتجميع الاستفسارات والشكاوى والطلبات مع تصميم حديث وتجربة استخدام سهلة وسريعة.',
         'cta.start': 'ابدأ الآن',
@@ -1507,7 +1518,7 @@
         'form.fullname': 'اسم المتعامل', 'form.fullname_ph': 'اكتب اسمك الكامل', 'form.phone': 'رقم الهاتف', 'form.phone_ph': '05xxxxxxxx', 'form.player': 'اسم اللاعب', 'form.player_ph': 'إن وجد', 'form.sport': 'اللعبة', 'form.sport_ph': 'مثال: كرة قدم', 'form.extra': 'تفاصيل إضافية', 'form.extra_ph': 'اكتب ملاحظاتك هنا...',
         'form.caller_name': 'اسم المتصل', 'form.caller_name_ph': 'الاسم', 'form.caller_phone': 'رقم المتصل', 'form.caller_phone_ph': '05xxxxxxxx', 'form.role': 'الصفة',
         'note.submit': 'بالنقر على إرسال سيتم تحويل الطلب إلى فريق العمليات.',
-        'btn.send_inquiry': 'إرسال الاستفسار', 'btn.send_complaint': 'إرسال الشكوى', 'btn.confirm_meeting': 'تأكيد الطلب', 'btn.save_call': 'حفظ السجل', 'btn.send_building': 'إرسال الطلب', 'btn.send_bus': 'إرسال الطلب', 'btn.send_rating': 'إرسال التقييم',
+        'btn.send_inquiry': 'إرسال الاستفسار', 'btn.send_suggestion': 'إرسال المقترح', 'btn.send_complaint': 'إرسال الشكوى', 'btn.confirm_meeting': 'تأكيد الطلب', 'btn.save_call': 'حفظ السجل', 'btn.send_building': 'إرسال الطلب', 'btn.send_bus': 'إرسال الطلب',
         'complaints.h2': 'الشكاوى', 'complaints.type': 'نوع الشكوى', 'complaints.opt.bus': 'شكوى على الحافلات', 'complaints.opt.coach': 'شكوى على مدرب', 'complaints.opt.admin': 'شكوى على إداري', 'complaints.opt.player': 'شكوى على لاعب زميل', 'complaints.opt.driver': 'شكوى على سائق', 'complaints.opt.other': 'أخرى', 'complaints.bus_details': 'تفاصيل خاصة بالحافلات', 'complaints.area': 'المنطقة السكنية', 'complaints.area_ph': 'اكتب المنطقة', 'complaints.busno': 'رقم الحافلة', 'complaints.busno_ph': '123', 'complaints.player_details': 'تفاصيل خاصة باللاعبين', 'complaints.details': 'تفاصيل الشكوى', 'complaints.details_ph': 'اكتب تفاصيل الشكوى', 'complaints.resolved': 'تم الحل من قبل الإداري', 'complaints.escalate': 'إحالة الشكوى إلى رئيس القسم',
         'meeting.h3': 'طلب لقاء بالإدارة', 'meeting.hint': 'اختر الجهة التي تود مقابلتها وحدد سبب الطلب.', 'meeting.person': 'المسؤول المطلوب', 'meeting.reason': 'سبب اللقاء', 'meeting.reason_ph': 'اشرح باختصار سبب طلب اللقاء', 'meeting.o1': 'مدير النادي - مكتب المدير', 'meeting.o2': 'رئيس قسم العمليات', 'meeting.o3': 'رئيس القسم الفني', 'meeting.o4': 'رئيس قسم المالية', 'meeting.o5': 'رئيس قسم الخدمات المساندة', 'meeting.o6': 'إداري - حدد الاسم', 'meeting.admin_name': 'اسم الإداري', 'meeting.admin_name_ph': 'اكتب اسم الإداري',
         'form.complainant': 'اسم الشاكي', 'form.against': 'اسم المُشتكى عليه',
@@ -1515,7 +1526,7 @@
         'role.parent': 'ولي أمر', 'role.player': 'لاعب', 'role.other': 'أخرى',
         'maint.h2': 'الصيانة', 'maint.building': 'صيانة المبنى', 'maint.ac': 'مكيفات', 'maint.elec': 'كهرباء', 'maint.toilet': 'حمامات', 'maint.paint': 'صبغ', 'maint.other': 'أخرى', 'maint.details': 'تفاصيل الطلب', 'maint.details_ph': 'صف موقع العطل ونوعه', 'maint.bus': 'صيانة الحافلات', 'maint.busno': 'رقم الحافلة', 'maint.busno_ph': '123', 'maint.type': 'نوع الصيانة', 'maint.periodic': 'دورية', 'maint.urgent': 'عاجلة', 'maint.more': 'تفاصيل', 'maint.more_ph': 'صف المشكلة والملاحظات',
         'staff.h2': 'الإداري المرافق', 'staff.rank': 'كابتن', 'staff.p1': 'محمود منصور', 'staff.p1r': 'أخصائي الدعم اللوجستي', 'staff.p2': 'خالد محمد عيسى', 'staff.p2r': 'أخصائي الدعم اللوجستي', 'staff.p3': 'أحمد يحي', 'staff.p3r': 'الشؤون الإدارية',
-        'rating.h2': 'التقييم', 'rating.ask': 'قيّم تجربتك مع قسم العمليات من 1 إلى 5:', 'rating.none': 'لم يتم التقييم بعد', 'rating.notes': 'ملاحظات', 'rating.notes_ph': 'أخبرنا كيف يمكننا التحسين',
+        'suggestions.h2': 'المقترحات', 'suggestions.hint': 'شاركنا مقترحاتك لتطوير الخدمات والارتقاء بمستواها.', 'suggestions.department': 'القسم المعني', 'suggestions.dept.select': '-- اختر القسم --', 'suggestions.dept.operations': 'قسم العمليات', 'suggestions.dept.coaching': 'القسم الفني / التدريب', 'suggestions.dept.finance': 'قسم المالية', 'suggestions.dept.transport': 'الحافلات والنقل', 'suggestions.dept.clinic': 'العيادة والصحة', 'suggestions.dept.facilities': 'المرافق والمبنى', 'suggestions.dept.general': 'عام', 'suggestions.priority': 'الأولوية', 'suggestions.priority.low': 'منخفضة', 'suggestions.priority.medium': 'متوسطة', 'suggestions.priority.high': 'عالية', 'suggestions.text': 'نص المقترح', 'suggestions.text_ph': 'اكتب مقترحك بوضوح وبالتفصيل...', 'suggestions.expected': 'النتيجة المتوقعة من التطبيق', 'suggestions.expected_ph': 'ما الذي تتوقع تحسينه؟',
         'personal.h2': 'البيانات الشخصية',
         'form.email': 'البريد الإلكتروني', 'form.email_ph': 'example@email.com',
         'nav.personal': 'البيانات الشخصية',
@@ -1523,7 +1534,7 @@
         'thanks.title': 'شكرًا لك',
         'thanks.subtitle': 'تم استلام طلبك، وسيقوم فريق العمليات بالمتابعة.',
         'thanks.new': 'إرسال طلب جديد',
-        'toast.inq': 'تم تسجيل الاستفسار ✅', 'toast.comp': 'تم إرسال الشكوى 📬', 'toast.meet': 'تم تسجيل طلب اللقاء 🗓️', 'toast.call': 'تم حفظ سجل المكالمة ☎️', 'toast.maint_b': 'تم إرسال طلب صيانة المبنى 🧰', 'toast.maint_bus': 'تم إرسال طلب صيانة الحافلة 🚌', 'toast.rate': 'شكرًا لمشاركتك رأيك 🌟',
+        'toast.inq': 'تم تسجيل الاستفسار ✅', 'toast.suggestion': 'تم إرسال مقترحك بنجاح 💡', 'toast.comp': 'تم إرسال الشكوى 📬', 'toast.meet': 'تم تسجيل طلب اللقاء 🗓️', 'toast.call': 'تم حفظ سجل المكالمة ☎️', 'toast.maint_b': 'تم إرسال طلب صيانة المبنى 🧰', 'toast.maint_bus': 'تم إرسال طلب صيانة الحافلة 🚌',
         'btn.next_service': 'التالي',
         'btn.export_admin': 'تصدير البيانات (للاستخدام الإداري)'
       },
@@ -1540,11 +1551,11 @@
         'landing.lang_en': 'English',
         'landing.question': 'What type of service do you need?',
         'srv.inquiry': 'Inquiry',
+        'srv.suggestion': 'Suggestions',
         'srv.complaint': 'Complaint',
         'srv.meeting': 'Meeting request',
         'srv.call': 'Phone call',
         'srv.maintenance': 'Maintenance',
-        'srv.rating': 'Rating',
         'h1': 'Fujairah Martial Arts Club Suggestions & Complaints',
         'lead': 'A unified portal for inquiries, complaints, and requests—modern design with a smooth, fast UX.',
         'cta.start': 'Get Started',
@@ -1554,7 +1565,7 @@
         'form.fullname': 'Full name', 'form.fullname_ph': 'Enter your full name', 'form.phone': 'Phone number', 'form.phone_ph': '05xxxxxxxx', 'form.player': 'Player name', 'form.player_ph': 'If any', 'form.sport': 'Sport', 'form.sport_ph': 'e.g., Football', 'form.extra': 'Additional details', 'form.extra_ph': 'Write your notes here...',
         'form.caller_name': 'Caller name', 'form.caller_name_ph': 'Name', 'form.caller_phone': 'Caller phone', 'form.caller_phone_ph': '05xxxxxxxx', 'form.role': 'Role',
         'note.submit': 'By submitting, your request will be forwarded to the Operations team.',
-        'btn.send_inquiry': 'Send Inquiry', 'btn.send_complaint': 'Send Complaint', 'btn.confirm_meeting': 'Confirm Request', 'btn.save_call': 'Save Log', 'btn.send_building': 'Submit', 'btn.send_bus': 'Submit', 'btn.send_rating': 'Send Rating',
+        'btn.send_inquiry': 'Send Inquiry', 'btn.send_suggestion': 'Submit Suggestion', 'btn.send_complaint': 'Send Complaint', 'btn.confirm_meeting': 'Confirm Request', 'btn.save_call': 'Save Log', 'btn.send_building': 'Submit', 'btn.send_bus': 'Submit',
         'complaints.h2': 'Complaints', 'complaints.type': 'Complaint type', 'complaints.opt.bus': 'Bus related', 'complaints.opt.coach': 'About a coach', 'complaints.opt.admin': 'About an admin', 'complaints.opt.player': 'About a teammate', 'complaints.opt.driver': 'About a driver', 'complaints.opt.other': 'Other', 'complaints.bus_details': 'Bus-specific details', 'complaints.area': 'Residential area', 'complaints.area_ph': 'Write the area', 'complaints.busno': 'Bus number', 'complaints.busno_ph': '123', 'complaints.player_details': 'Player-related details', 'complaints.details': 'Complaint details', 'complaints.details_ph': 'Write the complaint details', 'complaints.resolved': 'Resolved by admin', 'complaints.escalate': 'Escalate to head of department',
         'meeting.h3': 'Request a Meeting', 'meeting.hint': 'Choose whom you want to meet and specify the reason.', 'meeting.person': 'Person to meet', 'meeting.reason': 'Reason for meeting', 'meeting.reason_ph': 'Briefly explain the reason', 'meeting.o1': 'Club Manager - Manager\'s Office', 'meeting.o2': 'Head of Operations Dept.', 'meeting.o3': 'Head of Technical Dept.', 'meeting.o4': 'Head of Finance Dept.', 'meeting.o5': 'Head of Support Services Dept.', 'meeting.o6': 'Administrator - Specify name', 'meeting.admin_name': 'Administrator Name', 'meeting.admin_name_ph': 'Enter Administrator\'s name',
         'form.complainant': 'Complainant name', 'form.against': 'Against',
@@ -1562,7 +1573,7 @@
         'role.parent': 'Parent', 'role.player': 'Player', 'role.other': 'Other',
         'maint.h2': 'Maintenance', 'maint.building': 'Building maintenance', 'maint.ac': 'Air conditioning', 'maint.elec': 'Electrical', 'maint.toilet': 'Restrooms', 'maint.paint': 'Painting', 'maint.other': 'Other', 'maint.details': 'Request details', 'maint.details_ph': 'Describe the issue and location', 'maint.bus': 'Bus maintenance', 'maint.busno': 'Bus number', 'maint.busno_ph': '123', 'maint.type': 'Maintenance type', 'maint.periodic': 'Periodic', 'maint.urgent': 'Urgent', 'maint.more': 'Details', 'maint.more_ph': 'Describe the issue & notes',
         'staff.h2': 'Accompanying Staff', 'staff.rank': 'Captain', 'staff.p1': 'Mahmoud Mansour', 'staff.p1r': 'Logistics Specialist', 'staff.p2': 'Khaled Mohamed Eissa', 'staff.p2r': 'Logistics Specialist', 'staff.p3': 'Ahmed Yehia', 'staff.p3r': 'Admin Affairs',
-        'rating.h2': 'Rating', 'rating.ask': 'Rate your experience with Operations (1–5):', 'rating.none': 'Not rated yet', 'rating.notes': 'Notes', 'rating.notes_ph': 'Tell us how to improve',
+        'suggestions.h2': 'Suggestions', 'suggestions.hint': 'Share your suggestions to help improve our services.', 'suggestions.department': 'Relevant department', 'suggestions.dept.select': '-- Select department --', 'suggestions.dept.operations': 'Operations', 'suggestions.dept.coaching': 'Technical / Coaching', 'suggestions.dept.finance': 'Finance', 'suggestions.dept.transport': 'Transport & Buses', 'suggestions.dept.clinic': 'Clinic & Health', 'suggestions.dept.facilities': 'Facilities & Building', 'suggestions.dept.general': 'General', 'suggestions.priority': 'Priority', 'suggestions.priority.low': 'Low', 'suggestions.priority.medium': 'Medium', 'suggestions.priority.high': 'High', 'suggestions.text': 'Suggestion', 'suggestions.text_ph': 'Write your suggestion clearly and in detail...', 'suggestions.expected': 'Expected outcome (optional)', 'suggestions.expected_ph': 'What improvement do you expect?',
         'personal.h2': 'Personal Info',
         'form.email': 'Email', 'form.email_ph': 'example@email.com',
         'nav.personal': 'Personal Info',
@@ -1570,7 +1581,7 @@
         'thanks.title': 'Thank you',
         'thanks.subtitle': 'Your request has been received. The Operations team will follow up.',
         'thanks.new': 'Submit another request',
-        'toast.inq': 'Inquiry recorded ✅', 'toast.comp': 'Complaint sent 📬', 'toast.meet': 'Meeting request saved 🗓️', 'toast.call': 'Call log saved ☎️', 'toast.maint_b': 'Building maintenance request sent 🧰', 'toast.maint_bus': 'Bus maintenance request sent 🚌', 'toast.rate': 'Thanks for your feedback 🌟',
+        'toast.inq': 'Inquiry recorded ✅', 'toast.suggestion': 'Suggestion submitted successfully 💡', 'toast.comp': 'Complaint sent 📬', 'toast.meet': 'Meeting request saved 🗓️', 'toast.call': 'Call log saved ☎️', 'toast.maint_b': 'Building maintenance request sent 🧰', 'toast.maint_bus': 'Bus maintenance request sent 🚌',
         'btn.next_service': 'Next',
         'btn.export_admin': 'Export Data (For Admin Use)'
       }
@@ -1658,7 +1669,7 @@
         calls: Object.values(currentData.calls || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
         maintenanceBuilding: Object.values(currentData.maintenanceBuilding || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
         maintenanceBus: Object.values(currentData.maintenanceBus || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-        ratings: Object.values(currentData.ratings || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        suggestions: Object.values(currentData.suggestions || {}).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
         raw: currentData // For direct modifications
       };
     }
@@ -1673,7 +1684,7 @@
       // Re-convert arrays back to objects mapped by id before saving entirely 
       // This is less efficient than saveEntry but works for status toggles
       const toSave = {};
-      for (const key of ['inquiries', 'complaints', 'calls', 'maintenanceBuilding', 'maintenanceBus', 'ratings']) {
+      for (const key of ['inquiries', 'complaints', 'calls', 'maintenanceBuilding', 'maintenanceBus', 'suggestions']) {
         toSave[key] = {};
         if (updatedDb[key]) {
           for (const item of updatedDb[key]) {
@@ -1840,27 +1851,27 @@
       showThanks();
     }
 
-    window.submitRating = function () {
-      const db = loadDb();
-      const activeStar = document.querySelector('.star.active:last-of-type');
-      let value = 0;
-      if (activeStar) {
-        value = parseInt(activeStar.dataset.v, 10) || 0;
-      }
-      const notes = document.getElementById('rating-notes')?.value.trim() || '';
+    window.submitSuggestion = function () {
+      const department = document.getElementById('sug-department')?.value || '';
+      const priorityInput = document.querySelector('input[name="sug-priority"]:checked');
+      const priority = priorityInput ? priorityInput.value : '';
+      const text = document.getElementById('sug-text')?.value.trim() || '';
+      const expected = document.getElementById('sug-expected')?.value.trim() || '';
       const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
-        value,
-        notes,
+        department,
+        priority,
+        text,
+        expected,
         ...getPersonal(),
       };
-      saveEntry('ratings', entry);
+      saveEntry('suggestions', entry);
 
       // Send Email
-      sendEmailNotification('Rating (تقييم)', entry);
+      sendEmailNotification('Suggestion (مقترح)', entry);
 
-      toast(i18n[msgLang]['toast.rate']);
+      toast(i18n[msgLang]['toast.suggestion']);
       showThanks();
     }
 
@@ -1869,11 +1880,11 @@
 
       const tables = [
         { title: "الاستفسارات (Inquiries)", data: db.inquiries },
+        { title: "المقترحات (Suggestions)", data: db.suggestions },
         { title: "الشكاوى (Complaints)", data: db.complaints },
         { title: "الاتصالات (Calls)", data: db.calls },
         { title: "صيانة المبنى (Building Maintenance)", data: db.maintenanceBuilding },
-        { title: "صيانة الحافلات (Bus Maintenance)", data: db.maintenanceBus },
-        { title: "التقييمات (Ratings)", data: db.ratings }
+        { title: "صيانة الحافلات (Bus Maintenance)", data: db.maintenanceBus }
       ];
 
       let csvContent = "\uFEFF"; // BOM for UTF-8 Excel support
@@ -1947,7 +1958,7 @@
 
     function showPersonalStep() {
       const personal = document.getElementById('personal-data');
-      const serviceIds = ['inquiries', 'complaints', 'meeting', 'calls', 'maintenance', 'staff', 'rating'];
+      const serviceIds = ['inquiries', 'suggestions', 'complaints', 'meeting', 'calls', 'maintenance', 'staff'];
       if (personal) personal.style.display = 'block';
       serviceIds.forEach(id => {
         const el = document.getElementById(id);
@@ -1961,7 +1972,7 @@
     window.goToServiceStep = function () {
       const personal = document.getElementById('personal-data');
       if (personal) personal.style.display = 'none';
-      const serviceIds = ['inquiries', 'complaints', 'meeting', 'calls', 'maintenance', 'staff', 'rating'];
+      const serviceIds = ['inquiries', 'suggestions', 'complaints', 'meeting', 'calls', 'maintenance', 'staff'];
       serviceIds.forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -2004,7 +2015,7 @@
       if (callsForm) callsForm.reset();
       const maintForms = document.querySelectorAll('section#maintenance form');
       maintForms.forEach(f => f.reset());
-      document.getElementById('rating-notes') && (document.getElementById('rating-notes').value = '');
+      document.getElementById('form-suggestions')?.reset();
       document.getElementById('call-notes') && (document.getElementById('call-notes').value = '');
       selectedServiceId = '#inquiries';
       selectService('#inquiries', document.querySelector('.service-card[data-target="#inquiries"]'));
@@ -2184,7 +2195,7 @@
         case 'calls': renderCallsTable(db.calls || []); break;
         case 'maint-b': renderMaintBTable(db.maintenanceBuilding || []); break;
         case 'maint-bus': renderMaintBusTable(db.maintenanceBus || []); break;
-        case 'ratings': renderRatingsTable(db.ratings || []); break;
+        case 'suggestions': renderSuggestionsTable(db.suggestions || []); break;
       }
     }
 
@@ -2374,7 +2385,39 @@
       renderComplaintsTable(complaints);
     }
 
+    function renderSuggestionsTable(suggestions) {
+      const tbody = document.getElementById('admin-suggestions-tbody');
+      if (!tbody) return;
+
+      if (suggestions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="empty-admin">لا توجد مقترحات مسجلة بعد<br><span style="font-size:12px;opacity:.6">No suggestions recorded yet</span></td></tr>`;
+        return;
+      }
+
+      const priorityMap = { low: '🟢 منخفضة', medium: '🟡 متوسطة', high: '🔴 عالية' };
+      tbody.innerHTML = suggestions.map(s => {
+        const date = new Date(s.createdAt).toLocaleString('ar-SA', { dateStyle: 'short', timeStyle: 'short' });
+        const contact = [s.fullName, s.phone].filter(Boolean).join(' / ') || '-';
+        const dept = s.department || '-';
+        const text = (s.text || '').substring(0, 80) + (s.text && s.text.length > 80 ? '…' : '');
+        const priority = priorityMap[s.priority] || s.priority || '-';
+        return `
+          <tr>
+            <td>${date}</td>
+            <td>${contact}</td>
+            <td>${dept}</td>
+            <td title="${s.text || ''}">${text || '-'}</td>
+            <td>${priority}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    // Keep renderRatingsTable stub to avoid JS errors from old data references
     function renderRatingsTable(ratings) {
+      // No longer used — ratings replaced by suggestions
+    }
+
+    function _legacyRatingsTableBody(ratings) {
       const tbody = document.getElementById('admin-ratings-tbody');
       const avgEl = document.getElementById('admin-avg-rating');
       if (!tbody) return;
