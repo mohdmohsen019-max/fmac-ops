@@ -8,7 +8,7 @@
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title data-i18n="title">مقترحات و شكاوى نادي الفجيرة للفنون القتالية</title>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
   <style>
     :root {
@@ -16,8 +16,8 @@
       --fg: #f9fafb;
       --muted: #a1a1aa;
       --card: #121417;
-      --brand: #D6D2BF;
-      --brand-2: #E63946;
+      --brand: #DED2C1;
+      --brand-2: #C70017;
       --accent: #1f1f1f;
       --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       --radius: 20px;
@@ -25,8 +25,8 @@
       --overlay: rgba(255, 255, 255, 0.04);
       --overlay-strong: rgba(255, 255, 255, 0.1);
       --body-bg:
-        radial-gradient(1200px 600px at 100% -20%, rgba(0, 133, 74, 0.15), transparent 60%),
-        radial-gradient(1000px 500px at -10% 110%, rgba(230, 57, 70, 0.15), transparent 55%),
+        radial-gradient(1200px 600px at 100% -20%, rgba(193, 210, 222, 0.15), transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, rgba(199, 0, 23, 0.15), transparent 55%),
         linear-gradient(180deg, #050607, var(--bg));
       --nav-bg: rgba(9, 10, 11, 0.7);
       --card-bg: linear-gradient(180deg, rgba(18, 20, 23, 0.8), rgba(12, 14, 16, 0.8));
@@ -47,8 +47,8 @@
       --overlay: rgba(15, 23, 42, 0.04);
       --overlay-strong: rgba(15, 23, 42, 0.08);
       --body-bg:
-        radial-gradient(1200px 600px at 100% -20%, rgba(0, 133, 74, 0.1), transparent 60%),
-        radial-gradient(1000px 500px at -10% 110%, rgba(230, 57, 70, 0.08), transparent 55%),
+        radial-gradient(1200px 600px at 100% -20%, rgba(193, 210, 222, 0.1), transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, rgba(199, 0, 23, 0.08), transparent 55%),
         linear-gradient(180deg, #ffffff, #f1f5f9);
       --nav-bg: rgba(255, 255, 255, 0.8);
       --card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
@@ -64,7 +64,7 @@
 
     body {
       margin: 0;
-      font-family: "Cairo", "Inter", -apple-system, system-ui, sans-serif;
+      font-family: "DIN Arabic", "Inter", -apple-system, system-ui, sans-serif;
       color: var(--fg);
       background: var(--body-bg);
       background-color: var(--bg);
@@ -295,7 +295,7 @@
       height: 10px;
       border-radius: 50%;
       background: var(--brand-2);
-      filter: drop-shadow(0 0 6px rgba(210, 31, 43, .8));
+      filter: drop-shadow(0 0 6px rgba(199, 0, 23, 0.8));
     }
 
     .cta {
@@ -311,14 +311,14 @@
       font-weight: 800;
       letter-spacing: .4px;
       margin-top: 14px;
-      box-shadow: 0 4px 14px rgba(230, 57, 70, 0.4);
+      box-shadow: 0 4px 14px rgba(199, 0, 23, 0.4);
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
+      box-shadow: 0 6px 20px rgba(199, 0, 23, 0.6);
     }
 
     form .row {
@@ -350,7 +350,7 @@
     select:focus,
     textarea:focus {
       border-color: var(--brand-2);
-      box-shadow: 0 0 0 3px rgba(210, 31, 43, .2);
+      box-shadow: 0 0 0 3px rgba(199, 0, 23, 0.2);
     }
 
     /* ✅ Fixed classic checkbox/radio layout */
@@ -543,7 +543,7 @@
 
     .service-card.active {
       border-color: var(--brand-2);
-      box-shadow: 0 0 0 2px rgba(210, 31, 43, .3);
+      box-shadow: 0 0 0 2px rgba(199, 0, 23, 0.3);
       background: var(--overlay-strong);
     }
 
@@ -752,7 +752,7 @@
     }
 
     .badge-escalated {
-      background: rgba(230, 57, 70, .15);
+      background: rgba(199, 0, 23, 0.15);
       color: var(--brand-2);
     }
 
@@ -783,7 +783,7 @@
     }
 
     .icon-btn.active-escalate {
-      background: rgba(230, 57, 70, .2);
+      background: rgba(199, 0, 23, 0.2);
       border-color: var(--brand-2);
       color: var(--brand-2);
     }
@@ -1092,6 +1092,14 @@
               <label data-i18n="form.sport">اللعبة</label>
               <input data-placeholder="form.sport_ph" id="inq-sport" placeholder="مثال: كرة قدم" type="text" />
             </div>
+            <div>
+              <label data-i18n="form.branch">الفرع</label>
+              <select id="inq-branch" required>
+                <option value="" data-i18n="form.branch.select" disabled selected>-- اختر الفرع --</option>
+                <option value="Fujairah" data-i18n="form.branch.fujairah">فرع الفجيرة</option>
+                <option value="Dibba" data-i18n="form.branch.dibba">فرع دبا</option>
+              </select>
+            </div>
           </div>
           <div style="margin-top:16px; text-align:left;">
             <button class="cta" type="submit" data-i18n="btn.next_service">التالي</button>
@@ -1171,19 +1179,25 @@
           <form class="card" onsubmit="event.preventDefault(); submitComplaint();">
             <h3 data-i18n="complaints.type">نوع الشكوى</h3>
             <div class="choices">
-              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.bus">شكوى على
+              <label><input name="c-type" type="radio" value="bus" onchange="toggleComplaintExtra(this.value)" required /> <span data-i18n="complaints.opt.bus">شكوى على
                   الحافلات</span></label>
-              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.coach">شكوى على
+              <label><input name="c-type" type="radio" value="coach" onchange="toggleComplaintExtra(this.value)" required /> <span data-i18n="complaints.opt.coach">شكوى على
                   مدرب</span></label>
-              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.admin">شكوى على
+              <label><input name="c-type" type="radio" value="admin" onchange="toggleComplaintExtra(this.value)" required /> <span data-i18n="complaints.opt.admin">شكوى على
                   إداري</span></label>
-              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.player">شكوى على لاعب
+              <label><input name="c-type" type="radio" value="player" onchange="toggleComplaintExtra(this.value)" required /> <span data-i18n="complaints.opt.player">شكوى على لاعب
                   زميل</span></label>
-              <label><input name="c-type" type="radio" required /> <span data-i18n="complaints.opt.driver">شكوى على
+              <label><input name="c-type" type="radio" value="driver" onchange="toggleComplaintExtra(this.value)" required /> <span data-i18n="complaints.opt.driver">شكوى على
                   سائق</span></label>
-              <label><input name="c-type" type="radio" required /> <span
+              <label><input name="c-type" type="radio" value="other" onchange="toggleComplaintExtra(this.value)" required /> <span
                   data-i18n="complaints.opt.other">أخرى</span></label>
             </div>
+            
+            <div id="complaints-extra" style="display:none; margin-bottom:12px;">
+              <label id="complaints-extra-label"></label>
+              <input type="text" id="complaints-extra-input" />
+            </div>
+            
             <label data-i18n="complaints.details">تفاصيل الشكوى</label>
             <textarea id="complaint-details" data-placeholder="complaints.details_ph" placeholder="اكتب تفاصيل الشكوى"
               rows="4" required></textarea>
@@ -1241,6 +1255,14 @@
             </div>
             <div><label data-i18n="form.sport">اللعبة</label><input data-placeholder="form.sport_ph"
                 placeholder="مثال: كرة سلة" type="text" required /></div>
+            <div>
+              <label data-i18n="form.branch">الفرع</label>
+              <select id="call-branch" required>
+                <option value="" data-i18n="form.branch.select" disabled selected>-- اختر الفرع --</option>
+                <option value="Fujairah" data-i18n="form.branch.fujairah">فرع الفجيرة</option>
+                <option value="Dibba" data-i18n="form.branch.dibba">فرع دبا</option>
+              </select>
+            </div>
           </div>
           <label data-i18n="calls.type">نوع الشكوى</label>
           <div class="choices">
@@ -1271,6 +1293,14 @@
         <div class="grid">
           <form class="card" onsubmit="event.preventDefault(); submitBuildingMaintenance();">
             <h3 data-i18n="maint.building">صيانة المبنى</h3>
+            <div style="margin-bottom: 12px; max-width: 240px;">
+              <label data-i18n="form.branch">الفرع</label>
+              <select id="maint-b-branch" required style="margin-top: 4px;">
+                <option value="" data-i18n="form.branch.select" disabled selected>-- اختر الفرع --</option>
+                <option value="Fujairah" data-i18n="form.branch.fujairah">فرع الفجيرة</option>
+                <option value="Dibba" data-i18n="form.branch.dibba">فرع دبا</option>
+              </select>
+            </div>
             <div class="choices">
               <label><input type="checkbox" /> <span data-i18n="maint.ac">مكيفات</span></label>
               <label><input type="checkbox" /> <span data-i18n="maint.elec">كهرباء</span></label>
@@ -1285,6 +1315,14 @@
           </form>
           <form class="card" onsubmit="event.preventDefault(); submitBusMaintenance();">
             <h3 data-i18n="maint.bus">صيانة الحافلات</h3>
+            <div style="margin-bottom: 12px; max-width: 240px;">
+              <label data-i18n="form.branch">الفرع</label>
+              <select id="maint-bus-branch" required style="margin-top: 4px;">
+                <option value="" data-i18n="form.branch.select" disabled selected>-- اختر الفرع --</option>
+                <option value="Fujairah" data-i18n="form.branch.fujairah">فرع الفجيرة</option>
+                <option value="Dibba" data-i18n="form.branch.dibba">فرع دبا</option>
+              </select>
+            </div>
             <div class="row">
               <div><label data-i18n="maint.busno">رقم الحافلة</label><input data-placeholder="maint.busno_ph"
                   placeholder="123" type="text" required /></div>
@@ -1536,7 +1574,16 @@
         'thanks.new': 'إرسال طلب جديد',
         'toast.inq': 'تم تسجيل الاستفسار ✅', 'toast.suggestion': 'تم إرسال مقترحك بنجاح 💡', 'toast.comp': 'تم إرسال الشكوى 📬', 'toast.meet': 'تم تسجيل طلب اللقاء 🗓️', 'toast.call': 'تم حفظ سجل المكالمة ☎️', 'toast.maint_b': 'تم إرسال طلب صيانة المبنى 🧰', 'toast.maint_bus': 'تم إرسال طلب صيانة الحافلة 🚌',
         'btn.next_service': 'التالي',
-        'btn.export_admin': 'تصدير البيانات (للاستخدام الإداري)'
+        'btn.export_admin': 'تصدير البيانات (للاستخدام الإداري)',
+        'form.branch': 'الفرع',
+        'form.branch.select': '-- اختر الفرع --',
+        'form.branch.fujairah': 'فرع الفجيرة',
+        'form.branch.dibba': 'فرع دبا',
+        'complaints.extra.bus': 'رقم الحافلة',
+        'complaints.extra.coach': 'اسم المدرب',
+        'complaints.extra.admin': 'اسم الإداري',
+        'complaints.extra.player': 'اسم اللاعب',
+        'complaints.extra.driver': 'اسم السائق'
       },
       en: {
         'lang.btn': 'العربية',
@@ -1583,7 +1630,16 @@
         'thanks.new': 'Submit another request',
         'toast.inq': 'Inquiry recorded ✅', 'toast.suggestion': 'Suggestion submitted successfully 💡', 'toast.comp': 'Complaint sent 📬', 'toast.meet': 'Meeting request saved 🗓️', 'toast.call': 'Call log saved ☎️', 'toast.maint_b': 'Building maintenance request sent 🧰', 'toast.maint_bus': 'Bus maintenance request sent 🚌',
         'btn.next_service': 'Next',
-        'btn.export_admin': 'Export Data (For Admin Use)'
+        'btn.export_admin': 'Export Data (For Admin Use)',
+        'form.branch': 'Branch',
+        'form.branch.select': '-- Select Branch --',
+        'form.branch.fujairah': 'Fujairah Branch',
+        'form.branch.dibba': 'Dibba Branch',
+        'complaints.extra.bus': 'Bus Number',
+        'complaints.extra.coach': 'Coach Name',
+        'complaints.extra.admin': 'Administrator Name',
+        'complaints.extra.player': 'Teammate Name',
+        'complaints.extra.driver': 'Driver Name'
       }
     };
 
@@ -1700,6 +1756,7 @@
         fullName: document.getElementById('inq-name')?.value.trim() || '',
         phone: document.getElementById('inq-phone')?.value.trim() || '',
         email: document.getElementById('inq-email')?.value.trim() || '',
+        branch: document.getElementById('inq-branch')?.value.trim() || '',
         playerName: document.getElementById('inq-player')?.value.trim() || '',
         sport: document.getElementById('inq-sport')?.value.trim() || '',
       };
@@ -1729,7 +1786,16 @@
       const db = loadDb();
       const typeInput = document.querySelector('input[name="c-type"]:checked');
       const type = typeInput ? typeInput.nextElementSibling?.textContent.trim() : '';
-      const details = document.getElementById('complaint-details')?.value.trim() || '';
+      let details = document.getElementById('complaint-details')?.value.trim() || '';
+      
+      if (typeInput && typeInput.value !== 'other') {
+        const extraLabel = document.getElementById('complaints-extra-label')?.textContent || '';
+        const extraValue = document.getElementById('complaints-extra-input')?.value.trim() || '';
+        if (extraValue) {
+            details = `${extraLabel}: ${extraValue}\\n\\n${details}`;
+        }
+      }
+      
       const entry = {
         id: uid(),
         createdAt: new Date().toISOString(),
@@ -1787,8 +1853,10 @@
       const typeInput = document.querySelector('input[name="call-type"]:checked');
       const type = typeInput ? typeInput.nextElementSibling?.textContent.trim() : '';
       const notes = document.getElementById('call-notes')?.value.trim() || '';
+      const branch = document.getElementById('call-branch')?.value.trim() || '';
 
       const entry = {
+        branch,
         id: uid(),
         createdAt: new Date().toISOString(),
         callerName,
@@ -1813,7 +1881,10 @@
       const db = loadDb();
       const items = Array.from(document.querySelectorAll('section#maintenance form:first-of-type .choices input[type="checkbox"]:checked')).map(i => i.nextElementSibling?.textContent.trim());
       const details = document.getElementById('maint-building-notes')?.value.trim() || '';
+      const branch = document.getElementById('maint-b-branch')?.value.trim() || '';
+      
       const entry = {
+        branch,
         id: uid(),
         createdAt: new Date().toISOString(),
         items,
@@ -1835,7 +1906,10 @@
       const typeSelect = document.querySelector('section#maintenance form:last-of-type select');
       const maintenanceType = typeSelect ? typeSelect.value : '';
       const details = document.getElementById('maint-bus-notes')?.value.trim() || '';
+      const branch = document.getElementById('maint-bus-branch')?.value.trim() || '';
+      
       const entry = {
+        branch,
         id: uid(),
         createdAt: new Date().toISOString(),
         busNumber,
@@ -2025,6 +2099,34 @@
       const el = document.getElementById('admin-name-container');
       if (el) {
         el.style.display = val === 'o6' ? 'block' : 'none';
+      }
+    }
+
+    window.toggleComplaintExtra = function (val) {
+      const extraDiv = document.getElementById('complaints-extra');
+      const extraLabel = document.getElementById('complaints-extra-label');
+      const extraInput = document.getElementById('complaints-extra-input');
+      
+      const config = {
+        'bus': 'complaints.extra.bus',
+        'coach': 'complaints.extra.coach',
+        'admin': 'complaints.extra.admin',
+        'player': 'complaints.extra.player',
+        'driver': 'complaints.extra.driver'
+      };
+      
+      if (config[val]) {
+        extraDiv.style.display = 'block';
+        const labelKey = config[val];
+        extraLabel.setAttribute('data-i18n', labelKey);
+        if (i18n[msgLang] && i18n[msgLang][labelKey]) {
+            extraLabel.textContent = i18n[msgLang][labelKey];
+        }
+        extraInput.setAttribute('required', 'true');
+      } else {
+        extraDiv.style.display = 'none';
+        extraInput.removeAttribute('required');
+        extraInput.value = '';
       }
     }
 
