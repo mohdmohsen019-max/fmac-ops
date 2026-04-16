@@ -8,7 +8,7 @@ import { LogOut, ArrowRight, Clock, CheckCircle2, AlertCircle, Inbox, HelpCircle
 import Link from "next/link";
 import { RequestType } from "@/store/requestStore";
 
-type TabType = "all" | RequestType;
+type TabType = "all" | Exclude<RequestType, null>;
 
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -232,7 +232,7 @@ export default function AdminPage() {
         <nav className="flex-1 space-y-1">
           {tabs.map(tab => {
             const Icon = tab.icon;
-            const count = tab.id === 'all' ? requests.length : statsByType[tab.id as RequestType];
+            const count = tab.id === 'all' ? requests.length : statsByType[tab.id as Exclude<RequestType, null>];
             return (
               <button
                 key={tab.id}
@@ -260,7 +260,7 @@ export default function AdminPage() {
         <div className="mt-10 pt-6 border-t border-gray-100">
           <div className="px-4 mb-4">
             <div className="text-[10px] font-black text-gray-300 uppercase mb-1 tracking-widest">Admin</div>
-            <div className="text-[11px] font-bold text-gray-400 truncate">{user.email}</div>
+            <div className="text-[11px] font-bold text-gray-400 truncate">{user?.email}</div>
           </div>
           <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-2xl transition-all font-black text-xs uppercase tracking-widest">
             <LogOut className="w-4 h-4" /> Sign Out
