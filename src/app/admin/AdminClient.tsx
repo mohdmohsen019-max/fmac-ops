@@ -41,7 +41,7 @@ export default function AdminClient() {
     if (!user || !mounted || !db) return;
     const q = query(collection(db, "requests"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const data = snapshot.docs.map(docObj => ({ id: docObj.id, ...docObj.data() }));
       setRequests(data);
     });
     return () => unsubscribe();

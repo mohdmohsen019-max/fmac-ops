@@ -49,12 +49,13 @@ export default function RequestDetailsClient() {
   }, [id, user, router, mounted]);
 
   const updateStatus = async (status: string) => {
+    if (!db) return;
     const ref = doc(db, "requests", id);
     await updateDoc(ref, { status });
   };
 
   const addNote = async () => {
-    if (!newNote.trim()) return;
+    if (!newNote.trim() || !db) return;
     const ref = doc(db, "requests", id);
     await updateDoc(ref, {
       "admin.internalNotes": arrayUnion({
