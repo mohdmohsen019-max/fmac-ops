@@ -159,7 +159,15 @@ export default function RequestDetailsClient() {
                   <div className="space-y-2">
                     <div className="text-2xl font-black text-[var(--color-espresso)] tracking-tight">{request.userInfo?.name}</div>
                     <div className="text-sm font-bold text-gray-500">{request.userInfo?.phone} &bull; {request.userInfo?.email || 'No Email'}</div>
-                    <div className="inline-block px-3 py-1 bg-[var(--color-beige)] text-[var(--color-terracotta)] text-[10px] font-black rounded-md uppercase tracking-widest mt-2">{request.userInfo?.branch} Branch</div>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <span className="px-3 py-1 bg-[var(--color-beige)] text-[var(--color-terracotta)] text-[10px] font-black rounded-md uppercase tracking-widest">{request.userInfo?.branch} Branch</span>
+                      {request.userInfo?.sport && (
+                        <span className="px-3 py-1 bg-black text-white text-[10px] font-black rounded-md uppercase tracking-widest">{request.userInfo?.sport}</span>
+                      )}
+                      {request.userInfo?.playerName && (
+                        <span className="px-3 py-1 bg-gray-100 text-gray-600 text-[10px] font-black rounded-md uppercase tracking-widest">Player: {request.userInfo?.playerName}</span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -168,18 +176,45 @@ export default function RequestDetailsClient() {
                     <Tag className="w-3 h-3" /> Service specifics
                   </h3>
                   <div className="grid grid-cols-2 gap-y-6 gap-x-4">
-                    {renderServiceDetail('Against/Type', s.complaintType)}
-                    {renderServiceDetail('Target Name', s.againstName)}
-                    {renderServiceDetail('Bus #', s.busNumber || s.maintenanceBusNo)}
-                    {renderServiceDetail('Maint. Target', s.maintenanceTarget)}
-                    {renderServiceDetail('Maint. Type', s.maintenanceCategories)}
-                    {renderServiceDetail('Department', s.suggestionDept)}
-                    {renderServiceDetail('Inquiry Cat.', s.inquiryCategories)}
-                    {renderServiceDetail('Call Subject', request.content?.description ? null : s.callSubject)}
-                    {renderServiceDetail('Priority', request.priority || s.suggestionPriority)}
-                    {renderServiceDetail('Official', s.meetingPersonId)}
-                    {renderServiceDetail('Admin Name', s.meetingAdminName)}
-                    {renderServiceDetail('Urgency', s.maintenanceUrgency)}
+                    {request.type === 'inquiry' && renderServiceDetail('Inquiry Categories', s.inquiryCategories)}
+                    
+                    {request.type === 'complaint' && (
+                      <>
+                        {renderServiceDetail('Against/Type', s.complaintType)}
+                        {renderServiceDetail('Target Name', s.againstName)}
+                        {renderServiceDetail('Bus Number', s.busNumber)}
+                      </>
+                    )}
+
+                    {request.type === 'suggestion' && (
+                      <>
+                        {renderServiceDetail('Department', s.suggestionDept)}
+                        {renderServiceDetail('Priority', s.suggestionPriority)}
+                      </>
+                    )}
+
+                    {request.type === 'meeting' && (
+                      <>
+                        {renderServiceDetail('Official', s.meetingPersonId)}
+                        {renderServiceDetail('Admin Name', s.meetingAdminName)}
+                      </>
+                    )}
+
+                    {request.type === 'call' && (
+                      <>
+                        {renderServiceDetail('Caller Role', s.callerRole)}
+                        {renderServiceDetail('Subject', s.callSubject)}
+                      </>
+                    )}
+
+                    {request.type === 'maintenance' && (
+                      <>
+                        {renderServiceDetail('Maint. Target', s.maintenanceTarget)}
+                        {renderServiceDetail('Maint. Type', s.maintenanceCategories)}
+                        {renderServiceDetail('Bus #', s.maintenanceBusNo)}
+                        {renderServiceDetail('Urgency', s.maintenanceUrgency)}
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
