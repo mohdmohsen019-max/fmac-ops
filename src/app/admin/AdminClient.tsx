@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase/config";
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut, User } from "firebase/auth";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
-import { LogOut, ArrowRight, Clock, Inbox, HelpCircle, AlertTriangle, Lightbulb, Users, Phone, Wrench } from "lucide-react";
+import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from "firebase/firestore";
+import { LogOut, ArrowRight, Clock, Inbox, HelpCircle, AlertTriangle, Lightbulb, Users, Phone, Wrench, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { RequestType, useRequestStore } from "@/store/requestStore";
 
@@ -60,6 +60,24 @@ export default function AdminClient() {
 
   const handleLogout = async () => {
     if (auth) await signOut(auth);
+  };
+
+  const clearAllRequests = async () => {
+    if (!db || !user || user.email !== 'fmacoperations@gmail.com') return;
+    
+    if (window.confirm("⚠️ ATTENTION: Are you sure you want to PERMANENTLY delete ALL requests? This cannot be undone.")) {
+      setLoading(true);
+      try {
+        for (const req of requests) {
+          await deleteDoc(doc(db, "requests", req.id));
+        }
+        alert("Success: All requests cleared.");
+      } catch (err) {
+        console.error("Cleanup error:", err);
+        alert("Error clearing requests. Check console.");
+      }
+      setLoading(false);
+    }
   };
 
   if (!mounted || loading) {
@@ -295,6 +313,18 @@ export default function AdminClient() {
           <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-2xl transition-all font-black text-xs uppercase tracking-widest">
             <LogOut className="w-4 h-4" /> Sign Out
           </button>
+
+          {user?.email === 'fmacoperations@gmail.com' && (
+            <div className="mt-8 p-4 bg-red-50 rounded-2xl border border-red-100">
+              <div className="text-[10px] font-black text-red-800 uppercase mb-2 tracking-widest">Master Controls</div>
+              <button 
+                onClick={clearAllRequests}
+                className="w-full flex items-center gap-3 px-4 py-3 bg-red-600 text-white hover:bg-red-700 rounded-xl transition-all font-black text-[10px] uppercase tracking-widest shadow-lg shadow-red-900/10"
+              >
+                <Trash2 className="w-4 h-4" /> Clear All Requests
+              </button>
+            </div>
+          )}
         </div>
       </aside>
 
