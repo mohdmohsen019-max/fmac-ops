@@ -27,54 +27,83 @@ export default function Home() {
   const router = useRouter();
 
   const handleSelectService = (type: RequestType) => {
-    resetForm(); // Start fresh
+    resetForm();
     updateFormData({ type });
     router.push(`/submit/${type}`);
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-white flex flex-col font-english" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <Navigation />
-      <main className="flex-1 flex flex-col items-center justify-center p-6 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-[var(--color-beige)]">
-        <div className="w-full max-w-4xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-12 border border-white">
-          <Stepper currentStep={1} />
+      
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-16 px-6 overflow-hidden bg-black text-white">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,_#D2122E_0%,_transparent_50%)]" />
+          <div className="absolute inset-0 bg-[grid-white]/5 [mask-image:radial-gradient(white,transparent)]" />
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative z-10 text-center">
+          <div className="inline-block px-4 py-1.5 rounded-full border border-brand bg-brand/10 text-brand text-[10px] font-black uppercase tracking-[0.3em] mb-8">
+            {language === 'ar' ? 'البوابة الرسمية للعمليات' : 'Official Operations Portal'}
+          </div>
           
-          <div className="flex flex-col items-center mb-10">
-            <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center p-2 shadow-sm border border-gray-100 mb-6">
-              <img src="/fmac-logo.png" alt="Logo" className="w-full h-full object-contain" />
-            </div>
-            <h1 className="text-3xl md:text-5xl font-black text-[var(--color-espresso)] mb-4 tracking-tighter uppercase text-center">
-              {language === 'ar' ? 'نادي الفجيرة للفنون القتالية' : 'Fujairah Martial Arts Club'}
-            </h1>
-            <p className="text-[var(--color-espresso)] font-bold uppercase tracking-[0.3em] text-[10px] mb-8 opacity-60">
-              {language === 'ar' ? 'قسم العمليات' : 'Operations Department'}
-            </p>
-            <p className="text-gray-500 text-lg max-w-2xl mx-auto font-medium">
-              {language === 'ar' 
-                ? 'مرحباً بكم في المنصة الموحدة للاستفسارات والطلبات. يرجى اختيار الخدمة المطلوبة للمتابعة.' 
-                : 'Welcome to the unified platform for inquiries and requests. Please select the service required to proceed.'}
-            </p>
+          <h1 className="text-5xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter uppercase max-w-5xl mx-auto">
+            {language === 'ar' ? (
+              <span className="font-arabic leading-tight">نادي الفجيرة للفنون القتالية</span>
+            ) : (
+              <>FUJAIRAH <br className="hidden md:block" /> MARTIAL ARTS CLUB</>
+            )}
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-gray-400 font-medium max-w-2xl mx-auto mb-12">
+            {language === 'ar' 
+              ? 'نهدف إلى التميز في تقديم الخدمات الرقمية وتحسين تجربة المجتمع الرياضي في الفجيرة.'
+              : 'Striving for excellence in digital operations and enhancing the martial arts experience in Fujairah.'}
+          </p>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section className="flex-1 py-12 px-6 bg-gray-50/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-12 border-b-4 border-black pb-6">
+            <h2 className="text-2xl font-black uppercase tracking-widest text-black flex items-center gap-4">
+               <span className="w-8 h-8 bg-brand flex items-center justify-center text-white text-xs">01</span>
+               {language === 'ar' ? 'اختر الخدمة المطلوبة' : 'SELECT SERVICE'}
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service) => (
               <button
                 key={service.id}
                 onClick={() => handleSelectService(service.id)}
-                className="group relative bg-gray-50 hover:bg-[var(--color-espresso)] border border-gray-100 p-6 rounded-2xl flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                className="group relative h-72 bg-white border-2 border-black p-8 rounded-[2rem] flex flex-col justify-between items-start transition-all duration-300 hover:bg-brand hover:border-brand hover:translate-y-[-8px] hover:shadow-[0_20px_40px_rgba(210,18,46,0.2)] active:scale-95"
               >
-                <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                  <service.icon className="w-8 h-8 text-[var(--color-terracotta)]" />
+                <div className="w-16 h-16 rounded-2xl bg-black text-white flex items-center justify-center group-hover:bg-white group-hover:text-brand transition-colors duration-300">
+                  <service.icon className="w-8 h-8" />
                 </div>
-                <span className="font-bold text-lg text-gray-700 group-hover:text-white transition-colors">
-                  {language === 'ar' ? service.ar : service.en}
-                </span>
-                <div className="absolute inset-x-0 bottom-0 h-1 bg-[var(--color-terracotta)] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-b-2xl"></div>
+                
+                <div className="space-y-2 text-left">
+                  <h3 className={`text-2xl font-black uppercase leading-none group-hover:text-white transition-colors ${language === 'ar' ? 'font-arabic text-right' : 'font-display'}`}>
+                    {language === 'ar' ? service.ar : service.en}
+                  </h3>
+                  <div className="flex items-center gap-2 text-brand group-hover:text-white transition-colors font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                    {language === 'ar' ? 'ابدأ الآن' : 'Start Request'}
+                    <span className="block w-4 h-0.5 bg-current" />
+                  </div>
+                </div>
+
+                {/* Decorative Accent */}
+                <div className="absolute top-6 right-8 text-4xl font-black text-gray-100 group-hover:text-white/20 transition-colors pointer-events-none">
+                   {service.id === 'inquiry' ? '?' : service.id === 'complaint' ? '!' : '#'}
+                </div>
               </button>
             ))}
           </div>
         </div>
-      </main>
-    </>
+      </section>
+    </div>
   );
 }
