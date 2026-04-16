@@ -343,9 +343,9 @@ export default function AdminClient() {
       <main className="lg:pl-64 flex-1">
         <div className="max-w-6xl mx-auto px-6 py-10">
           <header className="mb-10 flex items-center justify-between">
-            <div className="text-center font-display">
-              <h1 className="text-2xl font-black text-[var(--color-espresso)]">Fujairah Martial Arts Club</h1>
-              <p className="text-[var(--color-terracotta)] text-sm font-bold uppercase tracking-widest">Operations Console</p>
+            <div className="text-start font-display">
+              <h1 className="text-2xl font-black text-[var(--color-espresso)] tracking-tighter">Fujairah Martial Arts Club</h1>
+              <p className="text-[var(--color-terracotta)] text-sm font-bold uppercase tracking-widest mt-1">Operations Console</p>
             </div>
             
             <div className="hidden sm:flex gap-3">
