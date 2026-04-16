@@ -8,6 +8,7 @@ import { useState, useRef } from "react";
 import { ArrowLeft, CheckCircle, Loader2, AlertCircle, ShieldCheck } from "lucide-react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
+import { notifyStaff } from "@/lib/web3forms";
 
 const generateTicketNumber = () => {
   const year = new Date().getFullYear();
@@ -93,6 +94,9 @@ export default function ReviewForm() {
           responseTime: null,
         }
       });
+      updateStatus("تم الإرسال والتبليغ...", "Submitted and notifying staff...");
+      // Send email notification via Web3Forms (non-blocking)
+      notifyStaff(ticketNumber, formData);
 
       updateStatus("تم الإرسال بنجاح!", "Successfully submitted!");
       clearTimeout(timeoutId);
