@@ -23,26 +23,31 @@ export async function notifyStaff(ticketNumber: string, formData: any) {
       `Sport: ${formData.sport || 'N/A'}`,
       ``,
       `--- SERVICE SPECIFICS ---`,
-      formData.inquiryCategories?.length ? `Inquiry categories: ${formData.inquiryCategories.join(', ')}` : null,
-      formData.suggestionDept ? `Department: ${formData.suggestionDept}` : null,
-      formData.suggestionPriority ? `Priority: ${formData.suggestionPriority}` : null,
-      formData.complaintType ? `Complaint against: ${formData.complaintType}` : null,
-      formData.againstName ? `Target name: ${formData.againstName}` : null,
-      formData.busNumber ? `Bus number: ${formData.busNumber}` : null,
-      formData.meetingPersonId ? `Meeting with: ${formData.meetingPersonId}` : null,
-      formData.meetingAdminName ? `Admin name: ${formData.meetingAdminName}` : null,
-      formData.callerRole ? `Caller role: ${formData.callerRole}` : null,
-      formData.callSubject ? `Call subject: ${formData.callSubject}` : null,
-      formData.maintenanceTarget ? `Maintenance target: ${formData.maintenanceTarget}` : null,
-      formData.maintenanceCategories?.length ? `Maintenance types: ${formData.maintenanceCategories.join(', ')}` : null,
-      formData.maintenanceBusNo ? `Maintenance bus #: ${formData.maintenanceBusNo}` : null,
-      formData.maintenanceUrgency ? `Maintenance urgency: ${formData.maintenanceUrgency}` : null,
+      formData.type === 'inquiry' && formData.inquiryCategories?.length ? `Inquiry categories: ${formData.inquiryCategories.join(', ')}` : null,
+      
+      formData.type === 'suggestion' && formData.suggestionDept ? `Department: ${formData.suggestionDept}` : null,
+      formData.type === 'suggestion' && formData.suggestionPriority ? `Priority: ${formData.suggestionPriority}` : null,
+      
+      formData.type === 'complaint' && formData.complaintType ? `Complaint against: ${formData.complaintType}` : null,
+      formData.type === 'complaint' && formData.againstName ? `Target name: ${formData.againstName}` : null,
+      formData.type === 'complaint' && formData.busNumber ? `Bus number: ${formData.busNumber}` : null,
+      
+      formData.type === 'meeting' && formData.meetingPersonId ? `Meeting with: ${formData.meetingPersonId}` : null,
+      formData.type === 'meeting' && formData.meetingAdminName ? `Admin name: ${formData.meetingAdminName}` : null,
+      
+      formData.type === 'call' && formData.callerRole ? `Caller role: ${formData.callerRole}` : null,
+      formData.type === 'call' && formData.callSubject ? `Call subject: ${formData.callSubject}` : null,
+      
+      formData.type === 'maintenance' && formData.maintenanceTarget ? `Maintenance target: ${formData.maintenanceTarget}` : null,
+      formData.type === 'maintenance' && formData.maintenanceCategories?.length ? `Maintenance types: ${formData.maintenanceCategories.join(', ')}` : null,
+      formData.type === 'maintenance' && formData.maintenanceBusNo ? `Maintenance bus #: ${formData.maintenanceBusNo}` : null,
+      formData.type === 'maintenance' && formData.maintenanceUrgency ? `Maintenance urgency: ${formData.maintenanceUrgency}` : null,
       ``,
       `--- DESCRIPTION ---`,
       formData.description,
       ``,
-      formData.suggestionExpected ? `--- EXPECTED OUTCOME ---\n${formData.suggestionExpected}` : null,
-    ].filter(Boolean);
+      formData.type === 'suggestion' && formData.suggestionExpected ? `--- EXPECTED OUTCOME ---\n${formData.suggestionExpected}` : null,
+    ].filter(v => v !== null && v !== false);
 
     const message = messageLines.join("\n");
 
