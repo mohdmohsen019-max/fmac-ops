@@ -4,6 +4,7 @@ import { useRequestStore, RequestType } from "@/store/requestStore";
 import { Navigation } from "@/components/Navigation";
 import { Stepper } from "@/components/Stepper";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { 
   MessageSquare, 
   AlertTriangle, 
@@ -25,12 +26,19 @@ const services: { id: RequestType; icon: any; en: string; ar: string }[] = [
 export default function Home() {
   const { language, updateFormData, resetForm } = useRequestStore();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSelectService = (type: RequestType) => {
     resetForm();
     updateFormData({ type });
     router.push(`/submit/${type}`);
   };
+
+  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-white flex flex-col font-english" dir={language === 'ar' ? 'rtl' : 'ltr'}>
@@ -48,7 +56,7 @@ export default function Home() {
             {language === 'ar' ? 'البوابة الرسمية للعمليات' : 'Official Operations Portal'}
           </div>
           
-          <h1 className="text-5xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter uppercase max-w-5xl mx-auto">
+          <h1 className="text-5xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter uppercase max-w-5xl mx-auto text-white">
             {language === 'ar' ? (
               <span className="font-arabic leading-tight">نادي الفجيرة للفنون القتالية</span>
             ) : (
@@ -86,7 +94,7 @@ export default function Home() {
                 </div>
                 
                 <div className="space-y-2 text-left">
-                  <h3 className={`text-2xl font-black uppercase leading-none group-hover:text-white transition-colors ${language === 'ar' ? 'font-arabic text-right' : 'font-display'}`}>
+                  <h3 className={`text-2xl font-black uppercase leading-none text-black group-hover:text-white transition-colors ${language === 'ar' ? 'font-arabic text-right' : 'font-display'}`}>
                     {language === 'ar' ? service.ar : service.en}
                   </h3>
                   <div className="flex items-center gap-2 text-brand group-hover:text-white transition-colors font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">

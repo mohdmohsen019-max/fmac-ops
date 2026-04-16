@@ -1,15 +1,31 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRequestStore } from "@/store/requestStore";
 import { Globe, Shield } from "lucide-react";
 
 export function Navigation() {
   const { language, setLanguage } = useRequestStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleLanguage = () => {
     setLanguage(language === 'ar' ? 'en' : 'ar');
   };
+
+  if (!mounted) {
+    return (
+      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between opacity-0">
+          Loading...
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
