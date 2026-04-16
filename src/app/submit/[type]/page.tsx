@@ -132,8 +132,7 @@ export default function BasicInfoForm() {
                   <option value="">{language === 'ar' ? 'اختر الفرع' : 'Select Branch'}</option>
                   <option value="Fujairah">{language === 'ar' ? 'الفجيرة (الرئيسي)' : 'Fujairah (Main)'}</option>
                   <option value="Dibba">{language === 'ar' ? 'دبا' : 'Dibba'}</option>
-                  <option value="Masafi">{language === 'ar' ? 'مسافي' : 'Masafi'}</option>
-                  <option value="Towayyaan">{language === 'ar' ? 'الطويين' : 'Towayyaan'}</option>
+                  <option value="AlBithna">{language === 'ar' ? 'البثنة' : 'Al Bithna'}</option>
                 </select>
               </div>
             </div>
