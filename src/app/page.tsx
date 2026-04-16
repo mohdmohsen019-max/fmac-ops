@@ -40,23 +40,63 @@ export default function Home() {
 
   if (!mounted) return null;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        type: "spring", 
+        stiffness: 100, 
+        damping: 12 
+      }
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-white flex flex-col font-english" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      <Navigation />
+    <div 
+      className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth bg-black overflow-x-hidden font-english" 
+      dir={language === 'ar' ? 'rtl' : 'ltr'}
+    >
+      <div className="fixed top-0 left-0 w-full z-50">
+        <Navigation />
+      </div>
       
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-16 px-6 overflow-hidden bg-black text-white">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,_#D2122E_0%,_transparent_50%)]" />
+      {/* SECTION 1: HERO / WELCOME */}
+      <section className="h-screen w-full snap-start relative flex flex-col items-center justify-center px-6 text-white text-center overflow-hidden">
+        {/* Animated Background Elements */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.15 }}
+          className="absolute inset-0 pointer-events-none"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#D2122E_0%,_transparent_70%)]" />
           <div className="absolute inset-0 bg-[grid-white]/5 [mask-image:radial-gradient(white,transparent)]" />
-        </div>
+        </motion.div>
         
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
+        <motion.div
+           initial={{ opacity: 0, y: 40 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8, ease: "easeOut" }}
+           className="relative z-10"
+        >
           <div className="inline-block px-4 py-1.5 rounded-full border border-brand bg-brand/10 text-brand text-[10px] font-black uppercase tracking-[0.3em] mb-8">
             {language === 'ar' ? 'البوابة الرسمية للعمليات' : 'Official Operations Portal'}
           </div>
           
-          <h1 className="text-5xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter uppercase max-w-5xl mx-auto text-white">
+          <h1 className="text-5xl md:text-9xl font-black mb-8 leading-[0.85] tracking-tighter uppercase max-w-6xl mx-auto">
             {language === 'ar' ? (
               <span className="font-arabic leading-tight">نادي الفجيرة للفنون القتالية</span>
             ) : (
@@ -64,52 +104,77 @@ export default function Home() {
             )}
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-400 font-medium max-w-2xl mx-auto mb-12">
+          <p className="text-xl md:text-3xl text-gray-400 font-medium max-w-2xl mx-auto mb-12">
             {language === 'ar' 
               ? 'نهدف إلى التميز في تقديم الخدمات الرقمية وتحسين تجربة المجتمع الرياضي في الفجيرة.'
               : 'Striving for excellence in digital operations and enhancing the martial arts experience in Fujairah.'}
           </p>
-        </div>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 1.5 }}
+            className="flex flex-col items-center gap-4 mt-8"
+          >
+            <span className="text-[10px] uppercase font-black tracking-[0.4em] text-gray-500">
+              {language === 'ar' ? 'مرر للخدمات' : 'Scroll for Services'}
+            </span>
+            <div className="w-[2px] h-12 bg-gradient-to-b from-brand to-transparent rounded-full animate-bounce" />
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* Services Grid */}
-      <section className="flex-1 py-12 px-6 bg-gray-50/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-12 border-b-4 border-black pb-6">
-            <h2 className="text-2xl font-black uppercase tracking-widest text-black flex items-center gap-4">
-               <span className="w-8 h-8 bg-brand flex items-center justify-center text-white text-xs">01</span>
-               {language === 'ar' ? 'اختر الخدمة المطلوبة' : 'SELECT SERVICE'}
+      {/* SECTION 2: SERVICES GRID */}
+      <section className="min-h-screen w-full snap-start bg-white py-24 px-6 relative">
+        <div className="max-w-7xl mx-auto pt-16">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center justify-between mb-16 border-b-4 border-black pb-8"
+          >
+            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-black flex items-center gap-4">
+               <span className="w-10 h-10 bg-brand flex items-center justify-center text-white text-xs">01</span>
+               {language === 'ar' ? 'خدماتنا' : 'OUR SERVICES'}
             </h2>
-          </div>
+            <div className="hidden md:block h-1 w-32 bg-gray-100" />
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
+          >
             {services.map((service) => (
-              <button
+              <motion.button
                 key={service.id}
+                variants={cardVariants}
                 onClick={() => handleSelectService(service.id)}
-                className="group relative h-72 bg-white border-2 border-black p-8 rounded-[2rem] flex flex-col justify-between items-start transition-all duration-300 hover:bg-brand hover:border-brand hover:translate-y-[-8px] hover:shadow-[0_20px_40px_rgba(210,18,46,0.2)] active:scale-95"
+                className="group relative h-80 bg-white border-2 border-black p-10 rounded-[2.5rem] flex flex-col justify-between items-start transition-all duration-300 hover:bg-black hover:border-black hover:translate-y-[-10px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] active:scale-95 text-left"
               >
-                <div className="w-16 h-16 rounded-2xl bg-black text-white flex items-center justify-center group-hover:bg-white group-hover:text-brand transition-colors duration-300">
+                <div className="w-16 h-16 rounded-2xl bg-brand text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors duration-400">
                   <service.icon className="w-8 h-8" />
                 </div>
                 
-                <div className="space-y-2 text-left">
-                  <h3 className={`text-2xl font-black uppercase leading-none text-black group-hover:text-white transition-colors ${language === 'ar' ? 'font-arabic text-right' : 'font-display'}`}>
+                <div className="space-y-3">
+                  <h3 className={`text-2xl font-black uppercase leading-[1.1] text-black group-hover:text-white transition-colors ${language === 'ar' ? 'font-arabic text-right' : 'font-display'}`}>
                     {language === 'ar' ? service.ar : service.en}
                   </h3>
-                  <div className="flex items-center gap-2 text-brand group-hover:text-white transition-colors font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                    {language === 'ar' ? 'ابدأ الآن' : 'Start Request'}
-                    <span className="block w-4 h-0.5 bg-current" />
+                  <div className="flex items-center gap-3 text-brand group-hover:text-white transition-all font-black text-[10px] uppercase tracking-widest translate-x-[-10px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 duration-500">
+                    {language === 'ar' ? 'ابدأ الآن' : 'Start Process'}
+                    <span className="block w-6 h-[2px] bg-current" />
                   </div>
                 </div>
 
-                {/* Decorative Accent */}
-                <div className="absolute top-6 right-8 text-4xl font-black text-gray-100 group-hover:text-white/20 transition-colors pointer-events-none">
-                   {service.id === 'inquiry' ? '?' : service.id === 'complaint' ? '!' : '#'}
+                {/* Decorative Accent Symbol */}
+                <div className="absolute top-8 right-10 text-5xl font-black text-gray-100 group-hover:text-white/5 transition-colors pointer-events-none select-none">
+                   {service.id === 'inquiry' ? '?' : service.id === 'complaint' ? '!' : '/'}
                 </div>
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>
