@@ -5,6 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { Stepper } from "@/components/Stepper";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   MessageSquare, 
   AlertTriangle, 
