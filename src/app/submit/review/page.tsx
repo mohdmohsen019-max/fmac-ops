@@ -45,6 +45,10 @@ export default function ReviewForm() {
     }, 20000);
 
     try {
+      if (!db) {
+        throw new Error("DB_MISSING");
+      }
+
       updateStatus("جاري تهيئة الاتصال...", "Initializing connection...");
       
       updateStatus("جاري حفظ الطلب...", "Saving request to cloud...");
@@ -111,9 +115,11 @@ export default function ReviewForm() {
       let msg = language === 'ar' ? 'فشل الإرسال. يرجى المحاولة لاحقاً.' : 'Submission failed. Please try again.';
       if (error.code === 'permission-denied') {
         msg = language === 'ar' ? 'خطأ في أذونات الداتابيز. يرجى مراجعة Firestore Rules.' : 'Database Permission Denied. Please check Firestore Rules.';
+      } else if (error.message === 'DB_MISSING') {
+        msg = language === 'ar' ? 'خطأ في إعدادات الداتابيز. يرجى التواصل مع الدعم.' : 'Database Configuration Missing. Please contact support.';
       }
       
-      setErrorStatus(`${msg} (${error.code || 'unknown'})`);
+      setErrorStatus(`${msg} (${error.code || error.message || 'unknown'})`);
       setIsSubmitting(false);
     }
   };
