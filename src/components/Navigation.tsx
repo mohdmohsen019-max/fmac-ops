@@ -30,16 +30,11 @@ export function Navigation() {
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-4 group">
-          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1.5 shadow-sm border border-gray-100 overflow-hidden group-hover:border-brand transition-colors">
-            <img src="/fmac-logo.png" alt="FMAC" className="w-full h-full object-contain" />
-          </div>
+        <Link href="/" className="flex items-center gap-6 group">
+          <img src="/fmac-logo.png" alt="FMAC" className="w-16 h-16 object-contain transition-transform group-hover:scale-110" />
           <div className="flex flex-col">
-            <span className="font-display font-black text-xl text-black leading-none uppercase tracking-tighter">
-              {language === 'ar' ? 'نادي الفجيرة للفنون القتالية' : 'FUJAIRAH MARTIAL ARTS CLUB'}
-            </span>
-            <span className="text-[10px] font-black text-brand uppercase tracking-[0.3em] mt-1 opacity-80">
-              {language === 'ar' ? 'بوابة الخدمات' : 'Service Portal'}
+            <span className="font-display font-black text-2xl text-black leading-none uppercase tracking-tighter">
+              {language === 'ar' ? 'بوابة الخدمات' : 'SERVICE PORTAL'}
             </span>
           </div>
         </Link>
