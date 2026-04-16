@@ -21,8 +21,8 @@
   --color-olive: #059669;
 
   --font-arabic: 'A Jannat LT', sans-serif;
-  --font-english: 'Inter', sans-serif;
-  --font-display: 'Montserrat', sans-serif;
+  --font-english: 'Inter', 'A Jannat LT', sans-serif;
+  --font-display: 'Montserrat', 'A Jannat LT', sans-serif;
 }
 
 [dir="rtl"] {
