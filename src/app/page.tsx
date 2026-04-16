@@ -64,7 +64,7 @@ export default function Home() {
         damping: 12 
       }
     },
-  };
+  } as const;
 
   return (
     <div 
