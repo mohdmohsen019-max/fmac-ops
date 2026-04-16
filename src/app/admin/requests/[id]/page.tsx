@@ -11,11 +11,16 @@ import { ArrowLeft, Clock, Shield, UploadCloud, MessageSquare, Tag, User as User
 import Link from "next/link";
 
 export default function RequestDetailsAdmin() {
+  const [mounted, setMounted] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [request, setRequest] = useState<any>(null);
   const [newNote, setNewNote] = useState("");
-  
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
@@ -71,7 +76,7 @@ export default function RequestDetailsAdmin() {
     );
   };
 
-  if (loading || !user || !request) return <div className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-beige)]"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[var(--color-terracotta)]"></div></div>;
+  if (!mounted || loading || !user || !request) return <div className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-beige)]"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[var(--color-terracotta)]"></div></div>;
 
   const s = request.serviceDetails || {};
 

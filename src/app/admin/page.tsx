@@ -13,6 +13,7 @@ import { RequestType } from "@/store/requestStore";
 type TabType = "all" | Exclude<RequestType, null>;
 
 export default function AdminPage() {
+  const [mounted, setMounted] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
@@ -20,6 +21,10 @@ export default function AdminPage() {
   const [loginError, setLoginError] = useState("");
   const [requests, setRequests] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<TabType>("all");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -53,7 +58,7 @@ export default function AdminPage() {
     await signOut(auth);
   };
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-beige)]"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[var(--color-terracotta)]"></div></div>;
+  if (!mounted || loading) return <div className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-beige)]"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[var(--color-terracotta)]"></div></div>;
 
   if (!user) {
     return (
