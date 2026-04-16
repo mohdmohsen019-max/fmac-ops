@@ -1,0 +1,36 @@
+@import url('https://db.onlinewebfonts.com/c/52673295988d8b835377f0bd66945037?family=A+Jannat+LT');
+@import "tailwindcss";
+
+@theme {
+  --color-espresso: #200f07;
+  --color-beige: #f2e8dc;
+  --color-terracotta: #c97b63;
+  --color-olive: #a3b18a;
+
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+
+  --font-arabic: 'A Jannat LT', sans-serif;
+  --font-english: 'A Jannat LT', sans-serif;
+}
+
+@layer base {
+  :root {
+    --bg: var(--color-beige);
+    --fg: var(--color-espresso);
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-arabic);
+  }
+
+  [dir="ltr"] body {
+    font-family: var(--font-english);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-espresso);
+  }
+}
