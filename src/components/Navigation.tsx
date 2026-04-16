@@ -33,7 +33,7 @@ export function Navigation() {
         <Link href="/" className="flex items-center gap-6 group">
           <img src="/fmac-logo.png" alt="FMAC" className="w-16 h-16 object-contain transition-transform group-hover:scale-110" />
           <div className="flex flex-col">
-            <span className="font-display font-black text-2xl text-black leading-none uppercase tracking-tighter">
+            <span className={`${language === 'ar' ? 'font-arabic' : 'font-display'} font-black text-2xl text-black leading-none uppercase tracking-tighter`}>
               {language === 'ar' ? 'بوابة الخدمات' : 'SERVICE PORTAL'}
             </span>
           </div>
