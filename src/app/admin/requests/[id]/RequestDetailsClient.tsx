@@ -24,6 +24,10 @@ export default function RequestDetailsClient() {
   }, []);
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
     const unsubAuth = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (!currentUser && mounted) router.push('/admin');
@@ -32,7 +36,7 @@ export default function RequestDetailsClient() {
   }, [router, mounted]);
 
   useEffect(() => {
-    if (!user || !id || !mounted) return;
+    if (!user || !id || !mounted || !db) return;
     const unsubDoc = onSnapshot(doc(db, "requests", id), (docObj) => {
       if (docObj.exists()) {
         setRequest({ id: docObj.id, ...docObj.data() });
@@ -74,7 +78,28 @@ export default function RequestDetailsClient() {
     );
   };
 
-  if (!mounted || loading || !user || !request) {
+  if (!mounted || loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-beige)]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[var(--color-terracotta)]"></div>
+      </div>
+    );
+  }
+
+  if (!auth || !db) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-beige)] px-4">
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-red-100 text-center">
+          <Shield className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h1 className="text-xl font-black text-[var(--color-espresso)] mb-2">Configuration Missing</h1>
+          <p className="text-gray-500 text-sm mb-6">Database keys are missing in Vercel. Please check your Project Settings.</p>
+          <Link href="/admin" className="inline-block px-6 py-3 bg-[var(--color-espresso)] text-white font-bold rounded-xl text-sm">Return to Admin</Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user || !request) {
     return (
       <div className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-beige)]">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[var(--color-terracotta)]"></div>

@@ -16,8 +16,8 @@ const firebaseConfig = {
 
 const app = (getApps().length === 0 && firebaseConfig.apiKey) 
   ? initializeApp(firebaseConfig) 
-  : getApps().length > 0 ? getApps()[0] : undefined;
+  : getApps().length > 0 ? getApps()[0] : null;
 
-export const db = app ? getFirestore(app) : undefined as any;
-export const auth = app ? getAuth(app) : undefined as any;
-export const storage = app ? getStorage(app) : undefined as any;
+export const db = app ? getFirestore(app) : null;
+export const auth = app ? getAuth(app) : null;
+export const storage = app ? getStorage(app) : null;

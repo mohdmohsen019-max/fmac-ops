@@ -26,6 +26,10 @@ export default function AdminClient() {
   }, []);
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
@@ -34,7 +38,7 @@ export default function AdminClient() {
   }, []);
 
   useEffect(() => {
-    if (!user || !mounted) return;
+    if (!user || !mounted || !db) return;
     const q = query(collection(db, "requests"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -45,6 +49,7 @@ export default function AdminClient() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!auth) return;
     setLoginError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -54,13 +59,26 @@ export default function AdminClient() {
   };
 
   const handleLogout = async () => {
-    await signOut(auth);
+    if (auth) await signOut(auth);
   };
 
   if (!mounted || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-beige)]">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[var(--color-terracotta)]"></div>
+      </div>
+    );
+  }
+
+  if (!auth || !db) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-beige)] px-4">
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-red-100 text-center">
+          <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h1 className="text-xl font-black text-[var(--color-espresso)] mb-2">Configuration Missing</h1>
+          <p className="text-gray-500 text-sm mb-6">Database keys are missing in Vercel. Please check your Project Settings.</p>
+          <Link href="/" className="inline-block px-6 py-3 bg-[var(--color-espresso)] text-white font-bold rounded-xl text-sm">Return Home</Link>
+        </div>
       </div>
     );
   }
