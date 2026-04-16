@@ -25,6 +25,10 @@
   --font-display: 'Montserrat', sans-serif;
 }
 
+[dir="rtl"] {
+  --font-display: var(--font-arabic);
+}
+
 @layer base {
   :root {
     --bg: #FFFFFF;

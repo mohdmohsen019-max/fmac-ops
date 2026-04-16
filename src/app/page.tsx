@@ -68,7 +68,7 @@ export default function Home() {
 
   return (
     <div 
-      className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth bg-black overflow-x-hidden font-english" 
+      className={`h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth bg-black overflow-x-hidden ${language === 'ar' ? 'font-arabic' : 'font-english'}`}
       dir={language === 'ar' ? 'rtl' : 'ltr'}
     >
       <div className="fixed top-0 left-0 w-full z-50">

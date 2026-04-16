@@ -7,6 +7,7 @@ import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from "firebase
 import { LogOut, ArrowRight, Clock, Inbox, HelpCircle, AlertTriangle, Lightbulb, Users, Phone, Wrench, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { RequestType, useRequestStore } from "@/store/requestStore";
+import { ConfirmationModal } from "@/components/ConfirmationModal";
 
 type TabType = "all" | Exclude<RequestType, null>;
 
@@ -19,6 +20,7 @@ export default function AdminClient() {
   const [loginError, setLoginError] = useState("");
   const [requests, setRequests] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<TabType>("all");
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
   const { language } = useRequestStore();
 
   useEffect(() => {
@@ -65,19 +67,16 @@ export default function AdminClient() {
   const clearAllRequests = async () => {
     if (!db || !user || user.email !== 'fmacoperations@gmail.com') return;
     
-    if (window.confirm("⚠️ ATTENTION: Are you sure you want to PERMANENTLY delete ALL requests? This cannot be undone.")) {
-      setLoading(true);
-      try {
-        for (const req of requests) {
-          await deleteDoc(doc(db, "requests", req.id));
-        }
-        alert("Success: All requests cleared.");
-      } catch (err) {
-        console.error("Cleanup error:", err);
-        alert("Error clearing requests. Check console.");
+    setLoading(true);
+    try {
+      for (const req of requests) {
+        await deleteDoc(doc(db, "requests", req.id));
       }
-      setLoading(false);
+    } catch (err) {
+      console.error("Cleanup error:", err);
+      alert("Error clearing requests. Check console.");
     }
+    setLoading(false);
   };
 
   if (!mounted || loading) {
@@ -318,7 +317,7 @@ export default function AdminClient() {
             <div className="mt-8 p-4 bg-red-50 rounded-2xl border border-red-100">
               <div className="text-[10px] font-black text-red-800 uppercase mb-2 tracking-widest">Master Controls</div>
               <button 
-                onClick={clearAllRequests}
+                onClick={() => setShowClearConfirm(true)}
                 className="w-full flex items-center gap-3 px-4 py-3 bg-red-600 text-white hover:bg-red-700 rounded-xl transition-all font-black text-[10px] uppercase tracking-widest shadow-lg shadow-red-900/10"
               >
                 <Trash2 className="w-4 h-4" /> Clear All Requests
@@ -327,6 +326,19 @@ export default function AdminClient() {
           )}
         </div>
       </aside>
+
+      <ConfirmationModal 
+        isOpen={showClearConfirm}
+        onClose={() => setShowClearConfirm(false)}
+        onConfirm={clearAllRequests}
+        isDanger={true}
+        title={language === 'ar' ? 'تأكيد الحذف النهائي' : 'Confirm Master Clear'}
+        message={language === 'ar' 
+          ? 'هل أنت متأكد من رغبتك في حذف جميع الطلبات بشكل نهائي؟ لا يمكن التراجع عن هذا الإجراء.' 
+          : 'Are you absolutely sure you want to PERMANENTLY delete ALL requests? This action cannot be undone.'}
+        confirmText={language === 'ar' ? 'نعم، احذف الكل' : 'Yes, Delete Everything'}
+        cancelText={language === 'ar' ? 'إلغاء' : 'Cancel'}
+      />
 
       <main className="lg:pl-64 flex-1">
         <div className="max-w-6xl mx-auto px-6 py-10">
