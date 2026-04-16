@@ -5,7 +5,8 @@ import { auth, db } from "@/lib/firebase/config";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Clock, Shield, UploadCloud, MessageSquare, Tag, User as UserIcon } from "lucide-react";
+import { ArrowLeft, Clock, Shield, UploadCloud, MessageSquare, Tag, User as UserIcon, ChevronDown, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 export default function RequestDetailsClient() {
@@ -14,6 +15,7 @@ export default function RequestDetailsClient() {
   const [loading, setLoading] = useState(true);
   const [request, setRequest] = useState<any>(null);
   const [newNote, setNewNote] = useState("");
+  const [isStatusMenuOpen, setIsStatusMenuOpen] = useState(false);
   
   const params = useParams();
   const router = useRouter();
@@ -291,15 +293,60 @@ export default function RequestDetailsClient() {
           <div className="bg-white rounded-[2.5rem] p-8 border border-white shadow-xl shadow-orange-900/5">
             <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-6">Execution Status</h3>
             <div className="space-y-4">
-               <select 
-                value={request.status} 
-                onChange={e => updateStatus(e.target.value)}
-                className="w-full px-6 py-5 bg-[var(--color-beige)]/20 border-2 border-transparent focus:border-[var(--color-terracotta)] rounded-[1.5rem] font-black text-xs uppercase tracking-widest text-[var(--color-espresso)] outline-none cursor-pointer transition-all"
-              >
-                <option value="new">🔴 UNRESOLVED</option>
-                <option value="in_progress">🟡 PROCESSING</option>
-                <option value="closed">🟢 COMPLETED</option>
-              </select>
+            <div className="relative">
+               <button
+                onClick={() => setIsStatusMenuOpen(!isStatusMenuOpen)}
+                className={`w-full px-6 py-5 bg-white border-2 border-gray-100 rounded-[1.5rem] flex items-center justify-between transition-all hover:border-[var(--color-terracotta)] shadow-sm ${isStatusMenuOpen ? 'ring-2 ring-[var(--color-terracotta)]/20' : ''}`}
+               >
+                 <div className="flex items-center gap-3">
+                    <div className={`w-3 h-3 rounded-full ${
+                      request.status === 'new' ? 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse' :
+                      request.status === 'in_progress' ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)]' :
+                      'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]'
+                    }`} />
+                    <span className="text-[10px] font-black text-[var(--color-espresso)] uppercase tracking-widest">
+                      {request.status.replace('_', ' ')}
+                    </span>
+                 </div>
+                 <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${isStatusMenuOpen ? 'rotate-180' : ''}`} />
+               </button>
+
+               <AnimatePresence>
+                 {isStatusMenuOpen && (
+                   <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="absolute top-full left-0 right-0 mt-2 bg-white rounded-3xl border border-gray-100 shadow-2xl p-2 z-50 overflow-hidden"
+                   >
+                     {[
+                       { id: 'new', label: 'Unresolved', color: 'text-red-600', bg: 'hover:bg-red-50', icon: AlertCircle },
+                       { id: 'in_progress', label: 'Processing', color: 'text-orange-600', bg: 'hover:bg-orange-50', icon: RefreshCw },
+                       { id: 'closed', label: 'Completed', color: 'text-green-600', bg: 'hover:bg-green-50', icon: CheckCircle2 },
+                     ].map(option => (
+                       <button
+                        key={option.id}
+                        onClick={() => {
+                          updateStatus(option.id);
+                          setIsStatusMenuOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all ${option.bg} group ${request.status === option.id ? 'bg-gray-50' : ''}`}
+                       >
+                         <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${option.color} bg-white shadow-sm border border-gray-100`}>
+                           <option.icon className="w-4 h-4" />
+                         </div>
+                         <span className={`text-[10px] font-black uppercase tracking-widest ${option.color}`}>
+                           {option.label}
+                         </span>
+                         {request.status === option.id && (
+                           <div className="ml-auto w-1.5 h-1.5 rounded-full bg-current" />
+                         )}
+                       </button>
+                     ))}
+                   </motion.div>
+                 )}
+               </AnimatePresence>
+            </div>
             </div>
           </div>
 
