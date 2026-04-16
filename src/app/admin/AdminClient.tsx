@@ -104,12 +104,12 @@ export default function AdminClient() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--color-beige)] px-4">
         <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-white">
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-gray-100 overflow-hidden p-2">
+          <div className="mb-10 font-display">
+            <div className="w-20 h-20 bg-white rounded-3xl shadow-xl border border-gray-100 mx-auto mb-6 flex items-center justify-center p-3 animate-in zoom-in-50 duration-500">
               <img src="/fmac-logo.png" alt="Logo" className="w-full h-full object-contain" />
             </div>
-            <h1 className="text-2xl font-black text-[var(--color-espresso)] text-center">Admin Console</h1>
-            <p className="text-gray-500 text-sm mt-1">Fujairah Martial Arts Club</p>
+            <h1 className="text-2xl font-black text-[var(--color-espresso)] text-center tracking-tighter uppercase">Admin Console</h1>
+            <p className="text-gray-500 text-[10px] uppercase font-black tracking-widest text-center mt-1">Fujairah Martial Arts Club</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -270,8 +270,8 @@ export default function AdminClient() {
            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1 shadow-sm border border-gray-100 overflow-hidden">
              <img src="/fmac-logo.png" alt="Logo" className="w-full h-full object-contain" />
            </div>
-           <div className="flex flex-col">
-             <span className="font-black text-[10px] text-[var(--color-espresso)] leading-tight uppercase font-serif">Fujairah Martial Arts Club</span>
+           <div className="flex flex-col font-display">
+             <span className="text-[11px] font-black text-[var(--color-espresso)] uppercase leading-none tracking-tighter">Fujairah Martial Arts Club</span>
              <span className="text-[9px] font-bold text-[var(--color-terracotta)] uppercase tracking-tight">Operations Console</span>
            </div>
         </div>
@@ -343,10 +343,8 @@ export default function AdminClient() {
       <main className="lg:pl-64 flex-1">
         <div className="max-w-6xl mx-auto px-6 py-10">
           <header className="mb-10 flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-black text-[var(--color-espresso)] tracking-tighter mb-1">
-                {tabs.find(t => t.id === activeTab)?.label}
-              </h1>
+            <div className="text-center font-display">
+              <h1 className="text-2xl font-black text-[var(--color-espresso)]">Fujairah Martial Arts Club</h1>
               <p className="text-[var(--color-terracotta)] text-sm font-bold uppercase tracking-widest">Operations Console</p>
             </div>
             
