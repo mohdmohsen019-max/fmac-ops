@@ -93,9 +93,6 @@ export default function Home() {
            transition={{ duration: 0.8, ease: "easeOut" }}
            className="relative z-10"
         >
-          <div className="inline-block px-4 py-1.5 rounded-full border border-brand bg-brand/10 text-brand text-[10px] font-black uppercase tracking-[0.3em] mb-8">
-            {language === 'ar' ? 'البوابة الرسمية للعمليات' : 'Official Operations Portal'}
-          </div>
           
           <h1 className="text-5xl md:text-9xl font-black mb-8 leading-[0.85] tracking-tighter uppercase max-w-6xl mx-auto">
             {language === 'ar' ? (
@@ -135,7 +132,6 @@ export default function Home() {
             className="flex items-center justify-between mb-16 border-b-4 border-black pb-8"
           >
             <h2 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-black flex items-center gap-4">
-               <span className="w-10 h-10 bg-brand flex items-center justify-center text-white text-xs">01</span>
                {language === 'ar' ? 'خدماتنا' : 'OUR SERVICES'}
             </h2>
             <div className="hidden md:block h-1 w-32 bg-gray-100" />
@@ -169,10 +165,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Decorative Accent Symbol */}
-                <div className="absolute top-8 right-10 text-5xl font-black text-gray-100 group-hover:text-white/5 transition-colors pointer-events-none select-none">
-                   {service.id === 'inquiry' ? '?' : service.id === 'complaint' ? '!' : '/'}
-                </div>
               </motion.button>
             ))}
           </motion.div>
