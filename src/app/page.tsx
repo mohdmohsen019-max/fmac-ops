@@ -101,8 +101,8 @@ export default function Home() {
           
           <p className="text-xl md:text-3xl text-gray-400 font-medium max-w-2xl mx-auto mb-12">
             {language === 'ar' 
-              ? 'نهدف إلى التميز في تقديم الخدمات الرقمية وتحسين تجربة المجتمع الرياضي في الفجيرة.'
-              : 'Striving for excellence in digital operations and enhancing the martial arts experience in Fujairah.'}
+              ? 'نهدف إلى التميز في تقديم الخدمات الرقمية الموحدة وتحسين تجربة المجتمع الرياضي في الفجيرة.'
+              : 'Striving for excellence in unified digital services and enhancing the martial arts experience in Fujairah.'}
           </p>
 
           <motion.div 

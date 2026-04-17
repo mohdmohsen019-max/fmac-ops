@@ -108,7 +108,7 @@ export default function AdminClient() {
             <div className="w-20 h-20 bg-white rounded-3xl shadow-xl border border-gray-100 mx-auto mb-6 flex items-center justify-center p-3 animate-in zoom-in-50 duration-500">
               <img src="/fmac-logo.png" alt="Logo" className="w-full h-full object-contain" />
             </div>
-            <h1 className="text-2xl font-black text-[var(--color-espresso)] text-center tracking-tighter uppercase">Admin Console</h1>
+            <h1 className="text-2xl font-black text-[var(--color-espresso)] text-center tracking-tighter uppercase">Unified Console</h1>
             <p className="text-gray-500 text-[10px] uppercase font-black tracking-widest text-center mt-1">Fujairah Martial Arts Club</p>
           </div>
 
@@ -272,7 +272,7 @@ export default function AdminClient() {
            </div>
            <div className="flex flex-col font-display">
              <span className="text-[11px] font-black text-[var(--color-espresso)] uppercase leading-none tracking-tighter">Fujairah Martial Arts Club</span>
-             <span className="text-[9px] font-bold text-[var(--color-terracotta)] uppercase tracking-tight">Operations Console</span>
+             <span className="text-[9px] font-bold text-[var(--color-terracotta)] uppercase tracking-tight">Unified Console</span>
            </div>
         </div>
 
@@ -345,7 +345,7 @@ export default function AdminClient() {
           <header className="mb-10 flex items-center justify-between">
             <div className="text-start font-display">
               <h1 className="text-2xl font-black text-[var(--color-espresso)] tracking-tighter">Fujairah Martial Arts Club</h1>
-              <p className="text-[var(--color-terracotta)] text-sm font-bold uppercase tracking-widest mt-1">Operations Console</p>
+              <p className="text-[var(--color-terracotta)] text-sm font-bold uppercase tracking-widest mt-1">Unified Console</p>
             </div>
             
             <div className="hidden sm:flex gap-3">

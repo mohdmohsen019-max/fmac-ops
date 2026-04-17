@@ -61,7 +61,7 @@ export async function notifyStaff(ticketNumber: string, formData: any) {
         access_key: accessKey,
         subject,
         message,
-        from_name: "FMAC Operations Console",
+        from_name: "FMAC Unified Console",
       }),
     });
   } catch (err) {

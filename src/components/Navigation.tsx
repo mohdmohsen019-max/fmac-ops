@@ -34,7 +34,7 @@ export function Navigation() {
           <img src="/fmac-logo.png" alt="FMAC" className="w-16 h-16 object-contain transition-transform group-hover:scale-110" />
           <div className="flex flex-col">
             <span className={`${language === 'ar' ? 'font-arabic' : 'font-display'} font-black text-2xl text-black leading-none uppercase tracking-tighter`}>
-              {language === 'ar' ? 'بوابة الخدمات' : 'SERVICE PORTAL'}
+              {language === 'ar' ? 'البوابة الموحدة' : 'UNIFIED PORTAL'}
             </span>
           </div>
         </Link>

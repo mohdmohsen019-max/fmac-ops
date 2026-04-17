@@ -3,8 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "FMAC Operations Department",
-  description: "FMAC Ticketing and Operations System",
+  title: "FMAC Unified Portal",
+  description: "Unified Digital Services for Fujairah Martial Arts Club",
   icons: {
     icon: '/fmac-logo.png',
   }

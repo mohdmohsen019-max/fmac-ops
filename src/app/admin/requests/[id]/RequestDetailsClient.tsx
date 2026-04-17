@@ -256,7 +256,7 @@ export default function RequestDetailsClient() {
           {/* Internal Notes */}
           <div className="bg-white rounded-[2.5rem] p-8 border border-white shadow-xl shadow-orange-900/5">
             <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-8 flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" /> Operations Team Logs
+              <MessageSquare className="w-4 h-4" /> Unified Console Logs
             </h3>
             <div className="space-y-4 mb-8">
               {(!request.admin?.internalNotes || request.admin.internalNotes.length === 0) ? (
