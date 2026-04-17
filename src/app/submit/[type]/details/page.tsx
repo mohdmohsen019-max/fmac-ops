@@ -6,6 +6,7 @@ import { Stepper } from "@/components/Stepper";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
 import { ArrowRight, ArrowLeft } from "lucide-react";
+import { CustomSelect } from "@/components/CustomSelect";
 
 export default function DetailsForm() {
   const { language, formData, updateFormData } = useRequestStore();
@@ -125,45 +126,36 @@ export default function DetailsForm() {
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[var(--color-terracotta)] outline-none transition-all"
                 />
               </div>
-            )}
-          </div>
         );
       case 'suggestion':
         return (
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="block text-sm font-bold text-gray-700">
-                  {language === 'ar' ? 'القسم المعني' : 'Concerned Department'}
-                </label>
-                <select 
-                  value={formData.suggestionDept || ''}
-                  onChange={(e) => updateFormData({ suggestionDept: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[var(--color-terracotta)] bg-white"
-                >
-                  <option value="">-- {language === 'ar' ? 'اختر القسم' : 'Select Department'} --</option>
-                  <option value="manager_office">{language === 'ar' ? 'مكتب المدير' : "Manager's Office"}</option>
-                  <option value="operations">{language === 'ar' ? 'قسم العمليات' : 'Operations Department'}</option>
-                  <option value="technical">{language === 'ar' ? 'قسم الإعداد الفني' : 'Technical Department'}</option>
-                  <option value="finance">{language === 'ar' ? 'القسم المالي' : 'Finance Department'}</option>
-                  <option value="support">{language === 'ar' ? 'قسم الخدمات المساندة' : 'Support Services Department'}</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="block text-sm font-bold text-gray-700">
-                  {language === 'ar' ? 'الأولوية' : 'Priority'}
-                </label>
-                <select 
-                  value={formData.suggestionPriority || 'medium'}
-                  onChange={(e) => updateFormData({ suggestionPriority: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white"
-                >
-                  <option value="low">{language === 'ar' ? 'منخفضة' : 'Low'}</option>
-                  <option value="medium">{language === 'ar' ? 'متوسطة' : 'Medium'}</option>
-                  <option value="high">{language === 'ar' ? 'عالية' : 'High'}</option>
-                </select>
-              </div>
+              <CustomSelect
+                label={language === 'ar' ? 'القسم المعني' : 'Concerned Department'}
+                value={formData.suggestionDept || ''}
+                onChange={(val) => updateFormData({ suggestionDept: val })}
+                placeholder={language === 'ar' ? 'اختر القسم' : 'Select Department'}
+                options={[
+                  { value: "manager_office", label: language === 'ar' ? 'مكتب المدير' : "Manager's Office" },
+                  { value: "operations", label: language === 'ar' ? 'قسم العمليات' : 'Operations Department' },
+                  { value: "technical", label: language === 'ar' ? 'قسم الإعداد الفني' : 'Technical Department' },
+                  { value: "finance", label: language === 'ar' ? 'القسم المالي' : 'Finance Department' },
+                  { value: "support", label: language === 'ar' ? 'قسم الخدمات المساندة' : 'Support Services Department' }
+                ]}
+              />
+              <CustomSelect
+                label={language === 'ar' ? 'الأولوية' : 'Priority'}
+                value={formData.suggestionPriority || 'medium'}
+                onChange={(val) => updateFormData({ suggestionPriority: val })}
+                options={[
+                  { value: "low", label: language === 'ar' ? 'منخفضة' : 'Low' },
+                  { value: "medium", label: language === 'ar' ? 'متوسطة' : 'Medium' },
+                  { value: "high", label: language === 'ar' ? 'عالية' : 'High' }
+                ]}
+              />
             </div>
+
             <div className="space-y-2">
               <label className="block text-sm font-bold text-gray-700">
                 {language === 'ar' ? 'النتيجة المتوقعة' : 'Expected Result'}
@@ -172,7 +164,7 @@ export default function DetailsForm() {
                 rows={2}
                 value={formData.suggestionExpected || ''}
                 onChange={(e) => updateFormData({ suggestionExpected: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[var(--color-terracotta)] resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[var(--color-terracotta)] resize-none transition-all outline-none"
               />
             </div>
           </div>
@@ -180,24 +172,20 @@ export default function DetailsForm() {
       case 'meeting':
         return (
           <div className="space-y-6">
-            <div className="space-y-2">
-              <label className="block text-sm font-bold text-gray-700">
-                {language === 'ar' ? 'المسؤول المطلوب مقابلته' : 'Official to meet'}
-              </label>
-              <select 
-                value={formData.meetingPersonId || ''}
-                onChange={(e) => updateFormData({ meetingPersonId: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white"
-              >
-                <option value="">-- {language === 'ar' ? 'اختر المسؤول' : 'Select Official'} --</option>
-                <option value="manager">{language === 'ar' ? 'مدير النادي' : 'Club Manager'}</option>
-                <option value="ops_head">{language === 'ar' ? 'رئيس قسم العمليات' : 'Head of Operations Department'}</option>
-                <option value="tech_head">{language === 'ar' ? 'رئيس قسم الإعداد الفني' : 'Head of Technical Department'}</option>
-                <option value="finance_head">{language === 'ar' ? 'رئيس القسم المالي' : 'Head of Finance Department'}</option>
-                <option value="support_head">{language === 'ar' ? 'رئيس قسم الخدمات المساندة' : 'Head of Support Services Department'}</option>
-                <option value="specific">{language === 'ar' ? 'موظف محدد' : 'Specific Employee'}</option>
-              </select>
-            </div>
+            <CustomSelect
+              label={language === 'ar' ? 'المسؤول المطلوب مقابلته' : 'Official to meet'}
+              value={formData.meetingPersonId || ''}
+              onChange={(val) => updateFormData({ meetingPersonId: val })}
+              placeholder={language === 'ar' ? 'اختر المسؤول' : 'Select Official'}
+              options={[
+                { value: "manager", label: language === 'ar' ? 'مدير النادي' : 'Club Manager' },
+                { value: "ops_head", label: language === 'ar' ? 'رئيس قسم العمليات' : 'Head of Operations Department' },
+                { value: "tech_head", label: language === 'ar' ? 'رئيس قسم الإعداد الفني' : 'Head of Technical Department' },
+                { value: "finance_head", label: language === 'ar' ? 'رئيس القسم المالي' : 'Head of Finance Department' },
+                { value: "support_head", label: language === 'ar' ? 'رئيس قسم الخدمات المساندة' : 'Head of Support Services Department' },
+                { value: "specific", label: language === 'ar' ? 'موظف محدد' : 'Specific Employee' }
+              ]}
+            />
             {formData.meetingPersonId === 'specific' && (
               <div className="space-y-2 animate-in fade-in slide-in-from-top-2">
                 <label className="block text-sm font-bold text-gray-700">

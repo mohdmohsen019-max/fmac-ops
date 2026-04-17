@@ -6,6 +6,7 @@ import { Stepper } from "@/components/Stepper";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
 import { ArrowRight, ArrowLeft } from "lucide-react";
+import { CustomSelect } from "@/components/CustomSelect";
 
 export default function BasicInfoForm() {
   const { language, formData, updateFormData } = useRequestStore();
@@ -100,40 +101,34 @@ export default function BasicInfoForm() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-sm font-bold text-gray-700">
-                  {language === 'ar' ? 'الرياضة (اختياري)' : 'Sport (Optional)'}
-                </label>
-                <select 
-                  value={formData.sport || ''}
-                  onChange={(e) => updateFormData({ sport: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[var(--color-terracotta)] focus:border-transparent outline-none transition-all bg-white"
-                >
-                  <option value="">{language === 'ar' ? 'اختر الرياضة' : 'Select Sport'}</option>
-                  <option value="Judo">{language === 'ar' ? 'جودو' : 'Judo'}</option>
-                  <option value="Taekwondo">{language === 'ar' ? 'تايكواندو' : 'Taekwondo'}</option>
-                  <option value="Karate">{language === 'ar' ? 'كاراتيه' : 'Karate'}</option>
-                  <option value="JiuJitsu">{language === 'ar' ? 'جوجيتسو' : 'Jiu-Jitsu'}</option>
-                  <option value="Wrestling">{language === 'ar' ? 'مصارعة' : 'Wrestling'}</option>
-                  <option value="Boxing">{language === 'ar' ? 'ملاكمة' : 'Boxing'}</option>
-                </select>
-              </div>
+              <CustomSelect
+                label={language === 'ar' ? 'اللعبة (اختياري)' : 'Sport (Optional)'}
+                value={formData.sport || ''}
+                onChange={(val) => updateFormData({ sport: val })}
+                placeholder={language === 'ar' ? 'اختر الرياضة' : 'Select Sport'}
+                options={[
+                  { value: "Judo", label: language === 'ar' ? 'جودو' : 'Judo' },
+                  { value: "Taekwondo", label: language === 'ar' ? 'تايكواندو' : 'Taekwondo' },
+                  { value: "Karate", label: language === 'ar' ? 'كاراتيه' : 'Karate' },
+                  { value: "JiuJitsu", label: language === 'ar' ? 'جوجيتسو' : 'Jiu-Jitsu' },
+                  { value: "Wrestling", label: language === 'ar' ? 'مصارعة' : 'Wrestling' },
+                  { value: "Boxing", label: language === 'ar' ? 'ملاكمة' : 'Boxing' },
+                ]}
+              />
 
-              <div className="space-y-2 md:col-span-2">
-                <label className="block text-sm font-bold text-gray-700">
-                  {language === 'ar' ? 'الفرع *' : 'Branch *'}
-                </label>
-                <select 
+              <div className="md:col-span-2">
+                <CustomSelect
                   required
+                  label={language === 'ar' ? 'الفرع' : 'Club Branch'}
                   value={formData.branch || ''}
-                  onChange={(e) => updateFormData({ branch: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[var(--color-terracotta)] focus:border-transparent outline-none transition-all bg-white"
-                >
-                  <option value="">{language === 'ar' ? 'اختر الفرع' : 'Select Branch'}</option>
-                  <option value="Fujairah">{language === 'ar' ? 'الفجيرة (الرئيسي)' : 'Fujairah (Main)'}</option>
-                  <option value="Dibba">{language === 'ar' ? 'دبا' : 'Dibba'}</option>
-                  <option value="AlBithna">{language === 'ar' ? 'البثنة' : 'Al Bithna'}</option>
-                </select>
+                  onChange={(val) => updateFormData({ branch: val })}
+                  placeholder={language === 'ar' ? 'اختر الفرع' : 'Select Branch'}
+                  options={[
+                    { value: "Fujairah", label: language === 'ar' ? 'الفجيرة (الرئيسي)' : 'Fujairah (Main)' },
+                    { value: "Dibba", label: language === 'ar' ? 'دبا' : 'Dibba' },
+                    { value: "AlBithna", label: language === 'ar' ? 'البثنة' : 'Al Bithna' },
+                  ]}
+                />
               </div>
             </div>
 
