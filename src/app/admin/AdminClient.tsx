@@ -342,19 +342,55 @@ export default function AdminClient() {
 
       <main className="lg:pl-64 flex-1">
         <div className="max-w-6xl mx-auto px-6 py-10">
-          <header className="mb-10 flex items-center justify-between">
+          <header className="mb-6 flex items-center justify-between">
             <div className="text-start font-display">
-              <h1 className="text-2xl font-black text-[var(--color-espresso)] tracking-tighter">Fujairah Martial Arts Club</h1>
-              <p className="text-[var(--color-terracotta)] text-sm font-bold uppercase tracking-widest mt-1">Unified Console</p>
+              <h1 className="text-xl md:text-2xl font-black text-[var(--color-espresso)] tracking-tighter">Fujairah Martial Arts Club</h1>
+              <p className="text-[var(--color-terracotta)] text-[10px] md:text-sm font-bold uppercase tracking-widest mt-0.5">Unified Console</p>
             </div>
             
-            <div className="hidden sm:flex gap-3">
-              <div className="px-4 py-2 bg-white rounded-xl border border-gray-100 shadow-sm flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                <span className="text-xs font-black text-[var(--color-espresso)] uppercase tracking-wider">Live Sync Active</span>
+            <div className="flex gap-2 md:gap-3">
+              <div className="px-3 md:px-4 py-1.5 md:py-2 bg-white rounded-xl border border-gray-100 shadow-sm flex items-center gap-2 md:gap-3">
+                <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-500 animate-pulse"></div>
+                <span className="text-[9px] md:text-xs font-black text-[var(--color-espresso)] uppercase tracking-wider">Live Sync</span>
               </div>
+              
+              <button 
+                onClick={handleLogout}
+                className="lg:hidden w-9 h-9 flex items-center justify-center bg-red-50 text-red-600 rounded-xl border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm"
+                title="Sign Out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
             </div>
           </header>
+
+          {/* Mobile Category Switcher */}
+          <nav className="flex lg:hidden overflow-x-auto no-scrollbar gap-2 mb-8 pb-2 -mx-2 px-2 scroll-smooth snap-x">
+            {tabs.map(tab => {
+              const Icon = tab.icon;
+              const count = tab.id === 'all' ? requests.length : statsByType[tab.id as Exclude<RequestType, null>];
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex-none snap-start flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all border ${
+                    isActive 
+                      ? 'bg-[var(--color-espresso)] text-[var(--color-beige)] border-[var(--color-espresso)] shadow-lg shadow-orange-900/10' 
+                      : 'bg-white text-gray-400 border-gray-100 hover:text-[var(--color-espresso)]'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span className="text-[11px] font-bold uppercase tracking-tight">{tab.label}</span>
+                  <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full ${
+                    isActive ? 'bg-white/20' : 'bg-gray-100 text-gray-400'
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
 
           <div className="grid grid-cols-3 gap-3 md:gap-6 mb-10">
             <div className="bg-white rounded-3xl md:rounded-[2rem] p-3 md:p-8 border border-white shadow-xl shadow-orange-900/5 text-center md:text-left">
@@ -389,6 +425,18 @@ export default function AdminClient() {
               </table>
             </div>
           </div>
+
+          {user?.email === 'fmacoperations@gmail.com' && requests.length > 0 && (
+            <div className="mt-12 flex lg:hidden flex-col items-center">
+              <div className="text-[10px] font-black text-red-800/30 uppercase mb-4 tracking-widest">Master Admin Tools</div>
+              <button 
+                onClick={() => setShowClearConfirm(true)}
+                className="flex items-center gap-3 px-8 py-4 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-2xl transition-all font-black text-[10px] uppercase tracking-widest border border-red-100"
+              >
+                <Trash2 className="w-4 h-4" /> Clear All Data
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </div>
