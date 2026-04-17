@@ -39,6 +39,9 @@ export default function Home() {
     router.push(`/submit/${type}`);
   };
 
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
+
   if (!mounted) return null;
 
   const containerVariants = {
@@ -80,6 +83,16 @@ export default function Home() {
         {/* Cinematic Background Layers */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="hero-mesh animate-mesh" />
+          <motion.div 
+            style={{ y }}
+            className="absolute inset-0 z-0 opacity-15 grayscale"
+          >
+            <img 
+              src="file:///C:/Users/HP/.gemini/antigravity/brain/dd7a0113-1121-455d-b799-1c12a10a1396/dojo_subtle_texture_1776431246858.png" 
+              alt="Dojo Background" 
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
           <div className="noise-overlay" />
           <div className="hero-vignette" />
         </div>
@@ -88,18 +101,18 @@ export default function Home() {
            initial={{ opacity: 0, y: 40 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.8, ease: "easeOut" }}
-           className="relative z-10"
+           className="relative z-10 w-full"
         >
           
-          <h1 className="text-5xl md:text-9xl font-black mb-8 leading-[0.85] tracking-tighter uppercase max-w-6xl mx-auto">
+          <h1 className="text-5xl md:text-8xl font-black mb-8 leading-[0.85] tracking-tighter uppercase max-w-5xl mx-auto">
             {language === 'ar' ? (
-              <span className="font-arabic leading-tight">نادي الفجيرة للفنون القتالية</span>
+              <span className="font-arabic leading-tight">المركز الموحد لنادي الفجيرة للفنون القتالية</span>
             ) : (
-              <>FUJAIRAH <br className="hidden md:block" /> MARTIAL ARTS CLUB</>
+              <>THE UNIFIED HUB FOR <br className="hidden md:block" /> FUJAIRAH MARTIAL ARTS CLUB</>
             )}
           </h1>
           
-          <p className="text-xl md:text-3xl text-gray-400 font-medium max-w-2xl mx-auto mb-12">
+          <p className="text-xl md:text-2xl text-gray-400 font-medium max-w-xl mx-auto mb-12">
             {language === 'ar' 
               ? 'نهدف إلى التميز في تقديم الخدمات الرقمية الموحدة وتحسين تجربة المجتمع الرياضي في الفجيرة.'
               : 'Striving for excellence in unified digital services and enhancing the martial arts experience in Fujairah.'}
@@ -114,7 +127,13 @@ export default function Home() {
             <span className="text-[10px] uppercase font-black tracking-[0.4em] text-gray-500">
               {language === 'ar' ? 'مرر للخدمات' : 'Scroll for Services'}
             </span>
-            <div className="w-[2px] h-12 bg-gradient-to-b from-brand to-transparent rounded-full animate-bounce" />
+            <div className="w-[1px] h-16 bg-gradient-to-b from-brand via-brand/50 to-transparent relative overflow-hidden">
+              <motion.div 
+                animate={{ y: [0, 64] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent via-white to-transparent"
+              />
+            </div>
           </motion.div>
         </motion.div>
       </section>
