@@ -120,8 +120,8 @@ export default function Home() {
       </section>
 
       {/* SECTION 2: SERVICES GRID */}
-      <section className="min-h-screen w-full snap-start scroll-mt-20 bg-white py-24 px-6 relative">
-        <div className="max-w-7xl mx-auto pt-16">
+      <section className="min-h-screen w-full snap-start bg-white pt-40 pb-24 px-6 relative">
+        <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
