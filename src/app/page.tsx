@@ -77,15 +77,12 @@ export default function Home() {
       
       {/* SECTION 1: HERO / WELCOME */}
       <section className="h-screen w-full snap-start relative flex flex-col items-center justify-center px-6 text-white text-center overflow-hidden">
-        {/* Animated Background Elements */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.15 }}
-          className="absolute inset-0 pointer-events-none"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#D2122E_0%,_transparent_70%)]" />
-          <div className="absolute inset-0 bg-[grid-white]/5 [mask-image:radial-gradient(white,transparent)]" />
-        </motion.div>
+        {/* Cinematic Background Layers */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="hero-mesh animate-mesh" />
+          <div className="noise-overlay" />
+          <div className="hero-vignette" />
+        </div>
         
         <motion.div
            initial={{ opacity: 0, y: 40 }}
