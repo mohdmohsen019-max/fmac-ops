@@ -188,8 +188,8 @@ export default function AdminClient() {
     const allCols = [baseCols[0], ...midCols, ...baseCols.slice(1)];
 
     return (
-      <tr className="bg-[var(--color-espresso)]/5 text-[10px] font-black text-gray-400 uppercase tracking-widest">
-        {allCols.map(c => <th key={c} className="px-6 py-4 border-b border-gray-100">{c}</th>)}
+      <tr className="bg-[var(--color-espresso)]/5 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">
+        {allCols.map(c => <th key={c} className="px-3 md:px-6 py-3 md:py-4 border-b border-gray-100">{c}</th>)}
       </tr>
     );
   };
@@ -240,10 +240,10 @@ export default function AdminClient() {
 
     return (
       <tr key={req.id} className="hover:bg-[var(--color-beige)]/30 border-b border-gray-100 last:border-none transition-colors">
-        <td className="px-6 py-5 font-black text-[var(--color-espresso)] text-sm tracking-tight">{req.ticketNumber}</td>
-        {midData.map((d, i) => <td key={i} className="px-6 py-5">{d}</td>)}
-        <td className="px-6 py-5">
-          <span className={`inline-block px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${
+        <td className="px-3 md:px-6 py-3 md:py-5 font-black text-[var(--color-espresso)] text-sm tracking-tight">{req.ticketNumber}</td>
+        {midData.map((d, i) => <td key={i} className="px-3 md:px-6 py-3 md:py-5 text-center">{d}</td>)}
+        <td className="px-3 md:px-6 py-3 md:py-5">
+          <span className={`inline-block px-2 md:px-3 py-1 rounded-lg text-[9px] md:text-[10px] font-black uppercase tracking-wider ${
             req.status === 'new' ? 'bg-red-50 text-red-700 border border-red-100' :
             req.status === 'in_progress' ? 'bg-orange-50 text-orange-700 border border-orange-100' :
             'bg-green-50 text-green-700 border border-green-100'
@@ -251,12 +251,12 @@ export default function AdminClient() {
             {req.status}
           </span>
         </td>
-        <td className="px-6 py-5 text-gray-400 text-xs font-bold">
+        <td className="px-3 md:px-6 py-3 md:py-5 text-gray-400 text-[10px] md:text-xs font-bold text-center">
           {req.createdAt?.toDate ? new Date(req.createdAt.toDate()).toLocaleDateString() : 'N/A'}
         </td>
-        <td className="px-6 py-5">
-          <Link href={`/admin/requests/${req.id}`} className="text-[var(--color-terracotta)] hover:text-[var(--color-espresso)] transition-colors inline-flex items-center gap-1.5 font-black text-[10px] uppercase tracking-widest">
-            Details <ArrowRight className="w-3 h-3" />
+        <td className="px-3 md:px-6 py-3 md:py-5 text-center">
+          <Link href={`/admin/requests/${req.id}`} className="text-[var(--color-terracotta)] hover:text-[var(--color-espresso)] transition-colors inline-flex items-center gap-1.5 font-black text-[9px] md:text-[10px] uppercase tracking-widest">
+            {language === 'ar' ? 'تفاصيل' : 'Details'} <ArrowRight className="w-3 h-3" />
           </Link>
         </td>
       </tr>
@@ -356,18 +356,18 @@ export default function AdminClient() {
             </div>
           </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div className="bg-white rounded-[2rem] p-8 border border-white shadow-xl shadow-orange-900/5">
-              <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Total Volume</div>
-              <div className="text-5xl font-black text-[var(--color-espresso)]">{filteredRequests.length}</div>
+          <div className="grid grid-cols-3 gap-3 md:gap-6 mb-10">
+            <div className="bg-white rounded-3xl md:rounded-[2rem] p-3 md:p-8 border border-white shadow-xl shadow-orange-900/5 text-center md:text-left">
+              <div className="text-[8px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 md:mb-3">Total</div>
+              <div className="text-xl md:text-5xl font-black text-[var(--color-espresso)]">{filteredRequests.length}</div>
             </div>
-            <div className="bg-white rounded-[2rem] p-8 border border-white shadow-xl shadow-orange-900/5">
-              <div className="text-[10px] font-black text-[var(--color-terracotta)] uppercase tracking-widest mb-3">Awaiting Action</div>
-              <div className="text-5xl font-black text-[var(--color-terracotta)]">{filteredRequests.filter(r => r.status === 'new').length}</div>
+            <div className="bg-white rounded-3xl md:rounded-[2rem] p-3 md:p-8 border border-white shadow-xl shadow-orange-900/5 text-center md:text-left">
+              <div className="text-[8px] md:text-[10px] font-black text-[var(--color-terracotta)] uppercase tracking-widest mb-1 md:mb-3">New</div>
+              <div className="text-xl md:text-5xl font-black text-[var(--color-terracotta)]">{filteredRequests.filter(r => r.status === 'new').length}</div>
             </div>
-            <div className="bg-white rounded-[2rem] p-8 border border-white shadow-xl shadow-orange-900/5">
-              <div className="text-[10px] font-black text-[var(--color-olive)] uppercase tracking-widest mb-3">Completed</div>
-              <div className="text-5xl font-black text-[var(--color-olive)]">{filteredRequests.filter(r => r.status === 'closed').length}</div>
+            <div className="bg-white rounded-3xl md:rounded-[2rem] p-3 md:p-8 border border-white shadow-xl shadow-orange-900/5 text-center md:text-left">
+              <div className="text-[8px] md:text-[10px] font-black text-[var(--color-olive)] uppercase tracking-widest mb-1 md:mb-3">Done</div>
+              <div className="text-xl md:text-5xl font-black text-[var(--color-olive)]">{filteredRequests.filter(r => r.status === 'closed').length}</div>
             </div>
           </div>
 

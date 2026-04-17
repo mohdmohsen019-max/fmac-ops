@@ -29,7 +29,7 @@ export function Navigation() {
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-12 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-6 group">
           <img src="/fmac-logo.png" alt="FMAC" className="w-16 h-16 object-contain transition-transform group-hover:scale-110" />
           <div className="flex flex-col">

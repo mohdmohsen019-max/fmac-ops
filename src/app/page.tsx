@@ -158,26 +158,26 @@ export default function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
+            className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 pb-12"
           >
             {services.map((service) => (
               <motion.button
                 key={service.id}
                 variants={cardVariants}
                 onClick={() => handleSelectService(service.id)}
-                className="group relative h-72 bg-white border-2 border-black p-10 rounded-[2.5rem] flex flex-col justify-between items-start transition-all duration-300 hover:bg-black hover:border-black hover:translate-y-[-10px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] active:scale-95 text-left"
+                className="group relative h-40 md:h-72 bg-white border-2 border-black p-4 md:p-10 rounded-2xl md:rounded-[2.5rem] flex flex-col justify-between items-start transition-all duration-300 hover:bg-black hover:border-black hover:translate-y-[-5px] md:hover:translate-y-[-10px] hover:shadow-[0_15px_30px_rgba(0,0,0,0.1)] active:scale-95 text-left"
               >
-                <div className="w-16 h-16 rounded-2xl bg-brand text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors duration-400">
-                  <service.icon className="w-8 h-8" />
+                <div className="w-10 h-10 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-brand text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors duration-400">
+                  <service.icon className="w-5 h-5 md:w-8 md:h-8" />
                 </div>
                 
-                <div className="space-y-3">
-                  <h3 className={`text-2xl font-black uppercase leading-[1.1] text-black group-hover:text-white transition-colors ${language === 'ar' ? 'font-arabic text-right' : 'font-display'}`}>
+                <div className="space-y-1.5 md:space-y-3">
+                  <h3 className={`text-sm md:text-2xl font-black uppercase leading-[1.1] text-black group-hover:text-white transition-colors ${language === 'ar' ? 'font-arabic text-right' : 'font-display'}`}>
                     {language === 'ar' ? service.ar : service.en}
                   </h3>
-                  <div className="flex items-center gap-3 text-brand group-hover:text-white transition-all font-black text-[10px] uppercase tracking-widest translate-x-[-10px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 duration-500">
-                    {language === 'ar' ? 'ابدأ الآن' : 'Start Process'}
-                    <span className="block w-6 h-[2px] bg-current" />
+                  <div className="flex items-center gap-1.5 md:gap-3 text-brand group-hover:text-white transition-all font-black text-[7px] md:text-[10px] uppercase tracking-widest translate-x-[-10px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 duration-500">
+                    {language === 'ar' ? 'ابدأ' : 'Start'}
+                    <span className="block w-4 md:w-6 h-[1.5px] md:h-[2px] bg-current" />
                   </div>
                 </div>
 
