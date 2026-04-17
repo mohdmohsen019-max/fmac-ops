@@ -85,13 +85,9 @@ export default function Home() {
           <div className="hero-mesh animate-mesh" />
           <motion.div 
             style={{ y }}
-            className="absolute inset-0 z-0 opacity-15 grayscale"
+            className="absolute inset-0 z-0 opacity-15"
           >
-            <img 
-              src="file:///C:/Users/HP/.gemini/antigravity/brain/dd7a0113-1121-455d-b799-1c12a10a1396/dojo_subtle_texture_1776431246858.png" 
-              alt="" 
-              className="w-full h-full object-cover"
-            />
+            <div className="w-full h-full hero-texture opacity-20" />
           </motion.div>
           <div className="noise-overlay" />
           <div className="hero-vignette" />

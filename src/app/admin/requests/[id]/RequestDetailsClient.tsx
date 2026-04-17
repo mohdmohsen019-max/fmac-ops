@@ -275,7 +275,7 @@ export default function RequestDetailsClient() {
                 ))
               )}
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mt-8">
               <input 
                 type="text"
                 value={newNote}
@@ -283,7 +283,12 @@ export default function RequestDetailsClient() {
                 placeholder="Log internal update..."
                 className="flex-1 px-6 py-4 bg-[var(--color-beige)]/30 border border-gray-100 rounded-[1.5rem] focus:ring-2 focus:ring-[var(--color-terracotta)] outline-none text-sm font-bold placeholder:text-gray-300 transition-all"
               />
-              <button onClick={addNote} className="px-10 py-4 bg-[var(--color-espresso)] text-[var(--color-beige)] font-black rounded-[1.5rem] hover:bg-black shadow-lg shadow-orange-900/10 transition-all uppercase text-xs tracking-widest">Post Log</button>
+              <button 
+                onClick={addNote} 
+                className="px-8 py-4 bg-[var(--color-espresso)] text-[var(--color-beige)] font-black rounded-[1.5rem] hover:bg-black shadow-lg shadow-orange-900/10 transition-all uppercase text-[10px] tracking-widest whitespace-nowrap min-w-[140px]"
+              >
+                Post Log
+              </button>
             </div>
           </div>
         </div>
