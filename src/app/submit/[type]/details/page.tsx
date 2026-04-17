@@ -126,6 +126,8 @@ export default function DetailsForm() {
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[var(--color-terracotta)] outline-none transition-all"
                 />
               </div>
+            )}
+          </div>
         );
       case 'suggestion':
         return (
