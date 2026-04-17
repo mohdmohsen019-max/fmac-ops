@@ -59,8 +59,65 @@
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-brand hover:bg-brand-hover text-white font-black uppercase tracking-widest py-4 px-8 rounded-2xl transition-all shadow-lg hover:shadow-brand/20 active:scale-95;
-  }
+}
+
+/* Cinematic Hero System */
+.hero-mesh {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(at 10% 10%, hsla(355, 85%, 25%, 0.9) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, hsla(355, 85%, 20%, 0.7) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, hsla(355, 85%, 15%, 0.5) 0px, transparent 80%),
+    radial-gradient(at 0% 100%, hsla(355, 85%, 30%, 0.8) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(13, 50%, 20%, 0.6) 0px, transparent 50%),
+    #000;
+  filter: blur(40px);
+  z-index: -1;
+  opacity: 1;
+}
+
+@keyframes mesh-pulse {
+  0%, 100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+  33% { transform: scale(1.1) translate(3%, 1.5%) rotate(0.5deg); }
+  66% { transform: scale(1.05) translate(-1%, 3%) rotate(-0.5deg); }
+}
+
+.animate-mesh {
+  animation: mesh-pulse 25s ease-in-out infinite;
+}
+
+.noise-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.9) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-brand);
+  border-radius: 10px;
 }
