@@ -45,10 +45,10 @@ export function Navigation() {
           </Link>
           <button 
             onClick={toggleLanguage}
-            className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-black bg-white hover:bg-black hover:text-white transition-all text-[10px] font-black uppercase tracking-widest"
+            className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-black bg-white hover:bg-black hover:text-white transition-all shadow-sm"
+            title={language === 'ar' ? 'English' : 'عربي'}
           >
-            <Globe className="w-3.5 h-3.5" />
-            {language === 'ar' ? 'English' : 'عربي'}
+            <Globe className="w-5 h-5" />
           </button>
         </div>
       </div>

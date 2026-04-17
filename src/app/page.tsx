@@ -89,7 +89,7 @@ export default function Home() {
           >
             <img 
               src="file:///C:/Users/HP/.gemini/antigravity/brain/dd7a0113-1121-455d-b799-1c12a10a1396/dojo_subtle_texture_1776431246858.png" 
-              alt="Dojo Background" 
+              alt="" 
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -104,11 +104,11 @@ export default function Home() {
            className="relative z-10 w-full"
         >
           
-          <h1 className="text-5xl md:text-8xl font-black mb-8 leading-[0.85] tracking-tighter uppercase max-w-5xl mx-auto">
+          <h1 className="text-5xl md:text-9xl font-black mb-8 leading-[0.85] tracking-tighter uppercase max-w-6xl mx-auto">
             {language === 'ar' ? (
-              <span className="font-arabic leading-tight">المركز الموحد لنادي الفجيرة للفنون القتالية</span>
+              <span className="font-arabic leading-tight">نادي الفجيرة للفنون القتالية</span>
             ) : (
-              <>THE UNIFIED HUB FOR <br className="hidden md:block" /> FUJAIRAH MARTIAL ARTS CLUB</>
+              <>FUJAIRAH <br className="hidden md:block" /> MARTIAL ARTS CLUB</>
             )}
           </h1>
           
