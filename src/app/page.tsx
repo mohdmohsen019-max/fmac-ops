@@ -120,13 +120,13 @@ export default function Home() {
       </section>
 
       {/* SECTION 2: SERVICES GRID */}
-      <section className="min-h-screen w-full snap-start bg-white pt-40 pb-24 px-6 relative">
+      <section className="min-h-screen w-full snap-start scroll-mt-20 bg-white pt-28 pb-12 px-6 relative">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex items-center justify-between mb-16 border-b-4 border-black pb-8"
+            className="flex items-center justify-between mb-12 border-b-4 border-black pb-8"
           >
             <h2 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-black flex items-center gap-4">
                {language === 'ar' ? 'خدماتنا' : 'OUR SERVICES'}
@@ -146,7 +146,7 @@ export default function Home() {
                 key={service.id}
                 variants={cardVariants}
                 onClick={() => handleSelectService(service.id)}
-                className="group relative h-80 bg-white border-2 border-black p-10 rounded-[2.5rem] flex flex-col justify-between items-start transition-all duration-300 hover:bg-black hover:border-black hover:translate-y-[-10px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] active:scale-95 text-left"
+                className="group relative h-72 bg-white border-2 border-black p-10 rounded-[2.5rem] flex flex-col justify-between items-start transition-all duration-300 hover:bg-black hover:border-black hover:translate-y-[-10px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] active:scale-95 text-left"
               >
                 <div className="w-16 h-16 rounded-2xl bg-brand text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors duration-400">
                   <service.icon className="w-8 h-8" />
