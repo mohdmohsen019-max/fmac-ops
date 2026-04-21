@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase/config";
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from "firebase/firestore";
-import { LogOut, ArrowRight, Clock, Inbox, HelpCircle, AlertTriangle, Lightbulb, Users, Phone, Wrench, Trash2 } from "lucide-react";
+import { LogOut, ArrowRight, Inbox, HelpCircle, AlertTriangle, Lightbulb, Users, Phone, Wrench, Trash2, Download, FileSpreadsheet, FileText, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { RequestType, useRequestStore } from "@/store/requestStore";
 import { ConfirmationModal } from "@/components/ConfirmationModal";
+import { exportToExcel, exportToPDF } from "@/lib/exportUtils";
 
 type TabType = "all" | Exclude<RequestType, null>;
 
@@ -21,7 +22,34 @@ export default function AdminClient() {
   const [requests, setRequests] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<TabType>("all");
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [showSingleDeleteConfirm, setShowSingleDeleteConfirm] = useState(false);
+  const [reqToDelete, setReqToDelete] = useState<any>(null);
+  const [isExporting, setIsExporting] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
   const { language } = useRequestStore();
+
+  const activeTabLabel = activeTab === 'all' ? 'All' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1);
+
+  const handleExport = async (format: 'excel' | 'pdf', exportData?: any[], customLabel?: string) => {
+    const data = exportData || (activeTab === 'all' ? requests : requests.filter(r => r.type === activeTab));
+    const label = customLabel || activeTabLabel;
+    
+    if (data.length === 0 || isExporting) return;
+    setIsExporting(true);
+    setShowExportMenu(false);
+    try {
+      if (format === 'excel') {
+        exportToExcel(data, activeTab, label);
+      } else {
+        await exportToPDF(data, activeTab, label);
+      }
+    } catch (err) {
+      console.error('Export failed:', err);
+      alert('Export failed. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -62,6 +90,20 @@ export default function AdminClient() {
 
   const handleLogout = async () => {
     if (auth) await signOut(auth);
+  };
+
+  const deleteSingleRequest = async () => {
+    if (!db || !user || !reqToDelete || user.email !== 'fmacoperations@gmail.com') return;
+    
+    setLoading(true);
+    try {
+      await deleteDoc(doc(db, "requests", reqToDelete.id));
+      setReqToDelete(null);
+    } catch (err) {
+      console.error("Deletion error:", err);
+      alert("Error deleting request.");
+    }
+    setLoading(false);
   };
 
   const clearAllRequests = async () => {
@@ -255,9 +297,24 @@ export default function AdminClient() {
           {req.createdAt?.toDate ? new Date(req.createdAt.toDate()).toLocaleDateString() : 'N/A'}
         </td>
         <td className="px-3 md:px-6 py-3 md:py-5 text-center">
-          <Link href={`/admin/requests/${req.id}`} className="text-[var(--color-terracotta)] hover:text-[var(--color-espresso)] transition-colors inline-flex items-center gap-1.5 font-black text-[9px] md:text-[10px] uppercase tracking-widest">
-            {language === 'ar' ? 'تفاصيل' : 'Details'} <ArrowRight className="w-3 h-3" />
-          </Link>
+          <div className="flex items-center justify-center gap-3 md:gap-4">
+            <Link href={`/admin/requests/${req.id}`} className="text-[var(--color-terracotta)] hover:text-[var(--color-espresso)] transition-colors inline-flex items-center gap-1.5 font-black text-[9px] md:text-[10px] uppercase tracking-widest">
+              {language === 'ar' ? 'تفاصيل' : 'Details'} <ArrowRight className="w-3 h-3" />
+            </Link>
+            
+            {user?.email === 'fmacoperations@gmail.com' && (
+              <button 
+                onClick={() => {
+                  setReqToDelete(req);
+                  setShowSingleDeleteConfirm(true);
+                }}
+                className="p-1.5 md:p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                title="Delete Entry"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </td>
       </tr>
     );
@@ -340,6 +397,22 @@ export default function AdminClient() {
         cancelText={language === 'ar' ? 'إلغاء' : 'Cancel'}
       />
 
+      <ConfirmationModal 
+        isOpen={showSingleDeleteConfirm}
+        onClose={() => {
+          setShowSingleDeleteConfirm(false);
+          setReqToDelete(null);
+        }}
+        onConfirm={deleteSingleRequest}
+        isDanger={true}
+        title={language === 'ar' ? 'حذف الطلب' : 'Delete Request'}
+        message={language === 'ar'
+          ? `هل أنت متأكد من رغبتك في حذف الطلب ${reqToDelete?.ticketNumber}؟ لا يمكن التراجع عن هذا الإجراء.`
+          : `Are you sure you want to delete request ${reqToDelete?.ticketNumber}? This action cannot be undone.`}
+        confirmText={language === 'ar' ? 'حذف' : 'Delete'}
+        cancelText={language === 'ar' ? 'إلغاء' : 'Cancel'}
+      />
+
       <main className="lg:pl-64 flex-1">
         <div className="max-w-6xl mx-auto px-6 py-10">
           <header className="mb-6 flex items-center justify-between">
@@ -348,12 +421,112 @@ export default function AdminClient() {
               <p className="text-[var(--color-terracotta)] text-[10px] md:text-sm font-bold uppercase tracking-widest mt-0.5">Unified Console</p>
             </div>
             
-            <div className="flex gap-2 md:gap-3">
+            <div className="flex gap-2 md:gap-3 items-center">
               <div className="px-3 md:px-4 py-1.5 md:py-2 bg-white rounded-xl border border-gray-100 shadow-sm flex items-center gap-2 md:gap-3">
                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-500 animate-pulse"></div>
                 <span className="text-[9px] md:text-xs font-black text-[var(--color-espresso)] uppercase tracking-wider">Live Sync</span>
               </div>
-              
+
+              {/* Export Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowExportMenu(v => !v)}
+                  disabled={isExporting || filteredRequests.length === 0}
+                  className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 md:py-2 bg-[var(--color-espresso)] hover:bg-black disabled:opacity-40 disabled:cursor-not-allowed text-[var(--color-beige)] rounded-xl border border-transparent shadow-sm transition-all text-[9px] md:text-xs font-black uppercase tracking-wider"
+                >
+                  {isExporting ? (
+                    <span className="animate-spin">⟳</span>
+                  ) : (
+                    <Download className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                  )}
+                  <span className="hidden sm:inline">Export</span>
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+
+                {showExportMenu && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowExportMenu(false)} />
+                    <div className="absolute right-0 mt-2 w-72 bg-white rounded-[2rem] border border-gray-100 shadow-2xl shadow-orange-900/20 z-50 overflow-hidden divide-y divide-gray-50 animate-in fade-in zoom-in-95 duration-200">
+                      
+                      {/* Section 1: Active View */}
+                      <div className="p-5">
+                        <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-4 flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-terracotta)]"></div>
+                          Active Workspace (${activeTabLabel})
+                        </p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleExport('excel')}
+                            className="flex-1 flex items-center justify-center gap-2 py-3 bg-green-50 text-green-700 rounded-2xl hover:bg-green-600 hover:text-white transition-all text-[10px] font-black uppercase tracking-wider shadow-sm"
+                          >
+                            <FileSpreadsheet className="w-3.5 h-3.5" /> XLSX
+                          </button>
+                          <button
+                            onClick={() => handleExport('pdf')}
+                            className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-50 text-red-700 rounded-2xl hover:bg-red-600 hover:text-white transition-all text-[10px] font-black uppercase tracking-wider shadow-sm"
+                          >
+                            <FileText className="w-3.5 h-3.5" /> PDF
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Section 2: Global Archive */}
+                      <div className="p-5 bg-gray-50/40">
+                        <p className="text-[9px] font-black text-[var(--color-espresso)] opacity-30 uppercase tracking-widest mb-4">Master Archives</p>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            onClick={() => handleExport('excel', requests, 'Full Master')}
+                            className="flex items-center justify-center gap-2 py-2.5 bg-white border border-gray-100 text-[var(--color-espresso)] rounded-xl hover:border-green-500 hover:text-green-600 transition-all text-[9px] font-bold uppercase"
+                            title="Export All as Excel"
+                          >
+                            <FileSpreadsheet className="w-3 h-3" /> Master XLSX
+                          </button>
+                          <button
+                            onClick={() => handleExport('pdf', requests, 'Full Master')}
+                            className="flex items-center justify-center gap-2 py-2.5 bg-white border border-gray-100 text-[var(--color-espresso)] rounded-xl hover:border-red-500 hover:text-red-600 transition-all text-[9px] font-bold uppercase"
+                            title="Export All as PDF"
+                          >
+                            <FileText className="w-3 h-3" /> Master PDF
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Section 3: Categories */}
+                      <div className="p-5">
+                        <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-3">Targeted Reports</p>
+                        <div className="space-y-1">
+                          {tabs.filter(t => t.id !== 'all').map(tab => (
+                            <div key={tab.id} className="flex items-center justify-between p-2 hover:bg-[var(--color-beige)]/30 rounded-xl transition-colors group">
+                              <div className="flex items-center gap-3">
+                                <tab.icon className="w-3.5 h-3.5 text-gray-400 group-hover:text-[var(--color-espresso)]" />
+                                <span className="text-[11px] font-bold text-gray-500 group-hover:text-[var(--color-espresso)]">{tab.label}</span>
+                              </div>
+                              <div className="flex gap-1">
+                                <button
+                                  onClick={() => handleExport('excel', requests.filter(r => r.type === tab.id), tab.label)}
+                                  className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-green-100 text-green-600 transition-colors"
+                                  title={`Export ${tab.label} as Excel`}
+                                >
+                                  <FileSpreadsheet className="w-3 h-3" />
+                                </button>
+                                <button
+                                  onClick={() => handleExport('pdf', requests.filter(r => r.type === tab.id), tab.label)}
+                                  className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-red-100 text-red-600 transition-colors"
+                                  title={`Export ${tab.label} as PDF`}
+                                >
+                                  <FileText className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                    </div>
+                  </>
+                )}
+              </div>
+
               <button 
                 onClick={handleLogout}
                 className="lg:hidden w-9 h-9 flex items-center justify-center bg-red-50 text-red-600 rounded-xl border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm"
